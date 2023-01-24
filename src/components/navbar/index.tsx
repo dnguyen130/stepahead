@@ -1,11 +1,8 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent } from 'react'
+import { useTheme } from '../../utils/provider'
 
-type NavbarProps = {
-
-}
+type NavbarProps = {}
 
 export const Navbar: FunctionComponent<NavbarProps> = ({}) => (
-   <nav className="navbar">
-
-   </nav>
+  <nav className="navbar"></nav>
 )
