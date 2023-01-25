@@ -1,0 +1,22 @@
+@mixin navbar-cont($bg, $txt) {
+  width: 100px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  place-items: center flex-start;
+  padding: 30px;
+
+  background-color: $bg;
+  color: $txt;
+
+  @media (max-width: $tablet) {
+    display: none;
+  }
+}
+
+.navbar-cont-light {
+  @include navbar-cont($bg: $strongcolorlight, $txt: $txtcolorlight);
+}

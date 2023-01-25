@@ -1,8 +1,12 @@
-$bgcolorlight: #FEF4D4;
-// $bgcolordark: #1a2e30;
-$txtcolorlight: #051A1F;
-// $txtcolordark: #FFFFFF;
-$buttoncolorlight: #FFBF1A;
-// $buttoncolordark: rgb(189, 91, 0);
-$buttontxtlight: #051A1F;
-// $buttontxtdark: #FFF;
+//Colours
+$bgcolorlight: #fef4d4;
+$txtcolorlight: #051a1f;
+$buttoncolorlight: #ffbf1a;
+$buttontxtlight: #051a1f;
+$strongcolorlight: #1f8fe0;
+
+//Breakpoints
+$mobilelarge: 600px;
+$tablet: 768px;
+$laptop: 992px;
+$desktop: 1200px;

@@ -1,0 +1,23 @@
+@mixin nav-cont($bg, $txt) {
+  width: 100vw;
+  height: 120px;
+  position: fixed;
+  left: 0;
+
+  background-color: $bg;
+  color: $txt;
+
+  @media (min-width: $tablet) {
+    display: none;
+  }
+}
+
+.bottomnav-cont-light {
+  @include nav-cont($bg: $strongcolorlight, $txt: $txtcolorlight);
+  bottom: 0;
+}
+
+.topnav-cont-light {
+  @include nav-cont($bg: $strongcolorlight, $txt: $txtcolorlight);
+  top: 0;
+}

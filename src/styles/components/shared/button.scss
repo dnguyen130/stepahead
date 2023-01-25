@@ -1,0 +1,24 @@
+@mixin button-cont($bg, $txt) {
+  border: none;
+  text-decoration: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-bottom: 30px;
+
+  background-color: $bg;
+  color: $txt;
+
+  @media (max-width: $tablet) {
+    width: 75px;
+    height: 75px;
+  }
+
+  @media (min-width: $tablet) {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.button-cont-light {
+  @include button-cont($bg: $buttoncolorlight, $txt: $buttontxtlight);
+}
