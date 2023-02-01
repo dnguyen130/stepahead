@@ -13,11 +13,11 @@
 }
 
 .bottomnav-cont-light {
-  @include nav-cont($bg: $strongcolorlight, $txt: $txtcolorlight);
+  @include nav-cont($bg: $bg2light, $txt: $txtlight);
   bottom: 0;
 }
 
 .topnav-cont-light {
-  @include nav-cont($bg: $strongcolorlight, $txt: $txtcolorlight);
+  @include nav-cont($bg: $bg2light, $txt: $txtlight);
   top: 0;
 }

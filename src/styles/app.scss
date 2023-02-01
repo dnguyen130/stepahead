@@ -23,5 +23,13 @@ body {
 }
 
 .container-light {
-  @include container($bg: $bgcolorlight, $txt: $txtcolorlight);
+  @include container($bg: $bglight, $txt: $txtlight);
+}
+
+.button-active-light {
+  background-color: $buttonactivelight;
+}
+
+.icon-active-light {
+  color: $iconactivelight;
 }

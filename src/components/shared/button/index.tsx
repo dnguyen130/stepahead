@@ -1,18 +1,32 @@
-import { FunctionComponent } from 'react'
+import { FunctionComponent, useState } from 'react'
 import { useTheme } from '../../../utils/provider'
-import { AiFillHome } from 'react-icons/ai'
 
 type NavbarProps = {
-  label: string
+  icon: JSX.Element
+  active: boolean
 }
 
-export const Button: FunctionComponent<NavbarProps> = ({ label }) => {
+export const Button: FunctionComponent<NavbarProps> = ({ icon, active }) => {
   const { theme } = useTheme()
-  console.log(theme)
+  const [page, setPage] = useState('home')
 
   return (
-    <button className={`button-cont-${theme}`}>
-      <h4>{label}</h4>
+    <button
+      className={
+        active
+          ? `button-cont-${theme} button-active-${theme}`
+          : `button-cont-${theme}`
+      }
+    >
+      <div
+        className={
+          active
+            ? `icon-cont-${theme} icon-active-${theme}`
+            : `icon-cont-${theme}`
+        }
+      >
+        {icon}
+      </div>
     </button>
   )
 }

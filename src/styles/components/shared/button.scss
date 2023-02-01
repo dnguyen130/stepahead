@@ -1,24 +1,33 @@
-@mixin button-cont($bg, $txt) {
+@mixin button-cont($bg) {
   border: none;
   text-decoration: none;
-  border-radius: 10px;
   cursor: pointer;
-  margin-bottom: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   background-color: $bg;
-  color: $txt;
 
   @media (max-width: $tablet) {
-    width: 75px;
     height: 75px;
   }
 
   @media (min-width: $tablet) {
-    width: 100px;
-    height: 100px;
+    height: 180px;
   }
 }
 
+@mixin icon-cont($bg) {
+  color: $bg;
+  width: 50%;
+  height: 100px;
+}
+
 .button-cont-light {
-  @include button-cont($bg: $buttoncolorlight, $txt: $buttontxtlight);
+  @include button-cont($bg: $bg2light);
+}
+
+.icon-cont-light {
+  @include icon-cont($bg: $bglight);
 }
