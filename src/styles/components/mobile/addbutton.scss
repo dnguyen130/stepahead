@@ -2,8 +2,7 @@
   width: 100px;
   height: 100px;
   display: flex;
-  border: 1px solid red;
-  border-radius: 15px;
+  border-radius: 10px;
   text-decoration: none;
   cursor: pointer;
 
@@ -23,6 +22,7 @@
 
 .addbuttonmobile-light {
   @include addbuttonmobile($bg: $bg2light);
+  border: 2px solid $bglight;
 }
 
 .addiconmobile-light {
