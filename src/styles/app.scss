@@ -1,7 +1,9 @@
 @import './variables/general.scss';
 @import './components/desktop/navbar.scss';
 @import './components/mobile/navbar.scss';
-@import './components//shared//button.scss';
+@import './components/shared/navbarbutton.scss';
+@import './components/mobile/addbutton.scss';
+@import './components/desktop/addbutton.scss';
 
 @mixin container($bg, $txt) {
   width: 100vw;
@@ -12,6 +14,11 @@
 
   background-color: $bg;
   color: $txt;
+
+  @media (min-width: $tablet) {
+    width: calc(100vw - 150px);
+    margin-left: 150px;
+  }
 }
 
 body {
@@ -22,14 +29,10 @@ body {
   min-height: 100vh;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 .container-light {
   @include container($bg: $bglight, $txt: $txtlight);
-}
-
-.button-active-light {
-  background-color: $buttonactivelight;
-}
-
-.icon-active-light {
-  color: $iconactivelight;
 }

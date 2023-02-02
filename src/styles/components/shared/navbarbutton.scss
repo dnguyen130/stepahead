@@ -1,0 +1,44 @@
+@mixin navbarbutton($bg) {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+
+  background-color: $bg;
+
+  @media (min-width: $tablet) {
+    height: 180px;
+  }
+}
+
+@mixin navbaricon($bg) {
+  color: $bg;
+  width: 50%;
+  max-width: 60px;
+  height: 100%;
+
+  @media (min-width: $tablet) {
+    height: 100px;
+    width: 50%;
+  }
+}
+
+.navbarbutton-light {
+  @include navbarbutton($bg: $bg2light);
+}
+
+.navbaricon-light {
+  @include navbaricon($bg: $bglight);
+}
+
+.navbarbutton-active-light {
+  background-color: $buttonactivelight;
+}
+
+.navbaricon-active-light {
+  color: $iconactivelight;
+}

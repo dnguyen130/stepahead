@@ -1,0 +1,47 @@
+@mixin addbuttondesktop($bg) {
+  width: 100px;
+  height: 100px;
+  display: none;
+  border: none;
+  border-radius: 15px;
+  text-decoration: none;
+  cursor: pointer;
+
+  background-color: $bg;
+
+  @media (min-width: $tablet) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+  }
+}
+
+@mixin addicondesktop($bg) {
+  color: $bg;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 48px;
+}
+
+.addbuttondesktop-light {
+  @include addbuttondesktop($bg: $bg2light);
+}
+
+.addicondesktop-light {
+  @include addicondesktop($bg: $bglight);
+}
+
+.addbuttondesktop-active-light {
+  background-color: $buttonactivelight;
+}
+
+.addicondesktop-active-light {
+  color: $iconactivelight;
+}

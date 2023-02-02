@@ -6,7 +6,10 @@ type NavbarProps = {
   active: boolean
 }
 
-export const Button: FunctionComponent<NavbarProps> = ({ icon, active }) => {
+export const NavbarButton: FunctionComponent<NavbarProps> = ({
+  icon,
+  active,
+}) => {
   const { theme } = useTheme()
   const [page, setPage] = useState('home')
 
@@ -14,15 +17,15 @@ export const Button: FunctionComponent<NavbarProps> = ({ icon, active }) => {
     <button
       className={
         active
-          ? `button-cont-${theme} button-active-${theme}`
-          : `button-cont-${theme}`
+          ? `navbarbutton-${theme} navbarbutton-active-${theme}`
+          : `navbarbutton-${theme}`
       }
     >
       <div
         className={
           active
-            ? `icon-cont-${theme} icon-active-${theme}`
-            : `icon-cont-${theme}`
+            ? `navbaricon-${theme} navbaricon-active-${theme}`
+            : `navbaricon-${theme}`
         }
       >
         {icon}

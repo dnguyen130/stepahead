@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react'
 import { useTheme } from '../../../utils/provider'
-import { Button } from '../../shared/button'
+import { NavbarButton } from '../../shared/navbarbutton'
 import { FaHome, FaCalendar, FaBook } from 'react-icons/fa'
 
 type NavbarProps = {}
@@ -11,9 +11,9 @@ export const Navbar: FunctionComponent<NavbarProps> = ({}) => {
 
   return (
     <nav className={`navbar-cont-${theme}`}>
-      <Button icon={<FaHome size="100%" />} active />
-      <Button icon={<FaCalendar size="100%" />} active={false} />
-      <Button icon={<FaBook size="100%" />} active={false} />
+      <NavbarButton icon={<FaHome size="100%" />} active />
+      <NavbarButton icon={<FaCalendar size="100%" />} active={false} />
+      <NavbarButton icon={<FaBook size="100%" />} active={false} />
     </nav>
   )
 }

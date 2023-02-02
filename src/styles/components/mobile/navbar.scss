@@ -1,6 +1,8 @@
 @mixin nav-cont($bg, $txt) {
   width: 100vw;
   height: 120px;
+  display: flex;
+  align-items: center;
   position: fixed;
   left: 0;
 
@@ -20,4 +22,7 @@
 .topnav-cont-light {
   @include nav-cont($bg: $bg2light, $txt: $txtlight);
   top: 0;
+  padding: 0 10px;
+  justify-content: flex-end;
+  border: 1px solid red;
 }
