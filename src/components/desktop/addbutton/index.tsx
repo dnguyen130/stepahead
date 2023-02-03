@@ -1,7 +1,6 @@
-import { FunctionComponent, useState } from 'react'
 import { useTheme } from '../../../utils/provider'
 
-export const AddButtonDesktop: FunctionComponent = ({}) => {
+export default function AddButtonDesktop() {
   const { theme } = useTheme()
 
   return (

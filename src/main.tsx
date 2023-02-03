@@ -4,9 +4,10 @@ import App from './App'
 import './styles/app.scss'
 
 import { ThemeProvider } from './utils/provider'
-import { Navbar } from './components/desktop/navbar'
-import { Topnav } from './components/mobile/topnav'
-import { Bottomnav } from './components/mobile/bottomnav'
+import Navbar from './components/desktop/navbar'
+import Topnav from './components/mobile/topnav'
+import Bottomnav from './components/mobile/bottomnav'
+import AddButtonDesktop from './components/desktop/addbutton'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <Navbar />
       <Topnav />
       <Bottomnav />
+      <AddButtonDesktop />
       <App />
     </ThemeProvider>
   </React.StrictMode>

@@ -4,10 +4,11 @@
 @import './components/shared/navbarbutton.scss';
 @import './components/mobile/addbutton.scss';
 @import './components/desktop/addbutton.scss';
+@import './components//shared//layout.scss';
 
 @mixin container($bg, $txt) {
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
   place-items: center flex-start;
@@ -27,6 +28,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: $bglight;
 }
 
 * {

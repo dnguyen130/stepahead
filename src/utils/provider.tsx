@@ -1,8 +1,17 @@
-import React, { useContext, createContext, useState, FC, ReactNode, Dispatch, SetStateAction } from "react";
+import {
+  useContext,
+  createContext,
+  useState,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from 'react'
 
-interface ThemeContextType {
-  theme: string;
-  setTheme: Dispatch<SetStateAction<string>>;
+interface ContextType {
+  theme: string
+  setTheme: Dispatch<SetStateAction<string>>
+  page: string
+  setPage: Dispatch<SetStateAction<string>>
 }
 
 type ThemeProviderProps = {
@@ -10,22 +19,31 @@ type ThemeProviderProps = {
 }
 
 const initialStates = {
-  theme: "light",
-  setTheme: () => {}
+  theme: 'light',
+  setTheme: () => {},
+  page: 'home',
+  setPage: () => {},
 }
 
-const ThemeContext = createContext<ThemeContextType>(initialStates);
+const Context = createContext<ContextType>(initialStates)
 
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState(initialStates.theme);
+export function ThemeProvider({ children }: ThemeProviderProps) {
+  const [theme, setTheme] = useState(initialStates.theme)
+  const [page, setPage] = useState(initialStates.page)
 
   return (
-    <ThemeContext.Provider value={{theme, setTheme}}>
-    {children}
-  </ThemeContext.Provider>
-  );
+    <Context.Provider value={{ theme, setTheme, page, setPage }}>
+      {children}
+    </Context.Provider>
+  )
 }
 
-export const useTheme = () => {
-  return useContext(ThemeContext);
+export function useTheme() {
+  const { theme, setTheme } = useContext(Context)
+  return { theme, setTheme }
+}
+
+export function usePage() {
+  const { page, setPage } = useContext(Context)
+  return { page, setPage }
 }

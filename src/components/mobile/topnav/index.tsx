@@ -1,12 +1,11 @@
 import { FunctionComponent } from 'react'
 import { useTheme } from '../../../utils/provider'
-import { AddButtonMobile } from '../addbutton'
+import AddButtonMobile from '../addbutton'
 
 type NavbarProps = {}
 
-export const Topnav: FunctionComponent<NavbarProps> = ({}) => {
+export default function Topnav() {
   const { theme } = useTheme()
-  console.log(theme)
 
   return (
     <nav className={`topnav-cont-${theme}`}>

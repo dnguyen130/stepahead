@@ -18,12 +18,13 @@
 @mixin navbaricon($bg) {
   color: $bg;
   width: 50%;
-  max-width: 60px;
+  max-width: 50px;
   height: 100%;
 
   @media (min-width: $tablet) {
     height: 100px;
     width: 50%;
+    max-width: 60px;
   }
 }
 

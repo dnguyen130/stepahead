@@ -1,7 +1,6 @@
-import { FunctionComponent, useState } from 'react'
 import { useTheme } from '../../../utils/provider'
 
-export const AddButtonMobile: FunctionComponent = ({}) => {
+export default function AddButtonMobile() {
   const { theme } = useTheme()
 
   return (

@@ -1,13 +1,9 @@
-import { FunctionComponent } from 'react'
 import { useTheme } from '../../../utils/provider'
-import { NavbarButton } from '../../shared/navbarbutton'
+import NavbarButton from '../../shared/navbarbutton'
 import { FaHome, FaCalendar, FaBook } from 'react-icons/fa'
 
-type NavbarProps = {}
-
-export const Bottomnav: FunctionComponent<NavbarProps> = ({}) => {
+export default function Bottomnav() {
   const { theme } = useTheme()
-  console.log(theme)
 
   return (
     <nav className={`bottomnav-cont-${theme}`}>
