@@ -11,6 +11,21 @@ type NavbarProps = {
 export default function NavbarButton(fn: NavbarProps) {
   const { theme } = useTheme()
   const { page, setPage } = usePage()
+  const location = useLocation().pathname
+  //Remove leading slash from pathname
+  const locationNoSlash = location.slice(1)
+
+  //On startup, set active navbar button to current link
+  useEffect(() => {
+    if (locationNoSlash != page && location != '/') {
+      console.log(location)
+      setPage(locationNoSlash)
+    } else if (location == '/') {
+      setPage(location)
+    } else {
+      return
+    }
+  }, [])
 
   return (
     <Link
@@ -24,6 +39,7 @@ export default function NavbarButton(fn: NavbarProps) {
       onClick={() => setPage(fn.navLink)}
     >
       <button
+        id="navbarbutton"
         className={
           fn.active
             ? `navbarbutton-${theme} navbarbutton-active-${theme}`

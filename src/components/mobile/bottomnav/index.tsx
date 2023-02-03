@@ -10,8 +10,8 @@ export default function Bottomnav() {
     <nav className={`bottomnav-cont-${theme}`}>
       <NavbarButton
         icon={<FaHome size="100%" />}
-        active={page == 'home'}
-        navLink="home"
+        active={page == '/'}
+        navLink="/"
       />
       <NavbarButton
         icon={<FaCalendar size="100%" />}

@@ -21,7 +21,7 @@ type ThemeProviderProps = {
 const initialStates = {
   theme: 'light',
   setTheme: () => {},
-  page: 'home',
+  page: '',
   setPage: () => {},
 }
 

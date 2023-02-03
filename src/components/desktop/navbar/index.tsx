@@ -11,8 +11,8 @@ export default function Navbar({}) {
     <nav className={`navbar-cont-${theme}`}>
       <NavbarButton
         icon={<FaHome size="100%" />}
-        active={page == 'home'}
-        navLink="home"
+        active={page == '/'}
+        navLink="/"
       />
       <NavbarButton
         icon={<FaCalendar size="100%" />}
