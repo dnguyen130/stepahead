@@ -1,15 +1,19 @@
 import Layout from '../../shared/layout'
-import { useTheme, usePage } from '../../../utils/provider'
+import { useTheme } from '../../../utils/provider'
 
-export default function Calendar() {
+type CalendarProps = {
+  homeRoute: () => void
+  journalRoute: () => void
+}
+
+export default function Calendar(fn: CalendarProps) {
   const { theme } = useTheme()
-  const { page, setPage } = usePage()
 
   return (
-    <Layout key="calendar">
+    <Layout>
       <div>calendar</div>
-      <button onClick={() => setPage('home')}>Home</button>
-      <button onClick={() => setPage('journal')}>Journal</button>
+      <button onClick={fn.homeRoute}>Home</button>
+      <button onClick={fn.journalRoute}>Journal</button>
     </Layout>
   )
 }

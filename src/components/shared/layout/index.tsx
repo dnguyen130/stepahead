@@ -9,13 +9,12 @@ export default function Layout(fn: NavbarProps) {
   return (
     <motion.div
       className="layout"
-      initial={{ x: 300, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: 300, opacity: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       transition={{
-        type: 'spring',
-        stiffness: 260,
-        damping: 20,
+        type: 'linear',
+        duration: 0.5,
       }}
     >
       {fn.children}

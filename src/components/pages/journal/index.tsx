@@ -1,15 +1,14 @@
 import Layout from '../../shared/layout'
-import { useTheme, usePage } from '../../../utils/provider'
+import { useTheme } from '../../../utils/provider'
 
-export default function Journal() {
+type JournalProps = {}
+
+export default function Journal(fn: JournalProps) {
   const { theme } = useTheme()
-  const { page, setPage } = usePage()
 
   return (
-    <Layout key="journal">
+    <Layout>
       <div>journal</div>
-      <button onClick={() => setPage('home')}>Home</button>
-      <button onClick={() => setPage('calendar')}>Calendar</button>
     </Layout>
   )
 }

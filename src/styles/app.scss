@@ -18,6 +18,7 @@
 
   @media (min-width: $tablet) {
     width: calc(100vw - 150px);
+    height: 100vh;
     margin-left: 150px;
   }
 }
