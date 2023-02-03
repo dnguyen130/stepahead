@@ -1,32 +1,45 @@
-import { useTheme } from '@utils/provider'
+import { useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { useTheme, usePage } from '@utils/provider'
 
 type NavbarProps = {
   icon: JSX.Element
   active: boolean
-  navbarOnClick: () => void
+  navLink: string
 }
 
 export default function NavbarButton(fn: NavbarProps) {
   const { theme } = useTheme()
+  const { page, setPage } = usePage()
 
   return (
-    <button
-      className={
-        fn.active
-          ? `navbarbutton-${theme} navbarbutton-active-${theme}`
-          : `navbarbutton-${theme}`
-      }
-      onClick={fn.navbarOnClick}
+    <Link
+      to={{
+        pathname: fn.navLink,
+      }}
+      style={{
+        width: '100%',
+        height: '100%',
+      }}
+      onClick={() => setPage(fn.navLink)}
     >
-      <div
+      <button
         className={
           fn.active
-            ? `navbaricon-${theme} navbaricon-active-${theme}`
-            : `navbaricon-${theme}`
+            ? `navbarbutton-${theme} navbarbutton-active-${theme}`
+            : `navbarbutton-${theme}`
         }
       >
-        {fn.icon}
-      </div>
-    </button>
+        <div
+          className={
+            fn.active
+              ? `navbaricon-${theme} navbaricon-active-${theme}`
+              : `navbaricon-${theme}`
+          }
+        >
+          {fn.icon}
+        </div>
+      </button>
+    </Link>
   )
 }

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 type NavbarProps = {
   children: ReactNode
 }
-
+//component to handle page transitions
 export default function Layout(fn: NavbarProps) {
   return (
     <motion.div
