@@ -1,5 +1,4 @@
-import { FunctionComponent, useState } from 'react'
-import { useTheme } from '../../../utils/provider'
+import { useTheme } from '@utils/provider'
 
 type NavbarProps = {
   icon: JSX.Element

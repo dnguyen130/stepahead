@@ -1,4 +1,4 @@
-import { useTheme } from '../../../utils/provider'
+import { useTheme } from '@utils/provider'
 
 export default function AddButtonMobile() {
   const { theme } = useTheme()

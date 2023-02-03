@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react'
-import { useTheme } from '../../../utils/provider'
-import AddButtonMobile from '../addbutton'
+import { useTheme } from '@utils/provider'
+import AddButtonMobile from '@components/mobile/addbutton'
 
 type NavbarProps = {}
 

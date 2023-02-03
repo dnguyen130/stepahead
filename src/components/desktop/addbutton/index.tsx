@@ -1,4 +1,4 @@
-import { useTheme } from '../../../utils/provider'
+import { useTheme } from '@utils/provider'
 
 export default function AddButtonDesktop() {
   const { theme } = useTheme()

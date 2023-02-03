@@ -1,5 +1,5 @@
-import Layout from '../../shared/layout'
-import { useTheme } from '../../../utils/provider'
+import Layout from '@components/shared/layout'
+import { useTheme } from '@utils/provider'
 
 type JournalProps = {
   homeRoute: () => void

@@ -1,5 +1,5 @@
-import { useTheme, usePage } from '../../../utils/provider'
-import NavbarButton from '../../shared/navbarbutton'
+import { useTheme, usePage } from '@utils/provider'
+import NavbarButton from '@components/shared/navbarbutton'
 import { FaHome, FaCalendar, FaBook } from 'react-icons/fa'
 
 export default function Bottomnav() {

@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import { useTheme, usePage } from './utils/provider'
-import Home from './components/pages/home'
-import Calendar from './components/pages/calendar'
-import Journal from './components/pages/journal'
+import Home from './pages/home'
+import Calendar from './pages/calendar'
+import Journal from './pages/journal'
 
 export default function App() {
   const { theme } = useTheme()
