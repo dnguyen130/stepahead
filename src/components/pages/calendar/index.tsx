@@ -11,7 +11,7 @@ export default function Calendar(fn: CalendarProps) {
 
   return (
     <Layout>
-      <div>calendar</div>
+      <h1>THIS IS THE CALENDAR PAGE</h1>
       <button onClick={fn.homeRoute}>Home</button>
       <button onClick={fn.journalRoute}>Journal</button>
     </Layout>

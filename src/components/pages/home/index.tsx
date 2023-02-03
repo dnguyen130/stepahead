@@ -11,7 +11,7 @@ export default function Home(fn: HomeProps) {
 
   return (
     <Layout>
-      <div>home</div>
+      <h1>THIS IS THE HOME PAGE</h1>
       <button onClick={fn.calendarRoute}>Calendar</button>
       <button onClick={fn.journalRoute}>Journal</button>
     </Layout>

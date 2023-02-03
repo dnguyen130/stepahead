@@ -4,6 +4,7 @@ import { useTheme } from '../../../utils/provider'
 type NavbarProps = {
   icon: JSX.Element
   active: boolean
+  navbarOnClick: () => void
 }
 
 export default function NavbarButton(fn: NavbarProps) {
@@ -16,6 +17,7 @@ export default function NavbarButton(fn: NavbarProps) {
           ? `navbarbutton-${theme} navbarbutton-active-${theme}`
           : `navbarbutton-${theme}`
       }
+      onClick={fn.navbarOnClick}
     >
       <div
         className={

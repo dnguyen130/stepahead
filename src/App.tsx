@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 
-import { useTheme } from './utils/provider'
+import { useTheme, usePage } from './utils/provider'
 import Home from './components/pages/home'
 import Calendar from './components/pages/calendar'
 import Journal from './components/pages/journal'
@@ -9,7 +9,7 @@ import Journal from './components/pages/journal'
 export default function App() {
   const { theme } = useTheme()
 
-  const [page, setPage] = useState('home')
+  const { page, setPage } = usePage()
 
   return (
     <div className={`container-${theme}`}>
@@ -26,6 +26,13 @@ export default function App() {
             key="calendar"
             homeRoute={() => setPage('home')}
             journalRoute={() => setPage('journal')}
+          />
+        )}
+        {page == 'journal' && (
+          <Calendar
+            key="journal"
+            homeRoute={() => setPage('home')}
+            journalRoute={() => setPage('calendar')}
           />
         )}
       </AnimatePresence>
