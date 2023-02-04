@@ -15,3 +15,10 @@ $mobilelarge: 600px;
 $tablet: 768px;
 $laptop: 992px;
 $desktop: 1200px;
+
+:export {
+  bgLight: $bglight;
+  bg2Light: $bg2light;
+  iconActiveLight: $iconactivelight;
+  buttonActiveLight: $buttonactivelight;
+}

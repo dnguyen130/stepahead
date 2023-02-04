@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { motion } from 'framer-motion'
+
 import { useTheme, usePage } from '@utils/provider'
 
 type NavbarProps = {
@@ -20,6 +22,7 @@ export default function NavbarButton(fn: NavbarProps) {
     if (locationNoSlash != page && location != '/') {
       console.log(location)
       setPage(locationNoSlash)
+      //If location is home aka /
     } else if (location == '/') {
       setPage(location)
     } else {
@@ -38,7 +41,7 @@ export default function NavbarButton(fn: NavbarProps) {
       }}
       onClick={() => setPage(fn.navLink)}
     >
-      <button
+      <motion.button
         id="navbarbutton"
         className={
           fn.active
@@ -46,7 +49,7 @@ export default function NavbarButton(fn: NavbarProps) {
             : `navbarbutton-${theme}`
         }
       >
-        <div
+        <motion.div
           className={
             fn.active
               ? `navbaricon-${theme} navbaricon-active-${theme}`
@@ -54,8 +57,8 @@ export default function NavbarButton(fn: NavbarProps) {
           }
         >
           {fn.icon}
-        </div>
-      </button>
+        </motion.div>
+      </motion.button>
     </Link>
   )
 }
