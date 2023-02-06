@@ -1,4 +1,4 @@
-@mixin navbarbutton($bg) {
+@mixin navbarbutton($bg, $color) {
   width: 100%;
   height: 100%;
   border: none;
@@ -7,16 +7,17 @@
   align-items: center;
   text-decoration: none;
   cursor: pointer;
+  transition: 0.2s;
 
   background-color: $bg;
+  color: $color;
 
   @media (min-width: $tablet) {
     height: 180px;
   }
 }
 
-@mixin navbaricon($bg) {
-  color: $bg;
+.navbaricon {
   width: 50%;
   max-width: 50px;
   height: 100%;
@@ -29,17 +30,10 @@
 }
 
 .navbarbutton-light {
-  @include navbarbutton($bg: $bg2light);
-}
-
-.navbaricon-light {
-  @include navbaricon($bg: $bglight);
+  @include navbarbutton($bg: $bg2light, $color: $bglight);
 }
 
 .navbarbutton-active-light {
   background-color: $buttonactivelight;
-}
-
-.navbaricon-active-light {
   color: $iconactivelight;
 }
