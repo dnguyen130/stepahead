@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useEffect, useLayoutEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 import { useTheme, usePage } from '@utils/provider'
+import styles from '@/styles/variables/export.module.scss'
 
 type NavbarProps = {
   icon: JSX.Element
@@ -16,11 +17,11 @@ export default function NavbarButton(fn: NavbarProps) {
   const location = useLocation().pathname
   //Remove leading slash from pathname
   const locationNoSlash = location.slice(1)
+  const navigate = useNavigate()
 
   //On startup, set active navbar button to current link
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (locationNoSlash != page && location != '/') {
-      console.log(location)
       setPage(locationNoSlash)
       //If location is home aka /
     } else if (location == '/') {
@@ -30,35 +31,47 @@ export default function NavbarButton(fn: NavbarProps) {
     }
   }, [])
 
+  function navigatePage(link: string) {
+    navigate(link)
+    setPage(link)
+  }
+
+  const buttonVariants = {
+    inactiveButton: {
+      backgroundColor: styles.bg2light,
+      transition: { duration: 0.2 },
+    },
+    activeButton: {
+      backgroundColor: styles.buttonActiveLight,
+      transition: { duration: 0.2 },
+    },
+    inactiveIcon: {
+      color: styles.bglight,
+      transition: { duration: 0.2 },
+    },
+    activeIcon: {
+      color: styles.iconActiveLight,
+      transition: { duration: 0.2 },
+    },
+  }
+
   return (
-    <Link
-      to={{
-        pathname: fn.navLink,
-      }}
-      style={{
-        width: '100%',
-        height: '100%',
-      }}
-      onClick={() => setPage(fn.navLink)}
+    <motion.button
+      id="navbarbutton"
+      className={`navbarbutton-${theme}`}
+      onClick={() => navigatePage(fn.navLink)}
+      variants={buttonVariants}
+      initial={'inactiveButton'}
+      animate={fn.active ? 'activeButton' : 'inactiveButton'}
     >
-      <motion.button
-        id="navbarbutton"
-        className={
-          fn.active
-            ? `navbarbutton-${theme} navbarbutton-active-${theme}`
-            : `navbarbutton-${theme}`
-        }
+      <motion.div
+        className={`navbaricon-${theme}`}
+        variants={buttonVariants}
+        initial={'inactiveIcon'}
+        animate={fn.active ? 'activeIcon' : 'inactiveIcon'}
       >
-        <motion.div
-          className={
-            fn.active
-              ? `navbaricon-${theme} navbaricon-active-${theme}`
-              : `navbaricon-${theme}`
-          }
-        >
-          {fn.icon}
-        </motion.div>
-      </motion.button>
-    </Link>
+        {fn.icon}
+      </motion.div>
+    </motion.button>
   )
 }
