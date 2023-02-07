@@ -13,7 +13,7 @@
   color: $color;
 
   @media (min-width: $tablet) {
-    height: 180px;
+    height: 150px;
   }
 }
 
@@ -30,7 +30,7 @@
 }
 
 .navbarbutton-light {
-  @include navbarbutton($bg: $bg2light, $color: $bglight);
+  @include navbarbutton($bg: transparent, $color: $bglight);
 }
 
 .navbarbutton-active-light {

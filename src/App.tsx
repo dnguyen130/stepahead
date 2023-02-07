@@ -14,7 +14,7 @@ const AnimatedOutlet: React.FC = () => {
   return <>{outlet}</>
 }
 
-export default function Root() {
+export default function App() {
   const { theme } = useTheme()
   const location = useLocation()
 

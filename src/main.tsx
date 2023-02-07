@@ -4,11 +4,12 @@ import './styles/app.scss'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { ThemeProvider } from '@utils/provider'
-import Root from '@routes/root'
+import Root from '@/App'
 import ErrorPage from '@components/error'
 import Home from '@routes/home'
 import Calendar from '@routes/calendar'
 import Journal from '@routes/journal'
+import Profile from './routes/profile'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: 'journal',
         element: <Journal />,
+      },
+      {
+        path: 'profile',
+        element: <Profile />,
       },
     ],
   },

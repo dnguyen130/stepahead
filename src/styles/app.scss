@@ -4,7 +4,8 @@
 @import './components/shared/navbarbutton.scss';
 @import './components/mobile/addbutton.scss';
 @import './components/desktop/addbutton.scss';
-@import './components//shared//layout.scss';
+@import './components/shared/layout.scss';
+@import './components/shared/profileicon.scss';
 
 @mixin container($bg, $txt) {
   width: 100vw;
