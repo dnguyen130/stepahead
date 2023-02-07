@@ -1,0 +1,10 @@
+@mixin homecont($bg, $color) {
+  width: 100%;
+  height: auto;
+  display: grid;
+  place-items: flex-start center;
+}
+
+.homecont-light {
+  @include homecont($bg: $bg2light, $color: $txtlight);
+}

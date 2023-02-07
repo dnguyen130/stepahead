@@ -6,8 +6,8 @@ export default function Home(fn: HomeProps) {
   const { theme } = useTheme()
 
   return (
-    <div>
+    <section className={`homecont-${theme}`}>
       <h1>THIS IS THE HOME PAGE</h1>
-    </div>
+    </section>
   )
 }
