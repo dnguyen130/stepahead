@@ -9,10 +9,11 @@
 
 @mixin container($bg, $txt) {
   width: 100vw;
-  height: calc(100vh - 200px);
+  height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   place-items: center flex-start;
+  padding: 25px 25px 0;
 
   background-color: $bg;
   color: $txt;
@@ -33,7 +34,7 @@
 body {
   margin: 0;
   display: flex;
-  place-items: center;
+  place-items: flex-start center;
   min-width: 320px;
   min-height: 100vh;
   background-color: $bglight;
