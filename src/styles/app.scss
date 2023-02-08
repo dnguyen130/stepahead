@@ -6,6 +6,8 @@
 @import './components/desktop/addbutton.scss';
 @import './components/shared/layout.scss';
 @import './components/pages/home.scss';
+@import './components/shared/todo.scss';
+@import './components/shared/calendar.scss';
 
 @mixin container($bg, $txt) {
   width: 100vw;

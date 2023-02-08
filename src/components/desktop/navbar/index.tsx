@@ -1,4 +1,3 @@
-import { FunctionComponent } from 'react'
 import { useTheme } from '@utils/provider'
 import NavbarButton from '@components/shared/navbarbutton'
 import { FaHome, FaCalendar, FaBook, FaUserCircle } from 'react-icons/fa'
