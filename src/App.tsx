@@ -4,8 +4,7 @@ import { useTheme } from '@utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 
 import Navbar from '@components/desktop/navbar'
-import Topnav from '@components/mobile/topnav'
-import Bottomnav from '@components/mobile/bottomnav'
+import Navbarmobile from '@/components/mobile/navbar'
 import AddButtonDesktop from '@components/desktop/addbutton'
 
 const AnimatedOutlet: React.FC = () => {
@@ -21,10 +20,9 @@ export default function App() {
   return (
     <>
       <Navbar />
-      <Topnav />
-      <Bottomnav />
+      <Navbarmobile />
       <AddButtonDesktop />
-      <div className={`container-${theme}`}>
+      <section className={`container-${theme}`}>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={location.pathname}
@@ -40,7 +38,7 @@ export default function App() {
             <AnimatedOutlet />
           </motion.div>
         </AnimatePresence>
-      </div>
+      </section>
     </>
   )
 }

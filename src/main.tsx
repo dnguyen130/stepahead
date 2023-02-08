@@ -9,7 +9,7 @@ import ErrorPage from '@components/error'
 import Home from '@routes/home'
 import Calendar from '@routes/calendar'
 import Journal from '@routes/journal'
-import Profile from './routes/profile'
+import Profile from '@/routes/profile'
 
 const router = createBrowserRouter([
   {

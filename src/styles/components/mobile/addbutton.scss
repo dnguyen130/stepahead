@@ -1,10 +1,15 @@
 @mixin addbuttonmobile($bg) {
-  width: 75px;
-  height: 75px;
+  width: 70px;
+  height: 70px;
   display: flex;
-  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100px;
   text-decoration: none;
   cursor: pointer;
+  position: relative;
+  bottom: 35px;
+  margin: 0 10px;
 
   background-color: $bg;
 }
@@ -22,7 +27,7 @@
 
 .addbuttonmobile-light {
   @include addbuttonmobile($bg: $bg2light);
-  border: 2px solid $bglight;
+  border: 5px solid $bglight;
 }
 
 .addiconmobile-light {

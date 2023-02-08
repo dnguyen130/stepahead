@@ -1,8 +1,7 @@
 import { FunctionComponent } from 'react'
 import { useTheme } from '@utils/provider'
 import NavbarButton from '@components/shared/navbarbutton'
-import { FaHome, FaCalendar, FaBook } from 'react-icons/fa'
-import ProfileIcon from '@/components/shared/profileicon'
+import { FaHome, FaCalendar, FaBook, FaUserCircle } from 'react-icons/fa'
 
 export default function Navbar({}) {
   const { theme } = useTheme()
@@ -12,7 +11,7 @@ export default function Navbar({}) {
       <NavbarButton icon={<FaHome size="100%" />} navLink="/" />
       <NavbarButton icon={<FaCalendar size="100%" />} navLink="calendar" />
       <NavbarButton icon={<FaBook size="100%" />} navLink="journal" />
-      <ProfileIcon />
+      <NavbarButton icon={<FaUserCircle size="100%" />} navLink="profile" />
     </nav>
   )
 }

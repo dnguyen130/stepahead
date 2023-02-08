@@ -8,24 +8,27 @@
   text-decoration: none;
   cursor: pointer;
   transition: 0.2s;
+  flex: 1;
 
   background-color: $bg;
   color: $color;
 
-  @media (min-width: $tablet) {
-    height: 150px;
+  @media only screen and (max-height: $maxphonewidth) and (orientation: landscape) {
+    height: 100%;
   }
 }
 
 .navbaricon {
-  width: 50%;
-  max-width: 50px;
   height: 100%;
+  max-height: 30px;
 
   @media (min-width: $tablet) {
-    height: 100px;
-    width: 50%;
-    max-width: 60px;
+    max-height: 50px;
+  }
+
+  @media only screen and (max-height: $maxphonewidth) and (orientation: landscape) {
+    height: 100%;
+    max-height: 30px;
   }
 }
 

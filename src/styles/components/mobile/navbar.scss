@@ -1,6 +1,6 @@
 @mixin nav-cont($bg, $txt) {
   width: 100vw;
-  height: 100px;
+  height: 70px;
   display: flex;
   align-items: center;
   position: fixed;
@@ -13,17 +13,13 @@
   @media (min-width: $tablet) {
     display: none;
   }
+
+  @media only screen and (max-height: $maxphonewidth) and (orientation: landscape) {
+    display: flex;
+  }
 }
 
-.bottomnav-cont-light {
+.navmobile-cont-light {
   @include nav-cont($bg: $bg2light, $txt: $txtlight);
   bottom: 0;
-}
-
-.topnav-cont-light {
-  @include nav-cont($bg: $bg2light, $txt: $txtlight);
-  top: 0;
-  padding: 0 10px;
-  justify-content: flex-end;
-  box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
 }

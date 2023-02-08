@@ -18,6 +18,10 @@
     bottom: 50px;
     right: 50px;
   }
+
+  @media only screen and (max-height: $maxphonewidth) and (orientation: landscape) {
+    display: none;
+  }
 }
 
 @mixin addicondesktop($bg) {

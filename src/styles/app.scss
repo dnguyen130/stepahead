@@ -5,7 +5,6 @@
 @import './components/mobile/addbutton.scss';
 @import './components/desktop/addbutton.scss';
 @import './components/shared/layout.scss';
-@import './components/shared/profileicon.scss';
 @import './components/pages/home.scss';
 
 @mixin container($bg, $txt) {
@@ -23,6 +22,12 @@
     height: 100vh;
     margin-left: 150px;
   }
+
+  @media only screen and (max-height: $maxphonewidth) and (orientation: landscape) {
+    width: 100vw;
+    height: calc(100vh - 200px);
+    margin: 0;
+  }
 }
 
 body {
@@ -32,10 +37,24 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: $bglight;
+  position: relative;
 }
 
 * {
   box-sizing: border-box;
+}
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
 }
 
 .container-light {
