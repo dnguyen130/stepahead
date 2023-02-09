@@ -28,9 +28,13 @@
 
   @media only screen and (max-height: $maxphonewidth) and (orientation: landscape) {
     width: 100vw;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 70px);
     margin: 0;
   }
+}
+
+.container-light {
+  @include container($bg: $bglight, $txt: $txtlight);
 }
 
 body {
@@ -58,10 +62,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
-
-.container-light {
-  @include container($bg: $bglight, $txt: $txtlight);
 }
 
 header {
