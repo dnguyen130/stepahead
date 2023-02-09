@@ -22,7 +22,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: auto auto;
   row-gap: 25px;
   column-gap: 25px;
   place-items: flex-start center;
@@ -36,7 +36,6 @@
 
 @mixin contentcont($shadowdark, $shadowlight) {
   width: 100%;
-  height: 300px;
   display: flex;
   flex-direction: column;
   border-radius: 25px;

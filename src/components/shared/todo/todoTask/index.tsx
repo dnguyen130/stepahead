@@ -1,8 +1,8 @@
-import { BsStar, BsStarFill } from 'react-icons/bs'
+import { BsDot, BsStarFill } from 'react-icons/bs'
 import { useTheme } from '@/utils/provider'
 
-interface ToDoTaskProps {
-  todoId: number
+export interface ToDoTaskProps {
+  uid: number
   title: string
   description: string
   creationDate: number
@@ -11,7 +11,7 @@ interface ToDoTaskProps {
 }
 
 export default function TodoTask({
-  todoId,
+  uid,
   title,
   description,
   creationDate,
@@ -23,7 +23,7 @@ export default function TodoTask({
   return (
     <div className="todotaskcont">
       <div className={`todotaskicon-${theme}`}>
-        {important ? <BsStarFill size="100%" /> : <BsStar size="100%" />}
+        {important && <BsStarFill size="100%" />}
       </div>
       <h3>{title}</h3>
     </div>

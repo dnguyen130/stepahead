@@ -5,12 +5,10 @@
 @import './components/shared/navbarbutton.scss';
 @import './components/mobile/addbutton.scss';
 @import './components/desktop/addbutton.scss';
-@import './components/shared/layout.scss';
 @import './components/pages/home.scss';
 
 @mixin container($bg, $txt) {
   width: 100vw;
-  height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   place-items: center flex-start;
@@ -72,4 +70,14 @@ header {
   @media (min-width: $tablet) {
     font-size: 48px;
   }
+}
+
+.layout {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+h3 {
+  margin: 10px 0;
 }
