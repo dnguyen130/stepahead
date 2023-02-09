@@ -1,7 +1,7 @@
 @mixin navbar-cont($bg, $txt) {
   width: 120px;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   display: flex;

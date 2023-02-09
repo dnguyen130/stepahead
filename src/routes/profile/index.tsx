@@ -1,8 +1,6 @@
 import { useTheme } from '@utils/provider'
 
-type ProfileProps = {}
-
-export default function Profile(fn: ProfileProps) {
+export default function Profile() {
   const { theme } = useTheme()
 
   return (

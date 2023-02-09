@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Ubuntu:wght@300&display=swap');
 @import './variables/general.scss';
 @import './components/desktop/navbar.scss';
 @import './components/mobile/navbar.scss';
@@ -6,8 +7,6 @@
 @import './components/desktop/addbutton.scss';
 @import './components/shared/layout.scss';
 @import './components/pages/home.scss';
-@import './components/shared/todo.scss';
-@import './components/shared/calendar.scss';
 
 @mixin container($bg, $txt) {
   width: 100vw;
@@ -16,6 +15,7 @@
   flex-direction: column;
   place-items: center flex-start;
   padding: 25px 25px 0;
+  overflow-y: scroll;
 
   background-color: $bg;
   color: $txt;
@@ -48,7 +48,7 @@ body {
 }
 
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: $sansserif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
@@ -62,4 +62,14 @@ body {
 
 .container-light {
   @include container($bg: $bglight, $txt: $txtlight);
+}
+
+header {
+  font-family: $styled;
+  font-weight: 600;
+  font-size: 24px;
+
+  @media (min-width: $tablet) {
+    font-size: 48px;
+  }
 }

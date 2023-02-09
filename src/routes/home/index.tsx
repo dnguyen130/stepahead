@@ -3,9 +3,7 @@ import { useTheme } from '@utils/provider'
 import Todo from '@/components/shared/todo'
 import Calendar from '@/components/shared/calendar'
 
-import data from '@/utils/fakeData.json'
-
-type HomeProps = {}
+import data from '@/utils/fakeUserData.json'
 
 const morning = (hour: number) => {
   return hour >= 6 && hour <= 11
@@ -17,7 +15,7 @@ const evening = (hour: number) => {
   return hour >= 17 && hour <= 23
 }
 
-export default function Home(fn: HomeProps) {
+export default function Home() {
   const { theme } = useTheme()
   const currentHour = new Date().getHours()
   let welcomeMessage
@@ -34,12 +32,15 @@ export default function Home(fn: HomeProps) {
 
   return (
     <section className={`homecont-${theme}`}>
-      <h2>
-        {welcomeMessage} {data.firstName}
-      </h2>
-      <Todo />
-      <Calendar />
-      <Calendar />
+      <header>
+        <h2>
+          {welcomeMessage} {data.firstName}
+        </h2>
+      </header>
+      <section className="content">
+        <Todo />
+        <Calendar />
+      </section>
     </section>
   )
 }

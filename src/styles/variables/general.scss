@@ -3,17 +3,28 @@
 $bglight: #fef4d4;
 //Secondary background
 $bg2light: #2f6eb8;
+//Containers on light
+$bg2lightcont: #c2d7ef;
 //Dark text on light background
 $txtlight: #051a1f;
 //Strong on bg2
 $iconactivelight: #ffbf1a;
 $buttonactivelight: #1a3d65;
-$btnlight: #051a1f;
+
+//Neumorphism shadows, produced by https://neumorphism.io/
+$homecontentshadowdark: #d3cbb0;
+$homecontentshadowlight: #fffff8;
+
+$navbarbuttonshadowdark: #0a1828;
+$navbarbuttonshadowlight: #2a62a2;
 
 //Breakpoints
+$maxphonewidth: 480px;
 $mobilelarge: 600px;
 $tablet: 768px;
 $laptop: 992px;
 $desktop: 1200px;
 
-$maxphonewidth: 480px;
+//Fonts
+$styled: 'Caveat', cursive, serif;
+$sansserif: 'Ubuntu', 'Arial', sans-serif;

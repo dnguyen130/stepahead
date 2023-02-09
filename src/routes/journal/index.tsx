@@ -1,8 +1,6 @@
 import { useTheme } from '@utils/provider'
 
-type JournalProps = {}
-
-export default function Journal(fn: JournalProps) {
+export default function Journal() {
   const { theme } = useTheme()
 
   return (

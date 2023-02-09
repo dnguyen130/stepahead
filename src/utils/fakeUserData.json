@@ -1,9 +1,9 @@
 {
   "userId": 123456789,
   "userName": "ABCCompany",
-  "firstName": "Dave",
-  "lastName": "Busters",
-  "email": "DaveBusters@ABC.ca",
+  "firstName": "Angie",
+  "lastName": "Lee",
+  "email": "fakeUser@ABC.ca",
   "password": "password123",
   "birthdate": "20000101",
   "registeredAt": "20230207"

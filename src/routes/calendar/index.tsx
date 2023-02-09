@@ -1,8 +1,6 @@
 import { useTheme } from '@utils/provider'
 
-type CalendarProps = {}
-
-export default function Calendar(fn: CalendarProps) {
+export default function Calendar() {
   const { theme } = useTheme()
 
   return (

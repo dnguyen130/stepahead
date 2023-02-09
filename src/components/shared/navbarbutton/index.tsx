@@ -5,24 +5,24 @@ import { motion } from 'framer-motion'
 import { useTheme } from '@utils/provider'
 import styles from '@/styles/variables/export.module.scss'
 
-type NavbarProps = {
+interface NavbarProps {
   icon: JSX.Element
   navLink: string
 }
 
-export default function NavbarButton(fn: NavbarProps) {
+export default function NavbarButton({ icon, navLink }: NavbarProps) {
   const { theme } = useTheme()
 
   return (
     <NavLink
-      to={fn.navLink}
+      to={navLink}
       className={({ isActive }) =>
         isActive
           ? `navbarbutton-${theme} navbarbutton-active-${theme}`
           : `navbarbutton-${theme}`
       }
     >
-      <div className="navbaricon">{fn.icon}</div>
+      <div className="navbaricon">{icon}</div>
     </NavLink>
   )
 }

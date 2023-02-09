@@ -38,5 +38,6 @@
 
 .navbarbutton-active-light {
   background-color: $buttonactivelight;
+  box-shadow: inset 10px 10px 21px #0a1828, inset -10px -10px 21px #2a62a2;
   color: $iconactivelight;
 }

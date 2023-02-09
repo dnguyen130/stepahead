@@ -1,0 +1,26 @@
+[
+  {
+    "uid": 1,
+    "title": "Do Dishes",
+    "description": "There are dishes to be done",
+    "creationDate": 20230208,
+    "dueDate": 20230212,
+    "important": true
+  },
+  {
+    "uid": 2,
+    "title": "Wash car",
+    "description": "It do be dirty af",
+    "creationDate": 20230125,
+    "dueDate": 20230220,
+    "important": false
+  },
+  {
+    "uid": 3,
+    "title": "Renew Driver's License",
+    "description": "Too fast, too furious",
+    "creationDate": 20230110,
+    "dueDate": 20230319,
+    "important": true
+  }
+]
