@@ -21,11 +21,11 @@ export default function TodoTask({
   const { theme } = useTheme()
 
   return (
-    <div className="todotaskcont">
+    <section className="todotaskcont">
       <div className={`todotaskicon-${theme}`}>
         {important && <BsStarFill size="100%" />}
       </div>
-      <h3>{title}</h3>
-    </div>
+      <h3 className="todotasktitle">{title}</h3>
+    </section>
   )
 }

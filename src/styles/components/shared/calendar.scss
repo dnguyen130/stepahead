@@ -1,0 +1,21 @@
+.react-calendar-custom {
+  border-radius: 10px;
+  width: auto !important;
+  max-width: $containermaxwidth;
+  background-color: transparent;
+  border: none;
+  min-height: 300px;
+  display: grid;
+  place-items: center;
+  box-shadow: inset 7px 7px 19px $homecontentshadowdark,
+    inset -7px -7px 19px $homecontentshadowlight;
+  padding: 25px;
+}
+
+.react-calendar__navigation {
+  margin: 0;
+}
+
+.react-calendar button {
+  border-radius: 5px;
+}

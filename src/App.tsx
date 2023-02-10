@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useOutlet, useLocation } from 'react-router-dom'
 import { useTheme } from '@utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -7,7 +7,7 @@ import Navbar from '@components/desktop/navbar'
 import Navbarmobile from '@/components/mobile/navbar'
 import AddButtonDesktop from '@components/desktop/addbutton'
 
-const AnimatedOutlet: React.FC = () => {
+const AnimatedOutlet = () => {
   const o = useOutlet()
   const [outlet] = useState(o)
   return <>{outlet}</>

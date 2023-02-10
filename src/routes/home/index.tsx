@@ -1,24 +1,21 @@
+import React from 'react'
 import { useTheme } from '@utils/provider'
-
-import Todo from '@/components/shared/todo'
-import Calendar from '@/components/shared/calendar'
-
 import data from '@/utils/fakeUserData.json'
+import Todo from '@/components/shared/todo'
 
-const morning = (hour: number) => {
+const morning = (hour: number): boolean => {
   return hour >= 6 && hour <= 11
 }
-const afternoon = (hour: number) => {
+const afternoon = (hour: number): boolean => {
   return hour >= 12 && hour <= 16
 }
-const evening = (hour: number) => {
+const evening = (hour: number): boolean => {
   return hour >= 17 && hour <= 23
 }
 
 export default function Home() {
-  const { theme } = useTheme()
-  const currentHour = new Date().getHours()
   let welcomeMessage
+  const currentHour = new Date().getHours()
 
   if (morning(currentHour)) {
     welcomeMessage = 'Good morning, '
@@ -30,16 +27,26 @@ export default function Home() {
     welcomeMessage = 'Up late or up early today, '
   }
 
+  const date = new Date()
+  const options: Object = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }
+  const today = date.toLocaleString('en-us', options)
+
   return (
-    <section className={`homecont-${theme}`}>
+    <section className="homecont">
       <header>
-        <h2>
+        <h1 className="homecontgreeting">
           {welcomeMessage} {data.firstName}
-        </h2>
+        </h1>
+        <h2 className="homecontdate">Today is</h2>
+        <h2 className="homecontdate">{today} </h2>
       </header>
       <section className="content">
         <Todo />
-        <Calendar />
       </section>
     </section>
   )

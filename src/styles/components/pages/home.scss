@@ -1,4 +1,4 @@
-@mixin homecont($bg, $color) {
+.homecont {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
@@ -14,10 +14,6 @@
   }
 }
 
-.homecont-light {
-  @include homecont($bg: $bg2light, $color: $txtlight);
-}
-
 .content {
   width: 100%;
   display: grid;
@@ -26,16 +22,19 @@
   row-gap: 25px;
   column-gap: 25px;
   place-items: flex-start center;
-  padding-bottom: 25px;
+  padding-bottom: 95px;
 
   @media (min-width: $tablet) {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
+    padding-bottom: 0;
   }
 }
 
 @mixin contentcont($shadowdark, $shadowlight) {
   width: 100%;
+  max-width: $containermaxwidth;
+  min-height: 300px;
   display: flex;
   flex-direction: column;
   border-radius: 25px;
@@ -73,4 +72,10 @@
 
 .todotaskicon-light {
   @include todotaskicon($color: $iconactivelight);
+}
+
+.todotasktitle {
+  font-family: $sansserif;
+  font-weight: 400;
+  font-size: 1.2em;
 }
