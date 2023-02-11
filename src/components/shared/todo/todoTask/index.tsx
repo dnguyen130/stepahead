@@ -8,6 +8,7 @@ export interface ToDoTaskProps {
   creationDate: number
   dueDate: number
   important: boolean
+  complete: boolean
 }
 
 export default function TodoTask({
@@ -17,6 +18,7 @@ export default function TodoTask({
   creationDate,
   dueDate,
   important,
+  complete,
 }: ToDoTaskProps) {
   const { theme } = useTheme()
 
@@ -25,7 +27,23 @@ export default function TodoTask({
       <div className={`todotaskicon-${theme}`}>
         {important && <BsStarFill size="100%" />}
       </div>
-      <h3 className="todotasktitle">{title}</h3>
+      <label
+        htmlFor={title}
+        className="todotasktitle"
+        style={{
+          textDecoration: complete ? 'line-through' : 'none',
+        }}
+      >
+        {title}
+      </label>
+      <input
+        id={title}
+        type="checkbox"
+        className="todotaskcheckbox"
+        checked={complete}
+        name="task"
+        onClick={() => (complete = !complete)}
+      />
     </section>
   )
 }

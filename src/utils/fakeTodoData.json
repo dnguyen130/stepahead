@@ -5,7 +5,8 @@
     "description": "There are dishes to be done",
     "creationDate": 20230208,
     "dueDate": 20230212,
-    "important": true
+    "important": true,
+    "complete": false
   },
   {
     "uid": 2,
@@ -13,7 +14,8 @@
     "description": "It do be dirty af",
     "creationDate": 20230125,
     "dueDate": 20230220,
-    "important": false
+    "important": false,
+    "complete": true
   },
   {
     "uid": 3,
@@ -21,6 +23,7 @@
     "description": "Too fast, too furious",
     "creationDate": 20230110,
     "dueDate": 20230319,
-    "important": true
+    "important": true,
+    "complete": false
   }
 ]

@@ -36,6 +36,7 @@ export default function Todo() {
             creationDate={o.creationDate}
             dueDate={o.dueDate}
             important={o.important}
+            complete={o.complete}
           />
         )
       })}

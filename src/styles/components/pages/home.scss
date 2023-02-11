@@ -58,14 +58,15 @@
 
 .todotaskcont {
   width: 100%;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto 1fr 20px;
 }
 
 @mixin todotaskicon($color) {
   width: 20px;
   height: 20px;
   margin-right: 20px;
+  align-self: center;
 
   color: $color;
 }
@@ -78,4 +79,13 @@
   font-family: $sansserif;
   font-weight: 400;
   font-size: 1.2em;
+  justify-self: start;
+  align-self: center;
+  line-height: 2em;
+}
+
+.todotaskcheckbox {
+  width: 100%;
+  justify-self: end;
+  align-self: center;
 }
