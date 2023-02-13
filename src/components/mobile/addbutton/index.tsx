@@ -1,7 +1,7 @@
 import { useTheme } from '@utils/provider'
 import { CgMathPlus } from 'react-icons/cg'
 
-export default function AddButtonMobile() {
+export default function AddButtonMobile(): JSX.Element {
   const { theme } = useTheme()
 
   return (

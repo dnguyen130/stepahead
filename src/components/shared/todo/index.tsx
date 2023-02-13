@@ -1,20 +1,20 @@
+import React from 'react'
 import { useTheme } from '@/utils/provider'
 import todoData from '@/utils/fakeTodoData.json'
 
 import TodoTask, { ToDoTaskProps } from './todoTask'
-import { useEffect } from 'react'
 
-export default function Todo() {
+export default function Todo(): JSX.Element {
   const { theme } = useTheme()
-  let sortedArray: Array<ToDoTaskProps> = []
+  let sortedArray: ToDoTaskProps[] = []
 
-  const sortedTodos = () => {
+  const sortedTodos = (): ToDoTaskProps[] => {
     const todoMap = Object.values(todoData)
     const todoArray = [...todoMap]
     sortedArray = todoArray.sort((key1, key2): number => {
       const importantkey1 = key1.important
       const importantkey2 = key2.important
-      if (importantkey1 == false && importantkey2 == true) {
+      if (!importantkey1 && importantkey2) {
         return 1
       } else {
         return -1

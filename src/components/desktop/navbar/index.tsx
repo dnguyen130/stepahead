@@ -2,7 +2,7 @@ import { useTheme } from '@utils/provider'
 import NavbarButton from '@components/shared/navbarbutton'
 import { FaHome, FaCalendar, FaBook, FaUserCircle } from 'react-icons/fa'
 
-export default function Navbar({}) {
+export default function Navbar(): JSX.Element {
   const { theme } = useTheme()
 
   return (

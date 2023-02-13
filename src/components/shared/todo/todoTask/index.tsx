@@ -1,4 +1,4 @@
-import { BsDot, BsStarFill } from 'react-icons/bs'
+import { BsStarFill } from 'react-icons/bs'
 import { useTheme } from '@/utils/provider'
 
 export interface ToDoTaskProps {
@@ -19,7 +19,7 @@ export default function TodoTask({
   dueDate,
   important,
   complete,
-}: ToDoTaskProps) {
+}: ToDoTaskProps): JSX.Element {
   const { theme } = useTheme()
 
   return (

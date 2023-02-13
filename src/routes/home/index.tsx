@@ -1,14 +1,5 @@
-import React from 'react'
-import { useTheme } from '@utils/provider'
 import data from '@/utils/fakeUserData.json'
 import Todo from '@/components/shared/todo'
-import {
-  Auth,
-  getAuth,
-  onAuthStateChanged,
-  createUserWithEmailAndPassword,
-} from 'firebase/auth'
-import { auth } from '@utils/firebase'
 
 const morning = (hour: number): boolean => {
   return hour >= 6 && hour <= 11
@@ -20,8 +11,8 @@ const evening = (hour: number): boolean => {
   return hour >= 17 && hour <= 23
 }
 
-export default function Home() {
-  //Date and welcome message
+export default function Home(): JSX.Element {
+  // Date and welcome message
   let welcomeMessage
   const currentHour = new Date().getHours()
   if (morning(currentHour)) {
@@ -34,7 +25,7 @@ export default function Home() {
     welcomeMessage = 'Up late or up early today, '
   }
   const date = new Date()
-  const options: Object = {
+  const options: Record<string, string | number> = {
     weekday: 'long',
     year: 'numeric',
     month: 'long',

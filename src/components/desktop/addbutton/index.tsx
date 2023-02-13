@@ -2,7 +2,7 @@ import { FaPlus } from 'react-icons/fa'
 import { useTheme } from '@utils/provider'
 import { IconContext } from 'react-icons'
 
-export default function AddButtonDesktop() {
+export default function AddButtonDesktop(): JSX.Element {
   const { theme } = useTheme()
 
   return (

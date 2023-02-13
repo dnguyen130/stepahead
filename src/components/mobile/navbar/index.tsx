@@ -3,7 +3,7 @@ import NavbarButton from '@components/shared/navbarbutton'
 import { FaHome, FaCalendar, FaBook, FaUserAlt } from 'react-icons/fa'
 import AddButtonMobile from '../addbutton'
 
-export default function Navbarmobile() {
+export default function Navbarmobile(): JSX.Element {
   const { theme } = useTheme()
 
   return (
