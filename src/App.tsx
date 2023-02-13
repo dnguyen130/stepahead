@@ -17,28 +17,34 @@ export default function App() {
   const { theme } = useTheme()
   const location = useLocation()
 
-  return (
-    <>
-      <Navbar />
-      <Navbarmobile />
-      <AddButtonDesktop />
-      <section className={`container-${theme}`}>
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={location.pathname}
-            className="layout"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{
-              type: 'linear',
-              duration: 0.2,
-            }}
-          >
-            <AnimatedOutlet />
-          </motion.div>
-        </AnimatePresence>
-      </section>
-    </>
-  )
+  if (true) {
+    return <>login</>
+  }
+
+  if (false) {
+    return (
+      <>
+        <Navbar />
+        <Navbarmobile />
+        <AddButtonDesktop />
+        <section className={`container-${theme}`}>
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={location.pathname}
+              className="layout"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{
+                type: 'linear',
+                duration: 0.2,
+              }}
+            >
+              <AnimatedOutlet />
+            </motion.div>
+          </AnimatePresence>
+        </section>
+      </>
+    )
+  }
 }

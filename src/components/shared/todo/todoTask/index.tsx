@@ -40,9 +40,8 @@ export default function TodoTask({
         id={title}
         type="checkbox"
         className="todotaskcheckbox"
-        checked={complete}
         name="task"
-        onClick={() => (complete = !complete)}
+        onChange={() => (complete = !complete)}
       />
     </section>
   )
