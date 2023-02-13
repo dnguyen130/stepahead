@@ -31,7 +31,7 @@ export function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
   )
 }
 
-export function useTheme(): Record<string, unknown> {
+export function useTheme(): ContextType {
   const { theme, setTheme } = useContext(Context)
   return { theme, setTheme }
 }
