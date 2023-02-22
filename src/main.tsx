@@ -10,7 +10,6 @@ import Home from '@routes/home'
 import Calendar from '@routes/calendar'
 import Journal from '@routes/journal'
 import Profile from '@routes/profile'
-import Login from '@routes/login'
 
 const router = createBrowserRouter([
   {
@@ -33,10 +32,6 @@ const router = createBrowserRouter([
       {
         path: 'profile',
         element: <Profile />,
-      },
-      {
-        path: 'login',
-        element: <Login />,
       },
     ],
   },

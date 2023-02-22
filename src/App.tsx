@@ -3,11 +3,12 @@ import { useOutlet, useLocation } from 'react-router-dom'
 import { useTheme } from '@utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { auth } from './utils/firebase'
+import { onAuthStateChanged } from 'firebase/auth'
 
 import Navbar from '@components/desktop/navbar'
 import Navbarmobile from '@/components/mobile/navbar'
 import AddButtonDesktop from '@components/desktop/addbutton'
-import { onAuthStateChanged } from 'firebase/auth'
+import Login from './components/shared/login'
 
 const AnimatedOutlet = (): React.ReactElement => {
   const o = useOutlet()
@@ -29,7 +30,7 @@ export default function App(): JSX.Element {
   })
 
   if (user == null) {
-    return <>login</>
+    return <Login />
   } else {
     return (
       <>
