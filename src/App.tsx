@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import { useOutlet, useLocation, redirect } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useOutlet, useLocation, useNavigate } from 'react-router-dom'
+import { onAuthStateChanged } from 'firebase/auth'
 import { useTheme } from '@utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { auth } from './utils/firebase'
-import { onAuthStateChanged } from 'firebase/auth'
 
 import Navbar from '@components/desktop/navbar'
 import Navbarmobile from '@/components/mobile/navbar'
@@ -18,14 +18,15 @@ const AnimatedOutlet = (): React.ReactElement => {
 export default function App(): JSX.Element {
   const { theme } = useTheme()
   const location = useLocation()
+  const navigate = useNavigate()
 
-  onAuthStateChanged(auth, (user) => {
-    if (user == null) {
-      return redirect('/login')
-    } else {
-      console.log(user.uid)
-    }
-  })
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user != null) {
+        navigate('/dashboard')
+      }
+    })
+  }, [])
 
   return (
     <>

@@ -7,7 +7,7 @@ export default function Navbar(): JSX.Element {
 
   return (
     <nav className={`navbar-cont-${theme}`}>
-      <NavbarButton icon={<FaHome size="100%" />} navLink="/" />
+      <NavbarButton icon={<FaHome size="100%" />} navLink="/dashboard" />
       <NavbarButton icon={<FaCalendar size="100%" />} navLink="calendar" />
       <NavbarButton icon={<FaBook size="100%" />} navLink="journal" />
       <NavbarButton icon={<FaUserCircle size="100%" />} navLink="profile" />

@@ -8,7 +8,7 @@ export default function Navbarmobile(): JSX.Element {
 
   return (
     <nav className={`navmobile-cont-${theme}`}>
-      <NavbarButton icon={<FaHome size="100%" />} navLink="/" />
+      <NavbarButton icon={<FaHome size="100%" />} navLink="/dashboard" />
       <NavbarButton icon={<FaCalendar size="100%" />} navLink="calendar" />
       <AddButtonMobile />
       <NavbarButton icon={<FaBook size="100%" />} navLink="journal" />
