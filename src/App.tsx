@@ -19,10 +19,12 @@ export default function App(): JSX.Element {
   const { theme } = useTheme()
   const location = useLocation()
   const navigate = useNavigate()
+  const [activeUser, setActiveUser] = useState(false)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user != null) {
+        setActiveUser(true)
         navigate('/dashboard')
       }
     })
@@ -30,9 +32,13 @@ export default function App(): JSX.Element {
 
   return (
     <>
-      <Navbar />
-      <Navbarmobile />
-      <AddButtonDesktop />
+      {activeUser && (
+        <AnimatePresence>
+          <Navbar key="navbar" />
+          <Navbarmobile key="navbarmobile" />
+          <AddButtonDesktop key="addbutton" />
+        </AnimatePresence>
+      )}
       <section className={`container-${theme}`}>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
