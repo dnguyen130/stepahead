@@ -4,6 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { useTheme } from '@utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { auth } from './utils/firebase'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 import Navbar from '@components/desktop/navbar'
 import Navbarmobile from '@/components/mobile/navbar'
@@ -20,27 +21,30 @@ export default function App(): JSX.Element {
   const location = useLocation()
   const navigate = useNavigate()
   const [activeUser, setActiveUser] = useState(false)
+  const [user, loading, error] = useAuthState(auth)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user != null) {
-        setActiveUser(true)
         navigate('/dashboard')
+        setActiveUser(true)
+      } else if (user == null) {
+        console.log('wtf')
+        setActiveUser(false)
+        console.log(activeUser)
       }
     })
   }, [])
 
-  return (
-    <>
-      {activeUser && (
-        <AnimatePresence>
-          <Navbar key="navbar" />
-          <Navbarmobile key="navbarmobile" />
-          <AddButtonDesktop key="addbutton" />
-        </AnimatePresence>
-      )}
-      <section className={`container-${theme}`}>
-        <AnimatePresence mode="wait" initial={false}>
+  if (loading) {
+    return <div>loading</div>
+  } else {
+    return (
+      <>
+        <Navbar key="navbar" opacity={activeUser ? 1 : 0} />
+        <Navbarmobile key="navbarmobile" opacity={activeUser ? 1 : 0} />
+        <AddButtonDesktop key="addbutton" opacity={activeUser ? 1 : 0} />
+        <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
             className="layout"
@@ -52,10 +56,12 @@ export default function App(): JSX.Element {
               duration: 0.2,
             }}
           >
-            <AnimatedOutlet />
+            <section className={`container-${theme}`}>
+              <AnimatedOutlet />
+            </section>
           </motion.div>
         </AnimatePresence>
-      </section>
-    </>
-  )
+      </>
+    )
+  }
 }

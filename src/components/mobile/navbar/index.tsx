@@ -3,11 +3,17 @@ import NavbarButton from '@components/shared/navbarbutton'
 import { FaHome, FaCalendar, FaBook, FaUserAlt } from 'react-icons/fa'
 import AddButtonMobile from '../addbutton'
 
-export default function Navbarmobile(): JSX.Element {
+interface NavbarmobileProps {
+  opacity: number
+}
+
+export default function Navbarmobile({
+  opacity,
+}: NavbarmobileProps): JSX.Element {
   const { theme } = useTheme()
 
   return (
-    <nav className={`navmobile-cont-${theme}`}>
+    <nav className={`navmobile-cont-${theme}`} style={{ opacity }}>
       <NavbarButton icon={<FaHome size="100%" />} navLink="/dashboard" />
       <NavbarButton icon={<FaCalendar size="100%" />} navLink="calendar" />
       <AddButtonMobile />
