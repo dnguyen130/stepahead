@@ -30,7 +30,7 @@ export default function Todo(): ReactElement {
         return (
           <>
             <TodoTask
-              key={o.uid}
+              key={i}
               uid={o.uid}
               title={o.title}
               description={o.description}

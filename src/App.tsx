@@ -44,8 +44,6 @@ export default function App(): ReactElement {
     }
   })
 
-  console.log(activeUser)
-
   return (
     <>
       <AnimatePresence>
