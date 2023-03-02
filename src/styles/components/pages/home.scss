@@ -39,7 +39,7 @@
   flex-direction: column;
   border-radius: 25px;
   box-shadow: inset 7px 7px 19px $shadowdark, inset -7px -7px 19px $shadowlight;
-  padding: 25px;
+  padding: 20px;
 }
 
 .calendarcont-light {
@@ -78,10 +78,11 @@
 .todotasktitle {
   font-family: $sansserif;
   font-weight: 400;
-  font-size: 1.2em;
+  font-size: 1em;
   justify-self: start;
   align-self: center;
   line-height: 2em;
+  margin-right: 10px;
 }
 
 .todotaskcheckbox {

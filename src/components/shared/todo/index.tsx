@@ -26,18 +26,22 @@ export default function Todo(): ReactElement {
 
   return (
     <section className={`todocont-${theme}`}>
-      {sortedArray.map((o) => {
+      {sortedArray.map((o, i) => {
         return (
-          <TodoTask
-            key={o.uid}
-            uid={o.uid}
-            title={o.title}
-            description={o.description}
-            creationDate={o.creationDate}
-            dueDate={o.dueDate}
-            important={o.important}
-            complete={o.complete}
-          />
+          <>
+            <TodoTask
+              key={o.uid}
+              uid={o.uid}
+              title={o.title}
+              description={o.description}
+              creationDate={o.creationDate}
+              dueDate={o.dueDate}
+              important={o.important}
+              complete={o.complete}
+            />
+            {/* Remove last underline in list */}
+            {i + 1 !== sortedArray.length && <div className="underline" />}
+          </>
         )
       })}
     </section>

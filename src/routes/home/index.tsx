@@ -45,6 +45,7 @@ export default function Home(): ReactElement {
       </header>
       <section className="content">
         <Todo />
+        <Todo />
       </section>
     </section>
   )
