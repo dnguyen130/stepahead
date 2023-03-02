@@ -1,8 +1,9 @@
-import { useTheme } from '@utils/provider'
+import { useMyContext } from '@utils/provider'
+import { ReactElement } from 'react'
 import { CgMathPlus } from 'react-icons/cg'
 
-export default function AddButtonMobile(): JSX.Element {
-  const { theme } = useTheme()
+export default function AddButtonMobile(): ReactElement {
+  const { theme } = useMyContext()
 
   return (
     <button className={`addbuttonmobile-${theme}`}>

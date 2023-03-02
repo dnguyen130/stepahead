@@ -1,6 +1,7 @@
+import { ReactElement } from 'react'
 import { useRouteError } from 'react-router-dom'
 
-export default function ErrorPage(): JSX.Element {
+export default function ErrorPage(): ReactElement {
   const error = useRouteError()
 
   return (

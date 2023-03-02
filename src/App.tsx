@@ -1,23 +1,22 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactElement } from 'react'
 import { useOutlet, useLocation, useNavigate } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
-import { useTheme } from '@utils/provider'
+import { useMyContext } from '@utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { auth } from './utils/firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'
 
 import Navbar from '@components/desktop/navbar'
 import Navbarmobile from '@/components/mobile/navbar'
 import AddButtonDesktop from '@components/desktop/addbutton'
 
-const AnimatedOutlet = (): React.ReactElement => {
+const AnimatedOutlet = (): ReactElement => {
   const o = useOutlet()
   const [outlet] = useState(o)
   return <>{outlet}</>
 }
 
-export default function App(): JSX.Element {
-  const { theme } = useTheme()
+export default function App(): ReactElement {
+  const { theme, currentUser, setCurrentUser } = useMyContext()
   const location = useLocation()
   const navigate = useNavigate()
   const [activeUser, setActiveUser] = useState(false)
@@ -28,18 +27,44 @@ export default function App(): JSX.Element {
         navigate('/dashboard')
         setActiveUser(true)
       } else if (user == null) {
-        console.log('wtf')
         setActiveUser(false)
-        console.log(activeUser)
       }
     })
   }, [])
 
+  useEffect(() => {
+    if (auth.currentUser != null && currentUser == null) {
+      setCurrentUser({
+        uid: auth.currentUser.uid,
+      })
+    } else if (auth.currentUser == null && currentUser.uid !== null) {
+      setCurrentUser({
+        uid: null,
+      })
+    }
+  })
+
+  console.log(activeUser)
+
   return (
     <>
-      <Navbar key="navbar" opacity={activeUser ? 1 : 0} />
-      <Navbarmobile key="navbarmobile" opacity={activeUser ? 1 : 0} />
-      <AddButtonDesktop key="addbutton" opacity={activeUser ? 1 : 0} />
+      <AnimatePresence>
+        {activeUser && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: activeUser ? 1 : 0 }}
+            exit={{ opacity: 0, transitionEnd: { display: 'none' } }}
+            transition={{
+              type: 'linear',
+              duration: 0.2,
+            }}
+          >
+            <Navbar key="navbar" />
+            <Navbarmobile key="navbarmobile" />
+            <AddButtonDesktop key="addbutton" />
+          </motion.div>
+        )}
+      </AnimatePresence>
       <AnimatePresence mode="wait">
         <motion.div
           key={location.pathname}
@@ -52,7 +77,11 @@ export default function App(): JSX.Element {
             duration: 0.2,
           }}
         >
-          <section className={`container-${theme}`}>
+          <section
+            className={
+              activeUser ? `container-${theme}` : `logincontainer-${theme}`
+            }
+          >
             <AnimatedOutlet />
           </section>
         </motion.div>

@@ -1,18 +1,13 @@
 import { FaPlus } from 'react-icons/fa'
-import { useTheme } from '@utils/provider'
+import { useMyContext } from '@utils/provider'
 import { IconContext } from 'react-icons'
+import { ReactElement } from 'react'
 
-interface AddbuttonDesktopProps {
-  opacity: number
-}
-
-export default function AddButtonDesktop({
-  opacity,
-}: AddbuttonDesktopProps): JSX.Element {
-  const { theme } = useTheme()
+export default function AddButtonDesktop(): ReactElement {
+  const { theme } = useMyContext()
 
   return (
-    <button className={`addbuttondesktop-${theme}`} style={{ opacity }}>
+    <button className={`addbuttondesktop-${theme}`}>
       <IconContext.Provider value={{ className: `addicondesktop-${theme}` }}>
         <FaPlus size="100%" />
       </IconContext.Provider>

@@ -1,11 +1,11 @@
-import React from 'react'
-import { useTheme } from '@/utils/provider'
+import { ReactElement } from 'react'
+import { useMyContext } from '@/utils/provider'
 import todoData from '@/utils/fakeTodoData.json'
 
 import TodoTask, { ToDoTaskProps } from './todoTask'
 
-export default function Todo(): JSX.Element {
-  const { theme } = useTheme()
+export default function Todo(): ReactElement {
+  const { theme } = useMyContext()
   let sortedArray: ToDoTaskProps[] = []
 
   const sortedTodos = (): ToDoTaskProps[] => {

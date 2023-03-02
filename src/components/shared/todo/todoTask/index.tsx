@@ -1,5 +1,6 @@
 import { BsStarFill } from 'react-icons/bs'
-import { useTheme } from '@/utils/provider'
+import { useMyContext } from '@/utils/provider'
+import { ReactElement } from 'react'
 
 export interface ToDoTaskProps {
   uid: number
@@ -19,8 +20,8 @@ export default function TodoTask({
   dueDate,
   important,
   complete,
-}: ToDoTaskProps): JSX.Element {
-  const { theme } = useTheme()
+}: ToDoTaskProps): ReactElement {
+  const { theme } = useMyContext()
 
   return (
     <section className="todotaskcont">

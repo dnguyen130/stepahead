@@ -1,5 +1,6 @@
 import data from '@/utils/fakeUserData.json'
 import Todo from '@/components/shared/todo'
+import { ReactElement } from 'react'
 
 const morning = (hour: number): boolean => {
   return hour >= 6 && hour <= 11
@@ -11,7 +12,7 @@ const evening = (hour: number): boolean => {
   return hour >= 17 && hour <= 23
 }
 
-export default function Home(): JSX.Element {
+export default function Home(): ReactElement {
   // Date and welcome message
   let welcomeMessage
   const currentHour = new Date().getHours()

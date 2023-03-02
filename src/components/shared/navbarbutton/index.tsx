@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 
-import { useTheme } from '@utils/provider'
+import { useMyContext } from '@utils/provider'
+import { ReactElement } from 'react'
 
 interface NavbarProps {
   icon: JSX.Element
@@ -10,8 +11,8 @@ interface NavbarProps {
 export default function NavbarButton({
   icon,
   navLink,
-}: NavbarProps): JSX.Element {
-  const { theme } = useTheme()
+}: NavbarProps): ReactElement {
+  const { theme } = useMyContext()
 
   return (
     <NavLink

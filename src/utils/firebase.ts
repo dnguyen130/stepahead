@@ -33,7 +33,6 @@ const SignInWithGoogle = async (): Promise<Record<string, any> | undefined> => {
   try {
     const res = await signInWithPopup(auth, googleProvider)
     const user = res.user
-    console.log(auth)
     return user
   } catch (err) {
     console.log(err)
@@ -43,7 +42,6 @@ const SignInWithGoogle = async (): Promise<Record<string, any> | undefined> => {
 const SignOut = async (): Promise<void> => {
   try {
     await signOut(auth)
-    console.log(auth)
   } catch (err) {
     console.log(err)
   }

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import './styles/app.scss'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import { ThemeProvider } from '@utils/provider'
+import { AppProvider } from '@utils/provider'
 import Root from '@/App'
 import ErrorPage from '@components/error'
 import Home from '@routes/home'
@@ -44,8 +44,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ThemeProvider>
+    <AppProvider>
       <RouterProvider router={router} />
-    </ThemeProvider>
+    </AppProvider>
   </React.StrictMode>
 )

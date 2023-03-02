@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom'
 import { SignOut } from '@/utils/firebase'
+import { ReactElement } from 'react'
 
-export default function Profile(): JSX.Element {
+export default function Profile(): ReactElement {
   const navigate = useNavigate()
 
   const SignOutAndRedirect = async (): Promise<void> => {

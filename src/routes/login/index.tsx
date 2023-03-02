@@ -1,6 +1,7 @@
 import { SignInWithGoogle } from '@/utils/firebase'
+import { ReactElement } from 'react'
 
-export default function Login(): JSX.Element {
+export default function Login(): ReactElement {
   return (
     <div className="login">
       <div>Login Page</div>
