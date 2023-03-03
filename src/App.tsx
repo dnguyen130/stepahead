@@ -44,7 +44,7 @@ export default function App(): ReactElement {
         name: null,
       })
     }
-  })
+  }, [currentUser])
 
   return (
     <>

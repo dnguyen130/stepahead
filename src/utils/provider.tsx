@@ -15,10 +15,6 @@ interface ContextType {
   setCurrentUser: Dispatch<SetStateAction<Record<string, any>>>
 }
 
-interface ThemeProviderProps {
-  children?: ReactNode
-}
-
 const initialStates = {
   theme: 'light',
   setTheme: () => {},
@@ -29,7 +25,7 @@ const initialStates = {
 
 const Context = createContext<ContextType>(initialStates)
 
-export function AppProvider({ children }: ThemeProviderProps): ReactElement {
+export function AppProvider(children: ReactNode): ReactElement {
   const [theme, setTheme] = useState(initialStates.theme)
   const [currentUser, setCurrentUser] = useState(initialStates.currentUser)
 

@@ -114,6 +114,7 @@ const SignInWithGoogle = async (): Promise<Record<string, any> | unknown> => {
       name: user.displayName,
       email: user.email,
     }
+
     await WriteUserData(activeUserData)
 
     return user
@@ -132,6 +133,7 @@ const SignOut = async (): Promise<void> => {
 
 export {
   auth,
+  db,
   SignInWithGoogle,
   SignOut,
   WriteUserData,
