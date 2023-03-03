@@ -44,6 +44,17 @@ interface UserDataProps {
   email: string | null
 }
 
+interface TodoDataProps {
+  uid: string
+  userid: string
+  title: string
+  description: string
+  creationDate: string
+  dueDate: string
+  important: boolean
+  complete: boolean
+}
+
 const WriteUserData = async ({
   uid,
   name,
@@ -66,6 +77,27 @@ const ReadUserData = async (uid: string): Promise<DataSnapshot | unknown> => {
     console.log(err)
     return err
   }
+}
+
+const CreateTodo = async ({
+  uid,
+  userid,
+  title,
+  description,
+  creationDate,
+  dueDate,
+  important,
+  complete,
+}: TodoDataProps): Promise<void> => {
+  await set(ref(db, 'todos/' + uid), {
+    userid,
+    title,
+    description,
+    creationDate,
+    dueDate,
+    important,
+    complete,
+  })
 }
 
 // Authentication
@@ -98,4 +130,11 @@ const SignOut = async (): Promise<void> => {
   }
 }
 
-export { auth, SignInWithGoogle, SignOut, WriteUserData, ReadUserData }
+export {
+  auth,
+  SignInWithGoogle,
+  SignOut,
+  WriteUserData,
+  ReadUserData,
+  CreateTodo,
+}

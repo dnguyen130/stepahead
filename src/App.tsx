@@ -32,11 +32,8 @@ export default function App(): ReactElement {
     })
   }, [])
 
-  console.log(currentUser)
-
   useEffect(() => {
     if (auth.currentUser != null && currentUser.uid === null) {
-      console.log('fire')
       setCurrentUser({
         uid: auth.currentUser.uid,
         name: auth.currentUser.displayName,
