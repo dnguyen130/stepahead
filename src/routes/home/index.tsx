@@ -1,6 +1,6 @@
-import data from '@/utils/fakeUserData.json'
 import Todo from '@/components/shared/todo'
 import { ReactElement } from 'react'
+import { useMyContext } from '@/utils/provider'
 
 const morning = (hour: number): boolean => {
   return hour >= 6 && hour <= 11
@@ -34,11 +34,13 @@ export default function Home(): ReactElement {
   }
   const today = date.toLocaleString('en-us', options)
 
+  const { currentUser } = useMyContext()
+
   return (
     <section className="homecont">
       <header>
         <h1 className="homecontgreeting">
-          {welcomeMessage} {data.firstName}
+          {welcomeMessage} {currentUser.name}
         </h1>
         <h2 className="homecontdate">Today is</h2>
         <h2 className="homecontdate">{today} </h2>

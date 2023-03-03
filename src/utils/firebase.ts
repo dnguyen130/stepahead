@@ -7,7 +7,14 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth'
-import { getDatabase, ref, set, child, get } from 'firebase/database'
+import {
+  getDatabase,
+  ref,
+  set,
+  child,
+  get,
+  DataSnapshot,
+} from 'firebase/database'
 
 // TODO: Add SDKs for Firebase products that you want to use
 
@@ -33,8 +40,8 @@ const db = getDatabase(app)
 
 interface UserDataProps {
   uid: string
-  name: string
-  email: string
+  name: string | null
+  email: string | null
 }
 
 const WriteUserData = async ({
@@ -48,13 +55,16 @@ const WriteUserData = async ({
   })
 }
 
-const ReadUserData = async (): Promise<void> => {
+const ReadUserData = async (uid: string): Promise<DataSnapshot | unknown> => {
   const dbRef = ref(db)
   try {
-    const res = await get(child(dbRef, 'users'))
-    console.log(res)
+    const res = await get(child(dbRef, `users/${uid}`))
+    if (res.exists()) {
+      return res.val()
+    }
   } catch (err) {
     console.log(err)
+    return err
   }
 }
 
@@ -62,11 +72,18 @@ const ReadUserData = async (): Promise<void> => {
 const auth = getAuth(app)
 const googleProvider = new GoogleAuthProvider()
 
-const SignInWithGoogle = async (): Promise<Record<string, any> | undefined> => {
+const SignInWithGoogle = async (): Promise<Record<string, any> | unknown> => {
   try {
     const res = await signInWithPopup(auth, googleProvider)
     const user = res.user
-    console.log(res)
+
+    const activeUserData: UserDataProps = {
+      uid: user.uid,
+      name: user.displayName,
+      email: user.email,
+    }
+    await WriteUserData(activeUserData)
+
     return user
   } catch (err) {
     console.log(err)

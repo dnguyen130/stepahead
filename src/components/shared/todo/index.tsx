@@ -28,9 +28,8 @@ export default function Todo(): ReactElement {
     <section className={`todocont-${theme}`}>
       {sortedArray.map((o, i) => {
         return (
-          <>
+          <div key={o.uid}>
             <TodoTask
-              key={i}
               uid={o.uid}
               title={o.title}
               description={o.description}
@@ -41,7 +40,7 @@ export default function Todo(): ReactElement {
             />
             {/* Remove last underline in list */}
             {i + 1 !== sortedArray.length && <div className="underline" />}
-          </>
+          </div>
         )
       })}
     </section>
