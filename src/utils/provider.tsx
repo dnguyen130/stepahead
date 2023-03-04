@@ -25,7 +25,11 @@ const initialStates = {
 
 const Context = createContext<ContextType>(initialStates)
 
-export function AppProvider(children: ReactNode): ReactElement {
+interface AppProviderProps {
+  children: ReactNode
+}
+
+export function AppProvider({ children }: AppProviderProps): ReactElement {
   const [theme, setTheme] = useState(initialStates.theme)
   const [currentUser, setCurrentUser] = useState(initialStates.currentUser)
 
