@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { SignOut } from '@/utils/firebase'
+import { SignOut } from '@/utils/functions'
 import { ReactElement } from 'react'
 
 export default function Profile(): ReactElement {

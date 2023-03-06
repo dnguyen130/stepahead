@@ -1,4 +1,4 @@
-import { SignInWithGoogle } from '@/utils/firebase'
+import { SignInWithGoogle } from '@/utils/functions'
 import { ReactElement } from 'react'
 
 export default function Login(): ReactElement {

@@ -19,7 +19,7 @@ export default function App(): ReactElement {
   const { theme, currentUser, setCurrentUser } = useMyContext()
   const location = useLocation()
   const navigate = useNavigate()
-  const [activeUser, setActiveUser] = useState(false)
+  const [activeUser, setActiveUser] = useState(true)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -48,10 +48,10 @@ export default function App(): ReactElement {
 
   return (
     <>
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {activeUser && (
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }}
             animate={{ opacity: activeUser ? 1 : 0 }}
             exit={{ opacity: 0, transitionEnd: { display: 'none' } }}
             transition={{
