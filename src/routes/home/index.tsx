@@ -40,7 +40,12 @@ export default function Home(): ReactElement {
     <section className="homecont">
       <header>
         <h1 className="homecontgreeting">
-          {welcomeMessage} {currentUser.name}
+          {currentUser.name !== null && (
+            <>
+              {welcomeMessage}
+              {currentUser.name}
+            </>
+          )}
         </h1>
         <h2 className="homecontdate">Today is</h2>
         <h2 className="homecontdate">{today} </h2>

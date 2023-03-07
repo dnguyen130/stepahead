@@ -8,6 +8,7 @@ import { auth } from './utils/firebase'
 import Navbar from '@components/desktop/navbar'
 import Navbarmobile from '@/components/mobile/navbar'
 import AddButtonDesktop from '@components/desktop/addbutton'
+import Loading from './components/shared/loading'
 
 const AnimatedOutlet = (): ReactElement => {
   const o = useOutlet()
@@ -16,10 +17,11 @@ const AnimatedOutlet = (): ReactElement => {
 }
 
 export default function App(): ReactElement {
-  const { theme, currentUser, setCurrentUser } = useMyContext()
+  const { theme, currentUser, setCurrentUser, loading, setLoading } =
+    useMyContext()
   const location = useLocation()
   const navigate = useNavigate()
-  const [activeUser, setActiveUser] = useState(true)
+  const [activeUser, setActiveUser] = useState(false)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -30,24 +32,36 @@ export default function App(): ReactElement {
         setActiveUser(false)
       }
     })
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 1000)
+    return () => {
+      clearTimeout(timer)
+    }
   }, [])
 
   useEffect(() => {
-    if (auth.currentUser != null && currentUser.uid === null) {
+    if (auth.currentUser != null && currentUser.uid === '') {
       setCurrentUser({
         uid: auth.currentUser.uid,
-        name: auth.currentUser.displayName,
+        name:
+          auth.currentUser.displayName !== null
+            ? auth.currentUser.displayName
+            : '',
       })
-    } else if (auth.currentUser == null && currentUser.uid !== null) {
+    } else if (auth.currentUser == null && currentUser.uid !== '') {
       setCurrentUser({
-        uid: null,
-        name: null,
+        uid: '',
+        name: '',
       })
     }
-  }, [currentUser])
+  })
+
+  console.log(auth.currentUser)
 
   return (
-    <>
+    <div className={loading ? 'maincont noscroll' : 'maincont'}>
+      <AnimatePresence>{loading && <Loading />}</AnimatePresence>
       <AnimatePresence initial={false}>
         {activeUser && (
           <motion.div
@@ -86,6 +100,6 @@ export default function App(): ReactElement {
           </section>
         </motion.div>
       </AnimatePresence>
-    </>
+    </div>
   )
 }

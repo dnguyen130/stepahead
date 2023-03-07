@@ -1,0 +1,14 @@
+@mixin loadingcont($bg) {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+
+  background-color: $bg;
+}
+
+.loadingcont-light {
+  @include loadingcont($bg: $bglight);
+}
