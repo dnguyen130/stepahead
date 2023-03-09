@@ -1,7 +1,12 @@
 import { ReactElement, useState } from 'react'
 import { SignUpWithEmail } from '@/utils/functions'
+import { useNavigate } from 'react-router-dom'
 
 export default function SignUp(): ReactElement {
+  const navigate = useNavigate()
+  const ReturnToLogin = (): void => {
+    navigate('/')
+  }
   const [signUpCredentials, setSignUpCredentials] = useState({
     email: '',
     password: '',
@@ -20,6 +25,12 @@ export default function SignUp(): ReactElement {
         })
         if (res === 'auth/email-already-in-use') {
           alert('Email already in use')
+        } else if (res === 'auth/invalid-email') {
+          alert('Invalid Email')
+        } else if (signUpPassword === '') {
+          alert('Invalid Password')
+        } else if (res === 'auth/weak-password') {
+          alert('Password must be at least 6 characters')
         }
       } else if (signUpPassword !== confirmPassword) {
         alert('Passwords do not match')
@@ -66,7 +77,8 @@ export default function SignUp(): ReactElement {
             })
           }}
         />
-        <button onClick={SignUp}>Check</button>
+        <button onClick={SignUp}>Sign Up</button>
+        <button onClick={ReturnToLogin}>Return to Login</button>
       </div>
     </div>
   )

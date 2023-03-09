@@ -2,6 +2,7 @@ import {
   signInWithPopup,
   signOut,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from 'firebase/auth'
 import { ref, set } from 'firebase/database'
 import { FirebaseError } from 'firebase/app'
@@ -67,11 +68,34 @@ const SignUpWithEmail = async ({
 }: SignInProps): Promise<Record<string, any> | unknown> => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password)
-    console.log(res)
+    const user = res.user
+
+    const activeUserData: UserDataProps = {
+      uid: user.uid,
+      name: user.displayName,
+      email: user.email,
+    }
+
+    await WriteUserData(activeUserData)
+
     return res
   } catch (err) {
     if (err instanceof FirebaseError) {
       return err.code
+    }
+  }
+}
+
+const LogInWithEmail = async ({
+  email,
+  password,
+}: SignInProps): Promise<Record<string, any> | unknown> => {
+  try {
+    const res = await signInWithEmailAndPassword(auth, email, password)
+    return res
+  } catch (err) {
+    if (err instanceof FirebaseError) {
+      return err
     }
   }
 }
@@ -103,4 +127,10 @@ const SignOut = async (): Promise<void> => {
   }
 }
 
-export { CreateTodo, SignInWithGoogle, SignOut, SignUpWithEmail }
+export {
+  CreateTodo,
+  SignInWithGoogle,
+  SignOut,
+  SignUpWithEmail,
+  LogInWithEmail,
+}

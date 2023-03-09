@@ -25,9 +25,11 @@ export default function App(): ReactElement {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user != null) {
-        setActiveUser(true)
-        navigate('/dashboard')
+      if (user !== null) {
+        if (user.displayName !== null) {
+          setActiveUser(true)
+          navigate('/dashboard')
+        }
       } else if (user == null) {
         setActiveUser(false)
       }
@@ -56,8 +58,6 @@ export default function App(): ReactElement {
       })
     }
   })
-
-  console.log(auth.currentUser)
 
   return (
     <div className={loading ? 'maincont noscroll' : 'maincont'}>

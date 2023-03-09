@@ -17,13 +17,13 @@ export default function Home(): ReactElement {
   let welcomeMessage
   const currentHour = new Date().getHours()
   if (morning(currentHour)) {
-    welcomeMessage = 'Good morning, '
+    welcomeMessage = 'Good morning'
   } else if (afternoon(currentHour)) {
-    welcomeMessage = 'Good afternoon, '
+    welcomeMessage = 'Good afternoon'
   } else if (evening(currentHour)) {
-    welcomeMessage = 'Good evening, '
+    welcomeMessage = 'Good evening'
   } else {
-    welcomeMessage = 'Up late or up early today, '
+    welcomeMessage = 'Up late or up early today'
   }
   const date = new Date()
   const options: Record<string, string | number> = {
@@ -43,6 +43,7 @@ export default function Home(): ReactElement {
           {currentUser.name !== null && (
             <>
               {welcomeMessage}
+              {currentUser.name !== '' && ', '}
               {currentUser.name}
             </>
           )}
