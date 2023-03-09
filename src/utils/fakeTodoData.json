@@ -1,7 +1,7 @@
 [
   {
     "uid": 1,
-    "userId": 123456789,
+    "userId": "123456789",
     "title": "Do Dishes",
     "description": "There are dishes to be done",
     "creationDate": 20230208,
@@ -11,7 +11,7 @@
   },
   {
     "uid": 2,
-    "userId": 123456789,
+    "userId": "123456789",
     "title": "Wash car",
     "description": "It do be dirty af",
     "creationDate": 20230125,
@@ -21,7 +21,7 @@
   },
   {
     "uid": 3,
-    "userId": 123456789,
+    "userId": "123456789",
     "title": "Renew Driver's License",
     "description": "Too fast, too furious",
     "creationDate": 20230110,

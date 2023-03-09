@@ -27,6 +27,7 @@ specifiers:
   react-router-dom: ^6.8.0
   sass: ^1.57.1
   typescript: ^4.9.4
+  uuid: ^9.0.0
   vite: ^4.0.0
 
 dependencies:
@@ -37,6 +38,7 @@ dependencies:
   react-firebase-hooks: 5.1.1_aqcelxavj7bzvzjrob2hajgybq
   react-icons: 4.7.1_react@18.2.0
   react-router-dom: 6.8.0_biqbaboplfbrettd7655fr4n2y
+  uuid: 9.0.0
 
 devDependencies:
   '@types/node': 18.13.0
@@ -3223,6 +3225,11 @@ packages:
     dependencies:
       punycode: 2.3.0
     dev: true
+
+  /uuid/9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
+    dev: false
 
   /vite/4.0.4_jd55mt5rgpyehisgeknrtdgmeu:
     resolution: {integrity: sha512-xevPU7M8FU0i/80DMR+YhgrzR5KS2ORy1B4xcX/cXLsvnUWvfHuqMmVU6N0YiJ4JWGRJJsLCgjEzKjG9/GKoSw==}

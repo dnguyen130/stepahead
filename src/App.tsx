@@ -26,8 +26,8 @@ export default function App(): ReactElement {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user != null) {
-        navigate('/dashboard')
         setActiveUser(true)
+        navigate('/dashboard')
       } else if (user == null) {
         setActiveUser(false)
       }
@@ -62,10 +62,10 @@ export default function App(): ReactElement {
   return (
     <div className={loading ? 'maincont noscroll' : 'maincont'}>
       <AnimatePresence>{loading && <Loading />}</AnimatePresence>
-      <AnimatePresence initial={false}>
+      <AnimatePresence>
         {activeUser && (
           <motion.div
-            initial={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
             animate={{ opacity: activeUser ? 1 : 0 }}
             exit={{ opacity: 0, transitionEnd: { display: 'none' } }}
             transition={{

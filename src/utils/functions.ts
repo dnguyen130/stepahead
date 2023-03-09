@@ -1,7 +1,10 @@
-import { signInWithPopup, signOut } from 'firebase/auth'
-
+import {
+  signInWithPopup,
+  signOut,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth'
 import { ref, set } from 'firebase/database'
-
+import { FirebaseError } from 'firebase/app'
 import { auth, db, googleProvider } from './firebase'
 
 interface UserDataProps {
@@ -12,13 +15,18 @@ interface UserDataProps {
 
 interface TodoDataProps {
   uid: string
-  userid: string
+  userId: string
   title: string
   description: string
   creationDate: string
   dueDate: string
   important: boolean
   complete: boolean
+}
+
+interface SignInProps {
+  email: string
+  password: string
 }
 
 const WriteUserData = async ({
@@ -34,7 +42,7 @@ const WriteUserData = async ({
 
 const CreateTodo = async ({
   uid,
-  userid,
+  userId,
   title,
   description,
   creationDate,
@@ -43,7 +51,7 @@ const CreateTodo = async ({
   complete,
 }: TodoDataProps): Promise<void> => {
   await set(ref(db, 'todos/' + uid), {
-    userid,
+    userId,
     title,
     description,
     creationDate,
@@ -51,6 +59,21 @@ const CreateTodo = async ({
     important,
     complete,
   })
+}
+
+const SignUpWithEmail = async ({
+  email,
+  password,
+}: SignInProps): Promise<Record<string, any> | unknown> => {
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password)
+    console.log(res)
+    return res
+  } catch (err) {
+    if (err instanceof FirebaseError) {
+      return err.code
+    }
+  }
 }
 
 const SignInWithGoogle = async (): Promise<Record<string, any> | unknown> => {
@@ -80,4 +103,4 @@ const SignOut = async (): Promise<void> => {
   }
 }
 
-export { CreateTodo, SignInWithGoogle, SignOut }
+export { CreateTodo, SignInWithGoogle, SignOut, SignUpWithEmail }

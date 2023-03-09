@@ -31,6 +31,7 @@ export default function Todo(): ReactElement {
           <div key={o.uid}>
             <TodoTask
               uid={o.uid}
+              userId={o.userId}
               title={o.title}
               description={o.description}
               creationDate={o.creationDate}

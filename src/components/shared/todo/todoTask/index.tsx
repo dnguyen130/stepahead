@@ -4,6 +4,7 @@ import { ReactElement } from 'react'
 
 export interface ToDoTaskProps {
   uid: number
+  userId: string
   title: string
   description: string
   creationDate: number
@@ -14,6 +15,7 @@ export interface ToDoTaskProps {
 
 export default function TodoTask({
   uid,
+  userId,
   title,
   description,
   creationDate,
