@@ -4,7 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { ref, set } from 'firebase/database'
+import { ref, set, get } from 'firebase/database'
 import { FirebaseError } from 'firebase/app'
 import { auth, db, googleProvider } from './firebase'
 
@@ -41,6 +41,15 @@ const WriteUserData = async ({
   })
 }
 
+const GetAllTodos = async (userId: string, uid: string): Promise<void> => {
+  try {
+    const initialTodoData = await get(ref(db, `users/${userId}/todos`))
+    console.log(initialTodoData.val())
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 const CreateTodo = async ({
   uid,
   userId,
@@ -51,7 +60,7 @@ const CreateTodo = async ({
   important,
   complete,
 }: TodoDataProps): Promise<void> => {
-  await set(ref(db, 'todos/' + uid), {
+  await set(ref(db, `users/${userId}/todo` + uid), {
     userId,
     title,
     description,
@@ -81,7 +90,20 @@ const SignUpWithEmail = async ({
     return res
   } catch (err) {
     if (err instanceof FirebaseError) {
-      return err.code
+      const errorCode = err.code
+      if (errorCode === 'auth/email-already-in-use') {
+        alert('Email already in use')
+      } else if (errorCode === 'auth/invalid-email') {
+        alert('Invalid Email')
+      } else if (password === '') {
+        alert('Invalid Password')
+      } else if (errorCode === 'auth/weak-password') {
+        alert('Password must be at least 6 characters')
+      } else {
+        console.log(err.message)
+      }
+    } else {
+      console.log(err)
     }
   }
 }
@@ -95,7 +117,16 @@ const LogInWithEmail = async ({
     return res
   } catch (err) {
     if (err instanceof FirebaseError) {
-      return err
+      const errorCode = err.code
+      if (errorCode === 'auth/invalid-email') {
+        alert('Invalid Email')
+      } else if (password === '') {
+        alert('Invalid Password')
+      } else if (errorCode === 'auth/wrong-password') {
+        alert('Incorrect Password')
+      } else {
+        console.log(err.message)
+      }
     }
   }
 }
@@ -115,7 +146,12 @@ const SignInWithGoogle = async (): Promise<Record<string, any> | unknown> => {
 
     return user
   } catch (err) {
-    console.log(err)
+    if (err instanceof FirebaseError) {
+      return err.code
+    } else {
+      console.log(err)
+      return err
+    }
   }
 }
 
@@ -129,6 +165,7 @@ const SignOut = async (): Promise<void> => {
 
 export {
   CreateTodo,
+  GetAllTodos,
   SignInWithGoogle,
   SignOut,
   SignUpWithEmail,

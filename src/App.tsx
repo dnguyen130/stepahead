@@ -3,7 +3,7 @@ import { useOutlet, useLocation, useNavigate } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { useMyContext } from '@utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
-import { auth } from './utils/firebase'
+import { auth } from '@utils/firebase'
 
 import Navbar from '@components/desktop/navbar'
 import Navbarmobile from '@/components/mobile/navbar'
@@ -21,19 +21,25 @@ export default function App(): ReactElement {
     useMyContext()
   const location = useLocation()
   const navigate = useNavigate()
-  const [activeUser, setActiveUser] = useState(false)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user !== null) {
-        if (user.displayName !== null) {
-          setActiveUser(true)
-          navigate('/dashboard')
-        }
+        setCurrentUser({
+          uid: user.uid,
+          name: user.displayName !== null ? user.displayName : '',
+        })
       } else if (user == null) {
-        setActiveUser(false)
+        setCurrentUser({
+          uid: '',
+          name: '',
+        })
+        if (location.pathname !== '/' && location.pathname !== '/signup') {
+          navigate('/')
+        }
       }
     })
+
     const timer = setTimeout(() => {
       setLoading(false)
     }, 1000)
@@ -42,31 +48,14 @@ export default function App(): ReactElement {
     }
   }, [])
 
-  useEffect(() => {
-    if (auth.currentUser != null && currentUser.uid === '') {
-      setCurrentUser({
-        uid: auth.currentUser.uid,
-        name:
-          auth.currentUser.displayName !== null
-            ? auth.currentUser.displayName
-            : '',
-      })
-    } else if (auth.currentUser == null && currentUser.uid !== '') {
-      setCurrentUser({
-        uid: '',
-        name: '',
-      })
-    }
-  })
-
   return (
     <div className={loading ? 'maincont noscroll' : 'maincont'}>
       <AnimatePresence>{loading && <Loading />}</AnimatePresence>
       <AnimatePresence>
-        {activeUser && (
+        {currentUser.uid !== '' && (
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: activeUser ? 1 : 0 }}
+            animate={{ opacity: currentUser.uid !== '' ? 1 : 0 }}
             exit={{ opacity: 0, transitionEnd: { display: 'none' } }}
             transition={{
               type: 'linear',
@@ -93,7 +82,9 @@ export default function App(): ReactElement {
         >
           <section
             className={
-              activeUser ? `container-${theme}` : `logincontainer-${theme}`
+              currentUser.uid !== ''
+                ? `container-${theme}`
+                : `logincontainer-${theme}`
             }
           >
             <AnimatedOutlet />

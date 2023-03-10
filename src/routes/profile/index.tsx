@@ -1,12 +1,8 @@
-import { useNavigate } from 'react-router-dom'
 import { SignOut } from '@/utils/functions'
 import { ReactElement } from 'react'
 
 export default function Profile(): ReactElement {
-  const navigate = useNavigate()
-
   const SignOutAndRedirect = async (): Promise<void> => {
-    navigate('/')
     await SignOut()
   }
 

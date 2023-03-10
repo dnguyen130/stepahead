@@ -1,7 +1,7 @@
 import { SignInWithGoogle, LogInWithEmail } from '@/utils/functions'
-import { FirebaseError } from 'firebase/app'
 import { ReactElement, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { User } from 'firebase/auth'
 
 export default function Login(): ReactElement {
   const navigate = useNavigate()
@@ -9,30 +9,23 @@ export default function Login(): ReactElement {
     email: '',
     password: '',
   })
+
+  const GoogleSignIn = async (): Promise<void> => {
+    const res = await SignInWithGoogle()
+    // Figure out how to route on successful sign in
+  }
+
   const NavigateToSignUp = (): void => {
     navigate('/signup')
   }
 
-  const Login = async (): Promise<unknown> => {
+  const Login = async (): Promise<void> => {
     const loginEmail = loginCredentials.email
     const loginPassword = loginCredentials.password
-    try {
-      const res = await LogInWithEmail({
-        email: loginEmail,
-        password: loginPassword,
-      })
-      if (res instanceof FirebaseError) {
-        if (res.code === 'auth/invalid-email') {
-          alert('Invalid Email')
-        } else if (loginPassword === '' || res.code === 'auth/wrong-password') {
-          alert('Invalid Password')
-        }
-      } else {
-        return res
-      }
-    } catch (err) {
-      console.log(err)
-    }
+    await LogInWithEmail({
+      email: loginEmail,
+      password: loginPassword,
+    })
   }
 
   return (
@@ -58,7 +51,7 @@ export default function Login(): ReactElement {
             })
           }}
         />
-        <button onClick={SignInWithGoogle}>Google Sign In</button>
+        <button onClick={GoogleSignIn}>Google Sign In</button>
         <button onClick={NavigateToSignUp}>Sign Up</button>
         <button onClick={Login}>Login</button>
       </div>

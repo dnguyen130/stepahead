@@ -17,26 +17,13 @@ export default function SignUp(): ReactElement {
     const signUpEmail = signUpCredentials.email
     const signUpPassword = signUpCredentials.password
     const confirmPassword = signUpCredentials.confirmPassword
-    try {
-      if (signUpPassword === confirmPassword) {
-        const res = await SignUpWithEmail({
-          email: signUpEmail,
-          password: signUpPassword,
-        })
-        if (res === 'auth/email-already-in-use') {
-          alert('Email already in use')
-        } else if (res === 'auth/invalid-email') {
-          alert('Invalid Email')
-        } else if (signUpPassword === '') {
-          alert('Invalid Password')
-        } else if (res === 'auth/weak-password') {
-          alert('Password must be at least 6 characters')
-        }
-      } else if (signUpPassword !== confirmPassword) {
-        alert('Passwords do not match')
-      }
-    } catch (err) {
-      console.log(err)
+    if (signUpPassword === confirmPassword) {
+      await SignUpWithEmail({
+        email: signUpEmail,
+        password: signUpPassword,
+      })
+    } else if (signUpPassword !== confirmPassword) {
+      alert('Passwords do not match')
     }
   }
 

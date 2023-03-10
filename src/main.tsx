@@ -12,7 +12,6 @@ import Journal from '@routes/journal'
 import Profile from '@routes/profile'
 import Login from '@routes/login'
 import SignUp from '@routes/signup'
-import ProtectedRoute from './components/shared/protectedRoute'
 
 const router = createBrowserRouter([
   {
@@ -22,35 +21,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: 'dashboard',
-        element: (
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        ),
+        element: <Home />,
       },
       {
         path: 'calendar',
-        element: (
-          <ProtectedRoute>
-            <Calendar />
-          </ProtectedRoute>
-        ),
+        element: <Calendar />,
       },
       {
         path: 'journal',
-        element: (
-          <ProtectedRoute>
-            <Journal />
-          </ProtectedRoute>
-        ),
+        element: <Journal />,
       },
       {
         path: 'profile',
-        element: (
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        ),
+        element: <Profile />,
       },
       {
         index: true,
