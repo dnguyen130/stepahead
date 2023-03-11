@@ -15,6 +15,8 @@ interface ContextType {
   setCurrentUser: Dispatch<SetStateAction<{ uid: string; name: string }>>
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
+  initialLoad: boolean
+  setInitialLoad: Dispatch<SetStateAction<boolean>>
 }
 
 const initialStates = {
@@ -26,6 +28,9 @@ const initialStates = {
 
   loading: true,
   setLoading: () => {},
+
+  initialLoad: false,
+  setInitialLoad: () => {},
 }
 
 const Context = createContext<ContextType>(initialStates)
@@ -38,6 +43,7 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
   const [theme, setTheme] = useState(initialStates.theme)
   const [currentUser, setCurrentUser] = useState(initialStates.currentUser)
   const [loading, setLoading] = useState(initialStates.loading)
+  const [initialLoad, setInitialLoad] = useState(initialStates.initialLoad)
 
   return (
     <Context.Provider
@@ -48,6 +54,8 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
         setCurrentUser,
         loading,
         setLoading,
+        initialLoad,
+        setInitialLoad,
       }}
     >
       {children}
@@ -56,7 +64,24 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
 }
 
 export function useMyContext(): ContextType {
-  const { theme, setTheme, currentUser, setCurrentUser, loading, setLoading } =
-    useContext(Context)
-  return { theme, setTheme, currentUser, setCurrentUser, loading, setLoading }
+  const {
+    theme,
+    setTheme,
+    currentUser,
+    setCurrentUser,
+    loading,
+    setLoading,
+    initialLoad,
+    setInitialLoad,
+  } = useContext(Context)
+  return {
+    theme,
+    setTheme,
+    currentUser,
+    setCurrentUser,
+    loading,
+    setLoading,
+    initialLoad,
+    setInitialLoad,
+  }
 }

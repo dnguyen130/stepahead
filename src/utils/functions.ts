@@ -74,7 +74,7 @@ const CreateTodo = async ({
 const SignUpWithEmail = async ({
   email,
   password,
-}: SignInProps): Promise<Record<string, any> | unknown> => {
+}: SignInProps): Promise<Record<string, any> | string> => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password)
     const user = res.user
@@ -93,17 +93,23 @@ const SignUpWithEmail = async ({
       const errorCode = err.code
       if (errorCode === 'auth/email-already-in-use') {
         alert('Email already in use')
+        return err.code
       } else if (errorCode === 'auth/invalid-email') {
         alert('Invalid Email')
+        return err.code
       } else if (password === '') {
         alert('Invalid Password')
+        return err.code
       } else if (errorCode === 'auth/weak-password') {
         alert('Password must be at least 6 characters')
+        return err.code
       } else {
         console.log(err.message)
+        return err.message
       }
     } else {
       console.log(err)
+      return 'error'
     }
   }
 }
@@ -111,7 +117,7 @@ const SignUpWithEmail = async ({
 const LogInWithEmail = async ({
   email,
   password,
-}: SignInProps): Promise<Record<string, any> | unknown> => {
+}: SignInProps): Promise<Record<string, any> | string> => {
   try {
     const res = await signInWithEmailAndPassword(auth, email, password)
     return res
@@ -120,18 +126,25 @@ const LogInWithEmail = async ({
       const errorCode = err.code
       if (errorCode === 'auth/invalid-email') {
         alert('Invalid Email')
+        return err.code
       } else if (password === '') {
         alert('Invalid Password')
+        return err.code
       } else if (errorCode === 'auth/wrong-password') {
         alert('Incorrect Password')
+        return err.code
       } else {
         console.log(err.message)
+        return err.message
       }
+    } else {
+      console.log(err)
+      return 'error'
     }
   }
 }
 
-const SignInWithGoogle = async (): Promise<Record<string, any> | unknown> => {
+const SignInWithGoogle = async (): Promise<Record<string, any> | string> => {
   try {
     const res = await signInWithPopup(auth, googleProvider)
     const user = res.user
@@ -150,7 +163,7 @@ const SignInWithGoogle = async (): Promise<Record<string, any> | unknown> => {
       return err.code
     } else {
       console.log(err)
-      return err
+      return 'error'
     }
   }
 }

@@ -17,8 +17,14 @@ const AnimatedOutlet = (): ReactElement => {
 }
 
 export default function App(): ReactElement {
-  const { theme, currentUser, setCurrentUser, loading, setLoading } =
-    useMyContext()
+  const {
+    theme,
+    currentUser,
+    setCurrentUser,
+    loading,
+    setLoading,
+    setInitialLoad,
+  } = useMyContext()
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -29,6 +35,16 @@ export default function App(): ReactElement {
           uid: user.uid,
           name: user.displayName !== null ? user.displayName : '',
         })
+        setLoading(true)
+        if (location.pathname === '/' || location.pathname === '/signup') {
+          navigate('/dashboard')
+        }
+        const timer = setTimeout(() => {
+          setLoading(false)
+        }, 1000)
+        return () => {
+          clearTimeout(timer)
+        }
       } else if (user == null) {
         setCurrentUser({
           uid: '',
@@ -40,6 +56,8 @@ export default function App(): ReactElement {
       }
     })
 
+    setInitialLoad(true)
+
     const timer = setTimeout(() => {
       setLoading(false)
     }, 1000)
@@ -50,12 +68,12 @@ export default function App(): ReactElement {
 
   return (
     <div className={loading ? 'maincont noscroll' : 'maincont'}>
-      <AnimatePresence>{loading && <Loading />}</AnimatePresence>
-      <AnimatePresence>
-        {currentUser.uid !== '' && (
+      {loading && <Loading />}
+      <AnimatePresence mode="wait">
+        {currentUser.uid !== '' && !loading && (
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: currentUser.uid !== '' ? 1 : 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0, transitionEnd: { display: 'none' } }}
             transition={{
               type: 'linear',
@@ -82,7 +100,7 @@ export default function App(): ReactElement {
         >
           <section
             className={
-              currentUser.uid !== ''
+              currentUser.uid !== '' && !loading
                 ? `container-${theme}`
                 : `logincontainer-${theme}`
             }
