@@ -17,6 +17,8 @@ interface ContextType {
   setLoading: Dispatch<SetStateAction<boolean>>
   initialLoad: boolean
   setInitialLoad: Dispatch<SetStateAction<boolean>>
+  activeModal: boolean
+  setActiveModal: Dispatch<SetStateAction<boolean>>
 }
 
 const initialStates = {
@@ -31,6 +33,9 @@ const initialStates = {
 
   initialLoad: false,
   setInitialLoad: () => {},
+
+  activeModal: false,
+  setActiveModal: () => {},
 }
 
 const Context = createContext<ContextType>(initialStates)
@@ -44,6 +49,7 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
   const [currentUser, setCurrentUser] = useState(initialStates.currentUser)
   const [loading, setLoading] = useState(initialStates.loading)
   const [initialLoad, setInitialLoad] = useState(initialStates.initialLoad)
+  const [activeModal, setActiveModal] = useState(initialStates.activeModal)
 
   return (
     <Context.Provider
@@ -56,6 +62,8 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
         setLoading,
         initialLoad,
         setInitialLoad,
+        activeModal,
+        setActiveModal,
       }}
     >
       {children}
@@ -73,6 +81,8 @@ export function useMyContext(): ContextType {
     setLoading,
     initialLoad,
     setInitialLoad,
+    activeModal,
+    setActiveModal,
   } = useContext(Context)
   return {
     theme,
@@ -83,5 +93,7 @@ export function useMyContext(): ContextType {
     setLoading,
     initialLoad,
     setInitialLoad,
+    activeModal,
+    setActiveModal,
   }
 }

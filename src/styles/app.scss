@@ -9,6 +9,7 @@
 @import './components/shared/calendar.scss';
 @import './components/shared/login.scss';
 @import './components/shared/loading.scss';
+@import './components/shared/createtask.scss';
 
 @mixin container($bg, $txt) {
   width: 100vw;
@@ -16,7 +17,7 @@
   flex-direction: column;
   place-items: center flex-start;
   padding: 25px 25px 0;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   background-color: $bg;
   color: $txt;
@@ -110,4 +111,18 @@ input[type='checkbox'] {
 
 .noscroll {
   overflow: hidden;
+}
+
+.fade {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  z-index: 1500;
+  position: fixed;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  transition: 0.2s;
+  opacity: 0;
 }

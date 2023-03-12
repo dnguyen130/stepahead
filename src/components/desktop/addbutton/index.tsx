@@ -4,10 +4,15 @@ import { IconContext } from 'react-icons'
 import { ReactElement } from 'react'
 
 export default function AddButtonDesktop(): ReactElement {
-  const { theme } = useMyContext()
+  const { theme, setActiveModal } = useMyContext()
 
   return (
-    <button className={`addbuttondesktop-${theme}`}>
+    <button
+      className={`addbuttondesktop-${theme}`}
+      onClick={() => {
+        setActiveModal(true)
+      }}
+    >
       <IconContext.Provider value={{ className: `addicondesktop-${theme}` }}>
         <FaPlus size="100%" />
       </IconContext.Provider>

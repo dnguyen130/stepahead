@@ -9,6 +9,7 @@ import Navbar from '@components/desktop/navbar'
 import Navbarmobile from '@/components/mobile/navbar'
 import AddButtonDesktop from '@components/desktop/addbutton'
 import Loading from './components/shared/loading'
+import CreateTask from './components/shared/createTask'
 
 const AnimatedOutlet = (): ReactElement => {
   const o = useOutlet()
@@ -68,7 +69,8 @@ export default function App(): ReactElement {
 
   return (
     <div className={loading ? 'maincont noscroll' : 'maincont'}>
-      {loading && <Loading />}
+      <Loading />
+      <CreateTask />
       <AnimatePresence mode="wait">
         {currentUser.uid !== '' && !loading && (
           <motion.div
