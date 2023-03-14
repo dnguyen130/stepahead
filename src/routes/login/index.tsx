@@ -6,7 +6,7 @@ import { useMyContext } from '@/utils/provider'
 
 export default function Login(): ReactElement {
   const navigate = useNavigate()
-  const { currentUser, loading } = useMyContext()
+  const { loading } = useMyContext()
   const [loginCredentials, setLoginCredentials] = useState({
     email: '',
     password: '',
@@ -75,13 +75,6 @@ export default function Login(): ReactElement {
             <button onClick={GoogleSignIn}>Google Sign In</button>
             <button onClick={NavigateToSignUp}>Sign Up</button>
             <button onClick={Login}>Login</button>
-            <button
-              onClick={() => {
-                console.log(currentUser)
-              }}
-            >
-              User Check
-            </button>
           </div>
         </motion.div>
       )}

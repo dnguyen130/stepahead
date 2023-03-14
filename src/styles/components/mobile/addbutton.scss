@@ -4,17 +4,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 100px;
   text-decoration: none;
   cursor: pointer;
   position: absolute;
   margin-left: auto;
   margin-right: auto;
+  border-radius: 100px;
   left: 0;
   right: 0;
   bottom: 35px;
   background-color: $bg;
   border: 5px solid $border;
+  transition: 0.2s;
 }
 
 @mixin addiconmobile($bg) {
@@ -26,6 +27,7 @@
   align-items: center;
   text-align: center;
   font-size: 48px;
+  transition: 0.2s;
 }
 
 .addbuttonmobile-light {
@@ -37,9 +39,10 @@
 }
 
 .addbuttonmobile-active-light {
-  background-color: $buttonactivelight;
+  @include addbuttonmobile($bg: $buttonactivelight, $border: $bglight);
+  box-shadow: inset 10px 10px 20px #0d1f34, inset -10px -10px 20px #275b96;
 }
 
 .addiconmobile-active-light {
-  color: $iconactivelight;
+  @include addiconmobile($bg: $iconactivelight);
 }

@@ -1,6 +1,6 @@
 import { ReactElement } from 'react'
 import { Navigate } from 'react-router-dom'
-import { useMyContext } from '@utils/provider'
+import { useMyContext } from '@/utils/provider'
 
 interface ProtectedRouteProps {
   children: ReactElement

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
-import { useMyContext } from '@utils/provider'
+import { useMyContext } from '@/utils/provider'
 import { ReactElement } from 'react'
 
 interface NavbarProps {
@@ -18,9 +18,7 @@ export default function NavbarButton({
     <NavLink
       to={navLink}
       className={({ isActive }) =>
-        isActive
-          ? `navbarbutton-${theme} navbarbutton-active-${theme}`
-          : `navbarbutton-${theme}`
+        isActive ? `navbarbutton-active-${theme}` : `navbarbutton-${theme}`
       }
     >
       <div className="navbaricon">{icon}</div>

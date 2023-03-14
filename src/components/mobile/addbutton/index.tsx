@@ -1,13 +1,28 @@
-import { useMyContext } from '@utils/provider'
+import { useMyContext } from '@/utils/provider'
 import { ReactElement } from 'react'
 import { CgMathPlus } from 'react-icons/cg'
 
 export default function AddButtonMobile(): ReactElement {
-  const { theme } = useMyContext()
+  const { theme, activeModal, setActiveModal } = useMyContext()
 
   return (
-    <button className={`addbuttonmobile-${theme}`}>
-      <div className={`addiconmobile-${theme}`}>
+    <button
+      className={
+        activeModal
+          ? `addbuttonmobile-active-${theme}`
+          : `addbuttonmobile-${theme}`
+      }
+      onClick={() => {
+        setActiveModal(true)
+      }}
+    >
+      <div
+        className={
+          activeModal
+            ? `addiconmobile-active-${theme}`
+            : `addiconmobile-${theme}`
+        }
+      >
         <CgMathPlus size="80%" />
       </div>
     </button>

@@ -1,5 +1,5 @@
-import { useMyContext } from '@utils/provider'
-import NavbarButton from '@components/shared/navbarbutton'
+import { useMyContext } from '@/utils/provider'
+import NavbarButton from '@/components/shared/navbarbutton'
 import { FaHome, FaCalendar, FaBook, FaUserAlt } from 'react-icons/fa'
 import AddButtonMobile from '../addbutton'
 import { ReactElement } from 'react'

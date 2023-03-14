@@ -1,15 +1,16 @@
 import { useState, useEffect, ReactElement } from 'react'
 import { useOutlet, useLocation, useNavigate } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
-import { useMyContext } from '@utils/provider'
+import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
-import { auth } from '@utils/firebase'
+import { auth } from '@/utils/firebase'
 
-import Navbar from '@components/desktop/navbar'
+import Navbar from '@/components/desktop/navbar'
 import Navbarmobile from '@/components/mobile/navbar'
-import AddButtonDesktop from '@components/desktop/addbutton'
+import AddButtonDesktop from '@/components/desktop/addbutton'
 import Loading from './components/shared/loading'
 import CreateTask from './components/shared/createTask'
+import BackgroundDim from './components/shared/backgroundDim'
 
 const AnimatedOutlet = (): ReactElement => {
   const o = useOutlet()
@@ -71,6 +72,7 @@ export default function App(): ReactElement {
     <div className={loading ? 'maincont noscroll' : 'maincont'}>
       <Loading />
       <CreateTask />
+      <BackgroundDim />
       <AnimatePresence mode="wait">
         {currentUser.uid !== '' && !loading && (
           <motion.div

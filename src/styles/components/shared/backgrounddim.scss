@@ -1,0 +1,12 @@
+.backgrounddim {
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  overflow: hidden;
+  transition: 0.2s;
+  z-index: 1005;
+}
