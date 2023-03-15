@@ -54,13 +54,6 @@ export default function Home(): ReactElement {
       <section className="content">
         <Todo />
         <Todo />
-        <button
-          onClick={() => {
-            console.log(currentUser)
-          }}
-        >
-          Button
-        </button>
       </section>
     </section>
   )
