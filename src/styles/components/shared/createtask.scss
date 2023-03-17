@@ -7,10 +7,59 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: 25px;
+  border-radius: 10px;
   z-index: 2001;
-  padding: 0 25px;
-
   display: flex;
-  background-color: $buttonactivelight;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  padding: 5px;
+  box-shadow: inset 35px 35px 54px #224f84, inset -35px -35px 54px #3c8dec,
+    10px 10px 10px rgba(0, 0, 0, 0.25);
+
+  background-color: $bg2light;
+}
+
+.createtaskheader {
+  width: 100%;
+  height: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 5px;
+}
+
+@mixin createtasktab($bg, $txtclr, $cursor) {
+  border: 0;
+  border-bottom: 0;
+  cursor: $cursor;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: 0.2s;
+  margin-bottom: 5px;
+
+  background: $bg;
+  color: $txtclr;
+}
+
+.createtasktab-active {
+  @include createtasktab(
+    $bg: $buttonactivelight,
+    $txtclr: $iconactivelight,
+    $cursor: auto
+  );
+}
+
+.createtasktab-inactive {
+  @include createtasktab($bg: transparent, $txtclr: $bglight, $cursor: pointer);
+}
+
+.createtask-content {
+  height: 100%;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
