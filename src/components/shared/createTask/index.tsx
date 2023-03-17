@@ -1,9 +1,10 @@
 import { ReactElement, useState } from 'react'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
+import CreateTaskForm from './form'
 
 export default function CreateTask(): ReactElement {
-  const { activeModal, setActiveModal } = useMyContext()
+  const { activeModal } = useMyContext()
   const [activeTab, setActiveTab] = useState('event')
 
   return (
@@ -20,7 +21,7 @@ export default function CreateTask(): ReactElement {
           }}
         >
           <header className="createtaskheader">
-            <button
+            <motion.button
               className={
                 activeTab === 'event'
                   ? 'createtasktab-active'
@@ -30,8 +31,8 @@ export default function CreateTask(): ReactElement {
                 setActiveTab('event')
               }}
             >
-              Create Event
-            </button>
+              Event
+            </motion.button>
             <button
               className={
                 activeTab === 'journal'
@@ -42,19 +43,13 @@ export default function CreateTask(): ReactElement {
                 setActiveTab('journal')
               }}
             >
-              Create Journal Entry
+              Journal Entry
             </button>
+            <button className="exitbutton">x</button>
           </header>
 
           <div className="createtask-content">
-            {' '}
-            <button
-              onClick={() => {
-                setActiveModal(false)
-              }}
-            >
-              Off
-            </button>
+            <CreateTaskForm />
           </div>
         </motion.div>
       )}

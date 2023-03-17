@@ -8,17 +8,35 @@ import {
   ReactElement,
 } from 'react'
 
+interface CurrentUserType {
+  uid: string
+  name: string
+}
+
+interface Todos {
+  uid: string
+  userId: string
+  title: string
+  description: string
+  creationDate: string
+  dueDate: string
+  important: boolean
+  complete: boolean
+}
+
 interface ContextType {
   theme: string
   setTheme: Dispatch<SetStateAction<string>>
   currentUser: Record<string, any>
-  setCurrentUser: Dispatch<SetStateAction<{ uid: string; name: string }>>
+  setCurrentUser: Dispatch<SetStateAction<CurrentUserType>>
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
   initialLoad: boolean
   setInitialLoad: Dispatch<SetStateAction<boolean>>
   activeModal: boolean
   setActiveModal: Dispatch<SetStateAction<boolean>>
+  todos: Todos[]
+  setTodos: Dispatch<SetStateAction<Todos[]>>
 }
 
 const initialStates = {
@@ -36,6 +54,20 @@ const initialStates = {
 
   activeModal: false,
   setActiveModal: () => {},
+
+  todos: [
+    {
+      uid: '',
+      userId: '',
+      title: '',
+      description: '',
+      creationDate: '',
+      dueDate: '',
+      important: false,
+      complete: false,
+    },
+  ],
+  setTodos: () => {},
 }
 
 const Context = createContext<ContextType>(initialStates)
@@ -50,6 +82,7 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
   const [loading, setLoading] = useState(initialStates.loading)
   const [initialLoad, setInitialLoad] = useState(initialStates.initialLoad)
   const [activeModal, setActiveModal] = useState(initialStates.activeModal)
+  const [todos, setTodos] = useState(initialStates.todos)
 
   return (
     <Context.Provider
@@ -64,6 +97,8 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
         setInitialLoad,
         activeModal,
         setActiveModal,
+        todos,
+        setTodos,
       }}
     >
       {children}
@@ -83,6 +118,8 @@ export function useMyContext(): ContextType {
     setInitialLoad,
     activeModal,
     setActiveModal,
+    todos,
+    setTodos,
   } = useContext(Context)
   return {
     theme,
@@ -95,5 +132,7 @@ export function useMyContext(): ContextType {
     setInitialLoad,
     activeModal,
     setActiveModal,
+    todos,
+    setTodos,
   }
 }
