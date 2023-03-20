@@ -2,6 +2,7 @@ import { ReactElement, useState } from 'react'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import CreateTaskForm from './form'
+import { MdClose } from 'react-icons/md'
 
 export default function CreateTask(): ReactElement {
   const { activeModal } = useMyContext()
@@ -21,7 +22,7 @@ export default function CreateTask(): ReactElement {
           }}
         >
           <header className="createtaskheader">
-            <motion.button
+            <button
               className={
                 activeTab === 'event'
                   ? 'createtasktab-active'
@@ -32,7 +33,7 @@ export default function CreateTask(): ReactElement {
               }}
             >
               Event
-            </motion.button>
+            </button>
             <button
               className={
                 activeTab === 'journal'
@@ -45,9 +46,10 @@ export default function CreateTask(): ReactElement {
             >
               Journal Entry
             </button>
-            <button className="exitbutton">x</button>
+            <button className="exitbutton">
+              <MdClose size="100%" />
+            </button>
           </header>
-
           <div className="createtask-content">
             <CreateTaskForm />
           </div>
