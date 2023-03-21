@@ -10,6 +10,12 @@
     "lint": "eslint \"**/*.{ts,tsx}\""
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.11.13",
+    "@mui/system": "^5.11.13",
+    "@mui/x-date-pickers": "^6.0.2",
+    "dayjs": "^1.11.7",
     "firebase": "^9.17.1",
     "framer-motion": "^9.0.1",
     "react": "^18.2.0",
