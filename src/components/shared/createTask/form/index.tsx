@@ -2,15 +2,20 @@ import { ReactElement, useState } from 'react'
 import { styled } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import styles from '@/styles/variables/export.module.scss'
-import DateTimePicker from 'react-datetime-picker'
-import 'react-datetime-picker/dist/DateTimePicker.css'
+import TimePicker from 'react-time-picker'
+import DatePicker from 'react-date-picker'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
+import { CreateTodo } from '@/utils/functions'
+import { v4 as uuidv4 } from 'uuid'
+import { useMyContext } from '@/utils/provider'
 interface CurrentEventProps {
   title: string
   description: string
   currentDate: Date
-  dueDate: Date | null
+  currentTime: Date | string
+  dueDate: Date
+  dueTime: Date | string | null
   important: boolean
   complete: boolean
 }
@@ -40,18 +45,49 @@ const CssTextField = styled(TextField)({
 })
 
 export default function CreateTaskForm(): ReactElement {
-  const [currentEvent, setCurrentEvent] = useState<CurrentEventProps>({
+  const { currentUser, setActiveModal } = useMyContext()
+
+  const defaultCurrentEventProps = {
     title: '',
     description: '',
     currentDate: new Date(),
+    currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
     dueDate: new Date(),
+    dueTime: new Date(),
     important: false,
     complete: false,
-  })
+  }
+
+  const [currentEvent, setCurrentEvent] = useState<CurrentEventProps>(
+    defaultCurrentEventProps
+  )
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrentEvent({ ...currentEvent, important: event.target.checked })
     console.log(currentEvent)
+  }
+
+  const ConfirmTodo = async (): Promise<void> => {
+    const uid = uuidv4()
+    const userId = currentUser.uid
+    try {
+      await CreateTodo({
+        uid,
+        userId,
+        title: currentEvent.title,
+        description: currentEvent.description,
+        creationDate: currentEvent.currentDate,
+        creationTime: currentEvent.currentTime,
+        dueDate: currentEvent.dueDate,
+        dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : null,
+        important: currentEvent.important,
+        complete: false,
+      })
+      alert('Todo Successfully Created')
+      setActiveModal(false)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -80,20 +116,26 @@ export default function CreateTaskForm(): ReactElement {
       />
       <div className="createtaskrow">
         <h4>Date and Time</h4>
-        <DateTimePicker
-          className="createtaskdatetime"
-          disableClock
-          minDate={new Date()}
-          value={currentEvent.dueDate}
-          onChange={(newValue) => {
-            try {
+        <div className="createtaskdatetime">
+          <DatePicker
+            value={currentEvent.dueDate}
+            onChange={(newValue: Date) => {
               setCurrentEvent({ ...currentEvent, dueDate: newValue })
               console.log(currentEvent)
-            } catch (error) {
-              console.log(error)
-            }
-          }}
-        />
+            }}
+          />
+          <TimePicker
+            value={currentEvent.dueTime !== null ? currentEvent.dueTime : ''}
+            onChange={(newValue: Date | string | null) => {
+              setCurrentEvent({
+                ...currentEvent,
+                dueTime:
+                  newValue !== null ? newValue.toLocaleString('en-GB') : null,
+              })
+              console.log(currentEvent)
+            }}
+          />
+        </div>
       </div>
       <FormControlLabel
         value="important"
@@ -112,8 +154,14 @@ export default function CreateTaskForm(): ReactElement {
         labelPlacement="start"
       />
       <div className="createtaskgroup half">
-        <button>Reset</button>
-        <button>Confirm</button>
+        <button
+          onClick={() => {
+            setCurrentEvent(defaultCurrentEventProps)
+          }}
+        >
+          Reset
+        </button>
+        <button onClick={ConfirmTodo}>Confirm</button>
       </div>
     </div>
   )

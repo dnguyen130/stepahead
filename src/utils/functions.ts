@@ -19,8 +19,10 @@ interface TodoDataProps {
   userId: string
   title: string
   description: string
-  creationDate: string
-  dueDate: string
+  creationDate: Date
+  creationTime: Date | string
+  dueDate: Date
+  dueTime: Date | string | null
   important: boolean
   complete: boolean
 }
@@ -56,16 +58,20 @@ const CreateTodo = async ({
   title,
   description,
   creationDate,
+  creationTime,
   dueDate,
+  dueTime,
   important,
   complete,
 }: TodoDataProps): Promise<void> => {
-  await set(ref(db, `users/${userId}/todo` + uid), {
+  await set(ref(db, `users/${userId}/todo/` + uid), {
     userId,
     title,
     description,
     creationDate,
+    creationTime,
     dueDate,
+    dueTime,
     important,
     complete,
   })

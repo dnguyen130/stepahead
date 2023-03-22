@@ -27,7 +27,7 @@ interface Todos {
 interface ContextType {
   theme: string
   setTheme: Dispatch<SetStateAction<string>>
-  currentUser: Record<string, any>
+  currentUser: Record<string, string>
   setCurrentUser: Dispatch<SetStateAction<CurrentUserType>>
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
