@@ -4,12 +4,13 @@ import TextField from '@mui/material/TextField'
 import styles from '@/styles/variables/export.module.scss'
 import DateTimePicker from 'react-datetime-picker'
 import 'react-datetime-picker/dist/DateTimePicker.css'
-
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
 interface CurrentEventProps {
   title: string
   description: string
   currentDate: Date
-  dueDate: Date
+  dueDate: Date | null
   important: boolean
   complete: boolean
 }
@@ -20,6 +21,7 @@ const CssTextField = styled(TextField)({
   },
   '& label': {
     color: styles.bgLight,
+    fontFamily: `"Ubuntu", "Arial", sans-serif`,
   },
   '& label.Mui-focused': {
     color: styles.bgLight,
@@ -47,6 +49,11 @@ export default function CreateTaskForm(): ReactElement {
     complete: false,
   })
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    setCurrentEvent({ ...currentEvent, important: event.target.checked })
+    console.log(currentEvent)
+  }
+
   return (
     <div className="createtaskform">
       <CssTextField
@@ -71,20 +78,39 @@ export default function CreateTaskForm(): ReactElement {
           })
         }}
       />
-      <DateTimePicker
-        className="createtaskdatetime"
-        disableClock={true}
-        minDate={new Date()}
-        value={currentEvent.dueDate}
-        onChange={(newValue) => {
-          setCurrentEvent({ ...currentEvent, dueDate: newValue })
-          console.log(currentEvent)
-        }}
-      />
-      <div>
-        <label className="createtasklabel">Important</label>
-        <input type="checkbox" />
+      <div className="createtaskrow">
+        <h4>Date and Time</h4>
+        <DateTimePicker
+          className="createtaskdatetime"
+          disableClock
+          minDate={new Date()}
+          value={currentEvent.dueDate}
+          onChange={(newValue) => {
+            try {
+              setCurrentEvent({ ...currentEvent, dueDate: newValue })
+              console.log(currentEvent)
+            } catch (error) {
+              console.log(error)
+            }
+          }}
+        />
       </div>
+      <FormControlLabel
+        value="important"
+        control={
+          <Checkbox
+            sx={{
+              color: styles.bgLight,
+              '&.Mui-checked': {
+                color: styles.iconActiveLight,
+              },
+            }}
+            onChange={handleChange}
+          />
+        }
+        label="Important"
+        labelPlacement="start"
+      />
       <div className="createtaskgroup half">
         <button>Reset</button>
         <button>Confirm</button>
