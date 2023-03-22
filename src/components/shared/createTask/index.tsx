@@ -5,7 +5,7 @@ import CreateTaskForm from './form'
 import { MdClose } from 'react-icons/md'
 
 export default function CreateTask(): ReactElement {
-  const { activeModal } = useMyContext()
+  const { activeModal, setActiveModal } = useMyContext()
   const [activeTab, setActiveTab] = useState('event')
 
   return (
@@ -46,7 +46,12 @@ export default function CreateTask(): ReactElement {
             >
               Journal Entry
             </button>
-            <button className="exitbutton">
+            <button
+              className="exitbutton"
+              onClick={() => {
+                setActiveModal(false)
+              }}
+            >
               <MdClose size="100%" />
             </button>
           </header>
