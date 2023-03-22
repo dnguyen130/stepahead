@@ -18,7 +18,7 @@ export default function CreateTask(): ReactElement {
           exit={{ opacity: 0, transitionEnd: { display: 'none' } }}
           transition={{
             type: 'linear',
-            duration: 0.2,
+            duration: 0.1,
           }}
         >
           <header className="createtaskheader">

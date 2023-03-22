@@ -12,7 +12,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
   padding: 5px;
   box-shadow: inset 35px 35px 54px #224f84, inset -35px -35px 54px #3c8dec,
     10px 10px 10px rgba(0, 0, 0, 0.25);
@@ -125,6 +124,65 @@
   width: 50%;
 }
 
-.createtaskdate {
-  width: 200px;
+.createtasklabel {
+  margin-right: 10px;
+}
+
+// React Date Time Picker
+
+.createtaskdatetime {
+  width: 100%;
+  height: 50px;
+}
+
+.react-datetime-picker__wrapper {
+  border: 1px solid $bglight !important;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.react-datetime-picker__inputGroup__month,
+.react-datetime-picker__inputGroup__year,
+.react-datetime-picker__inputGroup__day,
+.react-datetime-picker__inputGroup__hour,
+.react-datetime-picker__inputGroup__minute,
+.react-datetime-picker__inputGroup__second,
+.react-datetime-picker__inputGroup__amPm {
+  color: $bglight;
+}
+
+.react-datetime-picker__inputGroup__amPm option {
+  color: black;
+}
+
+.react-datetime-picker__button svg {
+  stroke: $bglight !important;
+}
+
+.react-datetime-picker__button:enabled:hover
+  .react-datetime-picker__clear-button__icon {
+  stroke: rgba(255, 0, 0, 0.7) !important;
+}
+
+.react-datetime-picker__button:enabled:focus
+  .react-datetime-picker__button__icon {
+  stroke: $bglight !important;
+}
+
+.react-datetime-picker__calendar-button:enabled:hover
+  .react-datetime-picker__button__icon {
+  stroke: rgba(0, 255, 0, 0.7) !important;
+}
+
+.react-datetime-picker__calendar-button:enabled:focus
+  .react-datetime-picker__button__icon {
+  stroke: $bglight !important;
+}
+
+.react-calendar {
+  color: black;
+}
+
+.react-calendar button {
+  border-radius: 0 !important;
 }
