@@ -4,7 +4,6 @@ import { ReactElement } from 'react'
 import { TodoDataProps } from '@/utils/types'
 
 export default function TodoTask({
-  uid,
   userId,
   title,
   description,

@@ -4,7 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { ref, set, get, child } from 'firebase/database'
+import { ref, set, get, child, push, update } from 'firebase/database'
 import { FirebaseError } from 'firebase/app'
 import { auth, db, googleProvider } from './firebase'
 import { UserDataProps, TodoDataProps, SignInProps } from './types'
@@ -23,7 +23,7 @@ const WriteUserData = async ({
 const GetAllTodos = async (userId: string): Promise<TodoDataProps | null> => {
   const dbRef = ref(db)
   try {
-    const initialTodoData = await get(child(dbRef, `users/${userId}/todo`))
+    const initialTodoData = await get(child(dbRef, `users/${userId}/todos`))
     if (initialTodoData.exists()) {
       return initialTodoData.val()
     } else {
@@ -37,7 +37,6 @@ const GetAllTodos = async (userId: string): Promise<TodoDataProps | null> => {
 }
 
 const CreateTodo = async ({
-  uid,
   userId,
   title,
   description,
@@ -48,8 +47,7 @@ const CreateTodo = async ({
   important,
   complete,
 }: TodoDataProps): Promise<void> => {
-  await set(ref(db, `users/${userId}/todo/` + uid), {
-    uid,
+  const todoData = {
     userId,
     title,
     description,
@@ -59,7 +57,16 @@ const CreateTodo = async ({
     dueTime,
     important,
     complete,
-  })
+  }
+
+  const newTodoKey = push(child(ref(db), 'todos')).key
+
+  if (newTodoKey !== null) {
+    const updates: Record<string, any> = {}
+    updates[`/users/${userId}/todos/` + newTodoKey] = todoData
+    console.log(updates)
+    await update(ref(db), updates)
+  }
 }
 
 const SignUpWithEmail = async ({

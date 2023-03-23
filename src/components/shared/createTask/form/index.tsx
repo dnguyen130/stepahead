@@ -7,7 +7,6 @@ import DatePicker from 'react-date-picker'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { CreateTodo } from '@/utils/functions'
-import { v4 as uuidv4 } from 'uuid'
 import { useMyContext } from '@/utils/provider'
 interface CurrentEventProps {
   title: string
@@ -67,11 +66,21 @@ export default function CreateTaskForm(): ReactElement {
   }
 
   const ConfirmTodo = async (): Promise<void> => {
-    const uid = uuidv4()
     const userId = currentUser.uid
-    try {
-      await CreateTodo({
-        uid,
+    await CreateTodo({
+      userId,
+      title: currentEvent.title,
+      description: currentEvent.description,
+      creationDate: currentEvent.currentDate.toDateString(),
+      creationTime: currentEvent.currentTime,
+      dueDate: currentEvent.dueDate.toDateString(),
+      dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
+      important: currentEvent.important,
+      complete: false,
+    })
+    setTodos([
+      ...todos,
+      {
         userId,
         title: currentEvent.title,
         description: currentEvent.description,
@@ -81,27 +90,10 @@ export default function CreateTaskForm(): ReactElement {
         dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
         important: currentEvent.important,
         complete: false,
-      })
-      setTodos([
-        ...todos,
-        {
-          uid,
-          userId,
-          title: currentEvent.title,
-          description: currentEvent.description,
-          creationDate: currentEvent.currentDate.toDateString(),
-          creationTime: currentEvent.currentTime,
-          dueDate: currentEvent.dueDate.toDateString(),
-          dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
-          important: currentEvent.important,
-          complete: false,
-        },
-      ])
-      alert('Todo Successfully Created')
-      setActiveModal(false)
-    } catch (error) {
-      console.log(error)
-    }
+      },
+    ])
+    alert('Todo Successfully Created')
+    setActiveModal(false)
   }
 
   return (

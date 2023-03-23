@@ -10,7 +10,6 @@ export interface SignInProps {
 }
 
 export interface TodoDataProps {
-  uid: string
   userId: string
   title: string
   description: string

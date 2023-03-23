@@ -13,7 +13,7 @@ import { UserDataProps, TodoDataProps } from './types'
 interface ContextType {
   theme: string
   setTheme: Dispatch<SetStateAction<string>>
-  currentUser: Record<string, string>
+  currentUser: UserDataProps
   setCurrentUser: Dispatch<SetStateAction<UserDataProps>>
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
@@ -43,7 +43,6 @@ const initialStates = {
 
   todos: [
     {
-      uid: '',
       userId: '',
       title: '',
       description: '',

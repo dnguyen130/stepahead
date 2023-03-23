@@ -37,20 +37,15 @@ export default function App(): ReactElement {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user !== null) {
+        setTodos([])
+        setLoading(true)
         setCurrentUser({
           uid: user.uid,
           name: user.displayName !== null ? user.displayName : '',
           email: user.email !== null ? user.email : '',
         })
-        setLoading(true)
         if (location.pathname === '/' || location.pathname === '/signup') {
           navigate('/dashboard')
-        }
-        const timer = setTimeout(() => {
-          setLoading(false)
-        }, 1000)
-        return () => {
-          clearTimeout(timer)
         }
       } else if (user == null) {
         setCurrentUser({
@@ -62,36 +57,53 @@ export default function App(): ReactElement {
         if (location.pathname !== '/' && location.pathname !== '/signup') {
           navigate('/')
         }
+        const timer = setTimeout(() => {
+          setLoading(false)
+        }, 1000)
+        return () => {
+          clearTimeout(timer)
+        }
       }
     })
+
     setInitialLoad(true)
-
-    console.log(todos)
-
-    const timer = setTimeout(() => {
-      setLoading(false)
-    }, 1000)
-    return () => {
-      clearTimeout(timer)
-    }
   }, [])
 
   useEffect(() => {
     if (currentUser.uid !== '') {
       const GetInitialTodos = async (uid: string): Promise<void> => {
         const res = await GetAllTodos(uid)
-        console.log(res)
-        console.log(currentUser.uid)
+
+        // GetAllTodos returns null if no todo data has been created or an error occurs
         if (res !== null) {
           const initialTodosArray: TodoDataProps[] = Object.values(res)
-          console.log(initialTodosArray)
           setTodos(initialTodosArray)
+          setInitialLoad(true)
+        } else {
+          setTodos([])
         }
       }
       GetInitialTodos(currentUser.uid).then(
         () => {},
         () => {}
       )
+      const timer = setTimeout(() => {
+        setLoading(false)
+      }, 1000)
+      return () => {
+        clearTimeout(timer)
+      }
+    }
+
+    if (loading && currentUser.uid !== '' && todos.length !== 0) {
+      if (todos[0].userId !== '') {
+        const timer = setTimeout(() => {
+          setLoading(false)
+        }, 1000)
+        return () => {
+          clearTimeout(timer)
+        }
+      }
     }
   }, [currentUser])
 
