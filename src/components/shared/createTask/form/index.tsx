@@ -107,6 +107,7 @@ export default function CreateTaskForm(): ReactElement {
   return (
     <div className="createtaskform">
       <CssTextField
+        required
         className="createtaskinput"
         label="Title"
         variant="outlined"
@@ -131,6 +132,7 @@ export default function CreateTaskForm(): ReactElement {
         <h4>Date and Time</h4>
         <div className="createtaskdatetime">
           <DatePicker
+            required
             value={currentEvent.dueDate}
             onChange={(newValue: Date) => {
               setCurrentEvent({ ...currentEvent, dueDate: newValue })
