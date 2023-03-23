@@ -28,17 +28,11 @@ export default function App(): ReactElement {
     loading,
     setLoading,
     setInitialLoad,
+    todos,
     setTodos,
   } = useMyContext()
   const location = useLocation()
   const navigate = useNavigate()
-
-  const GetInitialTodos = async (uid: string): Promise<void> => {
-    const initialTodos = await GetAllTodos(uid)
-
-    const initialTodosArray: TodoDataProps[] = Object.values(initialTodos)
-    setTodos(initialTodosArray)
-  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -64,12 +58,15 @@ export default function App(): ReactElement {
           name: '',
           email: '',
         })
+        setTodos([])
         if (location.pathname !== '/' && location.pathname !== '/signup') {
           navigate('/')
         }
       }
     })
     setInitialLoad(true)
+
+    console.log(todos)
 
     const timer = setTimeout(() => {
       setLoading(false)
@@ -81,7 +78,20 @@ export default function App(): ReactElement {
 
   useEffect(() => {
     if (currentUser.uid !== '') {
-      void GetInitialTodos(currentUser.uid)
+      const GetInitialTodos = async (uid: string): Promise<void> => {
+        const res = await GetAllTodos(uid)
+        console.log(res)
+        console.log(currentUser.uid)
+        if (res !== null) {
+          const initialTodosArray: TodoDataProps[] = Object.values(res)
+          console.log(initialTodosArray)
+          setTodos(initialTodosArray)
+        }
+      }
+      GetInitialTodos(currentUser.uid).then(
+        () => {},
+        () => {}
+      )
     }
   }, [currentUser])
 

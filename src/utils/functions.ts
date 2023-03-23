@@ -20,7 +20,7 @@ const WriteUserData = async ({
   })
 }
 
-const GetAllTodos = async (userId: string): Promise<TodoDataProps> => {
+const GetAllTodos = async (userId: string): Promise<TodoDataProps | null> => {
   const dbRef = ref(db)
   try {
     const initialTodoData = await get(child(dbRef, `users/${userId}/todo`))
@@ -28,33 +28,11 @@ const GetAllTodos = async (userId: string): Promise<TodoDataProps> => {
       return initialTodoData.val()
     } else {
       console.log('No data available')
-      return {
-        uid: '',
-        userId: '',
-        title: '',
-        description: '',
-        creationDate: new Date().toDateString(),
-        creationTime: '',
-        dueDate: new Date().toDateString(),
-        dueTime: '',
-        important: false,
-        complete: false,
-      }
+      return null
     }
   } catch (error) {
     console.log(error)
-    return {
-      uid: '',
-      userId: '',
-      title: '',
-      description: '',
-      creationDate: new Date().toDateString(),
-      creationTime: '',
-      dueDate: new Date().toDateString(),
-      dueTime: '',
-      important: false,
-      complete: false,
-    }
+    return null
   }
 }
 

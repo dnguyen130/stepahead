@@ -46,7 +46,7 @@ export default function Todo(): ReactElement {
               {i + 1 !== sortedArray.length && <div className="underline" />}
             </div>
           )
-        } else if (o.uid === '' && sortedArray.length === 1) {
+        } else if (o.uid === '' && sortedArray.length <= 1) {
           return (
             <div className="notaskscont" key={i}>
               No Tasks Created
