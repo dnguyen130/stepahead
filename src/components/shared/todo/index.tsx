@@ -1,15 +1,15 @@
-import { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { useMyContext } from '@/utils/provider'
-import todoData from '@/utils/fakeTodoData.json'
-
 import TodoTask, { ToDoTaskProps } from './todoTask'
 
 export default function Todo(): ReactElement {
-  const { theme } = useMyContext()
-  let sortedArray: ToDoTaskProps[] = []
+  const { theme, todos } = useMyContext()
 
+  useEffect(() => {}, [todos])
+
+  let sortedArray: ToDoTaskProps[] = []
   const sortedTodos = (): ToDoTaskProps[] => {
-    const todoMap = Object.values(todoData)
+    const todoMap = Object.values(todos)
     const todoArray = [...todoMap]
     sortedArray = todoArray.sort((key1, key2): number => {
       const importantkey1 = key1.important
@@ -35,7 +35,9 @@ export default function Todo(): ReactElement {
               title={o.title}
               description={o.description}
               creationDate={o.creationDate}
+              creationTime={o.creationTime}
               dueDate={o.dueDate}
+              dueTime={o.dueTime}
               important={o.important}
               complete={o.complete}
             />

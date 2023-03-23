@@ -18,8 +18,10 @@ interface Todos {
   userId: string
   title: string
   description: string
-  creationDate: string
-  dueDate: string
+  creationDate: Date
+  creationTime: string
+  dueDate: Date
+  dueTime: string
   important: boolean
   complete: boolean
 }
@@ -61,8 +63,10 @@ const initialStates = {
       userId: '',
       title: '',
       description: '',
-      creationDate: '',
-      dueDate: '',
+      creationDate: new Date(),
+      creationTime: '',
+      dueDate: new Date(),
+      dueTime: '',
       important: false,
       complete: false,
     },

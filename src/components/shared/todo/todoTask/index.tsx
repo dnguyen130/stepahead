@@ -3,12 +3,14 @@ import { useMyContext } from '@/utils/provider'
 import { ReactElement } from 'react'
 
 export interface ToDoTaskProps {
-  uid: number
+  uid: string
   userId: string
   title: string
   description: string
-  creationDate: number
-  dueDate: number
+  creationDate: Date
+  creationTime: string
+  dueDate: Date
+  dueTime: string
   important: boolean
   complete: boolean
 }

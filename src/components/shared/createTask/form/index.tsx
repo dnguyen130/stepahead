@@ -13,9 +13,9 @@ interface CurrentEventProps {
   title: string
   description: string
   currentDate: Date
-  currentTime: Date | string
+  currentTime: string
   dueDate: Date
-  dueTime: Date | string | null
+  dueTime: string | null
   important: boolean
   complete: boolean
 }
@@ -45,7 +45,7 @@ const CssTextField = styled(TextField)({
 })
 
 export default function CreateTaskForm(): ReactElement {
-  const { currentUser, setActiveModal } = useMyContext()
+  const { currentUser, setActiveModal, todos, setTodos } = useMyContext()
 
   const defaultCurrentEventProps = {
     title: '',
@@ -53,7 +53,7 @@ export default function CreateTaskForm(): ReactElement {
     currentDate: new Date(),
     currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
     dueDate: new Date(),
-    dueTime: new Date(),
+    dueTime: '',
     important: false,
     complete: false,
   }
@@ -76,13 +76,28 @@ export default function CreateTaskForm(): ReactElement {
         userId,
         title: currentEvent.title,
         description: currentEvent.description,
-        creationDate: currentEvent.currentDate,
+        creationDate: currentEvent.currentDate.toDateString(),
         creationTime: currentEvent.currentTime,
-        dueDate: currentEvent.dueDate,
-        dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : null,
+        dueDate: currentEvent.dueDate.toDateString(),
+        dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
         important: currentEvent.important,
         complete: false,
       })
+      setTodos([
+        ...todos,
+        {
+          uid,
+          userId,
+          title: currentEvent.title,
+          description: currentEvent.description,
+          creationDate: currentEvent.currentDate,
+          creationTime: currentEvent.currentTime,
+          dueDate: currentEvent.dueDate,
+          dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
+          important: currentEvent.important,
+          complete: false,
+        },
+      ])
       alert('Todo Successfully Created')
       setActiveModal(false)
     } catch (error) {

@@ -19,9 +19,9 @@ interface TodoDataProps {
   userId: string
   title: string
   description: string
-  creationDate: Date
+  creationDate: string
   creationTime: Date | string
-  dueDate: Date
+  dueDate: string
   dueTime: Date | string | null
   important: boolean
   complete: boolean
