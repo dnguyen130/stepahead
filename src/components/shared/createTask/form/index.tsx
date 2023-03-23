@@ -64,7 +64,6 @@ export default function CreateTaskForm(): ReactElement {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrentEvent({ ...currentEvent, important: event.target.checked })
-    console.log(currentEvent)
   }
 
   const ConfirmTodo = async (): Promise<void> => {
@@ -90,9 +89,9 @@ export default function CreateTaskForm(): ReactElement {
           userId,
           title: currentEvent.title,
           description: currentEvent.description,
-          creationDate: currentEvent.currentDate,
+          creationDate: currentEvent.currentDate.toDateString(),
           creationTime: currentEvent.currentTime,
-          dueDate: currentEvent.dueDate,
+          dueDate: currentEvent.dueDate.toDateString(),
           dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
           important: currentEvent.important,
           complete: false,
@@ -114,7 +113,6 @@ export default function CreateTaskForm(): ReactElement {
         value={currentEvent.title}
         onChange={(newValue) => {
           setCurrentEvent({ ...currentEvent, title: newValue.target.value })
-          console.log(currentEvent)
         }}
       />
       <CssTextField
@@ -136,7 +134,6 @@ export default function CreateTaskForm(): ReactElement {
             value={currentEvent.dueDate}
             onChange={(newValue: Date) => {
               setCurrentEvent({ ...currentEvent, dueDate: newValue })
-              console.log(currentEvent)
             }}
           />
           <TimePicker
@@ -147,7 +144,6 @@ export default function CreateTaskForm(): ReactElement {
                 dueTime:
                   newValue !== null ? newValue.toLocaleString('en-GB') : null,
               })
-              console.log(currentEvent)
             }}
           />
         </div>

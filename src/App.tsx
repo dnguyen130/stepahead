@@ -4,6 +4,8 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { auth } from '@/utils/firebase'
+import { GetAllTodos } from './utils/functions'
+import { TodoDataProps } from './utils/types'
 
 import Navbar from '@/components/desktop/navbar'
 import Navbarmobile from '@/components/mobile/navbar'
@@ -26,9 +28,17 @@ export default function App(): ReactElement {
     loading,
     setLoading,
     setInitialLoad,
+    setTodos,
   } = useMyContext()
   const location = useLocation()
   const navigate = useNavigate()
+
+  const GetInitialTodos = async (uid: string): Promise<void> => {
+    const initialTodos = await GetAllTodos(uid)
+
+    const initialTodosArray: TodoDataProps[] = Object.values(initialTodos)
+    setTodos(initialTodosArray)
+  }
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -36,6 +46,7 @@ export default function App(): ReactElement {
         setCurrentUser({
           uid: user.uid,
           name: user.displayName !== null ? user.displayName : '',
+          email: user.email !== null ? user.email : '',
         })
         setLoading(true)
         if (location.pathname === '/' || location.pathname === '/signup') {
@@ -51,13 +62,13 @@ export default function App(): ReactElement {
         setCurrentUser({
           uid: '',
           name: '',
+          email: '',
         })
         if (location.pathname !== '/' && location.pathname !== '/signup') {
           navigate('/')
         }
       }
     })
-
     setInitialLoad(true)
 
     const timer = setTimeout(() => {
@@ -67,6 +78,12 @@ export default function App(): ReactElement {
       clearTimeout(timer)
     }
   }, [])
+
+  useEffect(() => {
+    if (currentUser.uid !== '') {
+      void GetInitialTodos(currentUser.uid)
+    }
+  }, [currentUser])
 
   return (
     <div className={loading ? 'maincont noscroll' : 'maincont'}>

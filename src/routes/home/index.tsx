@@ -13,6 +13,8 @@ const evening = (hour: number): boolean => {
 }
 
 export default function Home(): ReactElement {
+  const { currentUser } = useMyContext()
+
   // Date and welcome message
   let welcomeMessage
   const currentHour = new Date().getHours()
@@ -33,8 +35,6 @@ export default function Home(): ReactElement {
     day: 'numeric',
   }
   const today = date.toLocaleString('en-us', options)
-
-  const { currentUser } = useMyContext()
 
   return (
     <section className="homecont">

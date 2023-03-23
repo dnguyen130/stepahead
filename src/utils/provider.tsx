@@ -8,44 +8,28 @@ import {
   ReactElement,
 } from 'react'
 
-interface CurrentUserType {
-  uid: string
-  name: string
-}
-
-interface Todos {
-  uid: string
-  userId: string
-  title: string
-  description: string
-  creationDate: Date
-  creationTime: string
-  dueDate: Date
-  dueTime: string
-  important: boolean
-  complete: boolean
-}
+import { UserDataProps, TodoDataProps } from './types'
 
 interface ContextType {
   theme: string
   setTheme: Dispatch<SetStateAction<string>>
   currentUser: Record<string, string>
-  setCurrentUser: Dispatch<SetStateAction<CurrentUserType>>
+  setCurrentUser: Dispatch<SetStateAction<UserDataProps>>
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>
   initialLoad: boolean
   setInitialLoad: Dispatch<SetStateAction<boolean>>
   activeModal: boolean
   setActiveModal: Dispatch<SetStateAction<boolean>>
-  todos: Todos[]
-  setTodos: Dispatch<SetStateAction<Todos[]>>
+  todos: TodoDataProps[]
+  setTodos: Dispatch<SetStateAction<TodoDataProps[]>>
 }
 
 const initialStates = {
   theme: 'light',
   setTheme: () => {},
 
-  currentUser: { uid: '', name: '' },
+  currentUser: { uid: '', name: '', email: '' },
   setCurrentUser: () => {},
 
   loading: true,
@@ -63,9 +47,9 @@ const initialStates = {
       userId: '',
       title: '',
       description: '',
-      creationDate: new Date(),
+      creationDate: new Date().toDateString(),
       creationTime: '',
-      dueDate: new Date(),
+      dueDate: new Date().toDateString(),
       dueTime: '',
       important: false,
       complete: false,

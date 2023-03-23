@@ -1,19 +1,7 @@
 import { BsStarFill } from 'react-icons/bs'
 import { useMyContext } from '@/utils/provider'
 import { ReactElement } from 'react'
-
-export interface ToDoTaskProps {
-  uid: string
-  userId: string
-  title: string
-  description: string
-  creationDate: Date
-  creationTime: string
-  dueDate: Date
-  dueTime: string
-  important: boolean
-  complete: boolean
-}
+import { TodoDataProps } from '@/utils/types'
 
 export default function TodoTask({
   uid,
@@ -24,7 +12,7 @@ export default function TodoTask({
   dueDate,
   important,
   complete,
-}: ToDoTaskProps): ReactElement {
+}: TodoDataProps): ReactElement {
   const { theme } = useMyContext()
 
   return (

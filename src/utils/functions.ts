@@ -4,33 +4,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { ref, set, get } from 'firebase/database'
+import { ref, set, get, child } from 'firebase/database'
 import { FirebaseError } from 'firebase/app'
 import { auth, db, googleProvider } from './firebase'
-
-interface UserDataProps {
-  uid: string
-  name: string | null
-  email: string | null
-}
-
-interface TodoDataProps {
-  uid: string
-  userId: string
-  title: string
-  description: string
-  creationDate: string
-  creationTime: Date | string
-  dueDate: string
-  dueTime: Date | string | null
-  important: boolean
-  complete: boolean
-}
-
-interface SignInProps {
-  email: string
-  password: string
-}
+import { UserDataProps, TodoDataProps, SignInProps } from './types'
 
 const WriteUserData = async ({
   uid,
@@ -43,12 +20,41 @@ const WriteUserData = async ({
   })
 }
 
-const GetAllTodos = async (userId: string, uid: string): Promise<void> => {
+const GetAllTodos = async (userId: string): Promise<TodoDataProps> => {
+  const dbRef = ref(db)
   try {
-    const initialTodoData = await get(ref(db, `users/${userId}/todos`))
-    console.log(initialTodoData.val())
-  } catch (err) {
-    console.log(err)
+    const initialTodoData = await get(child(dbRef, `users/${userId}/todo`))
+    if (initialTodoData.exists()) {
+      return initialTodoData.val()
+    } else {
+      console.log('No data available')
+      return {
+        uid: '',
+        userId: '',
+        title: '',
+        description: '',
+        creationDate: new Date().toDateString(),
+        creationTime: '',
+        dueDate: new Date().toDateString(),
+        dueTime: '',
+        important: false,
+        complete: false,
+      }
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      uid: '',
+      userId: '',
+      title: '',
+      description: '',
+      creationDate: new Date().toDateString(),
+      creationTime: '',
+      dueDate: new Date().toDateString(),
+      dueTime: '',
+      important: false,
+      complete: false,
+    }
   }
 }
 
@@ -65,6 +71,7 @@ const CreateTodo = async ({
   complete,
 }: TodoDataProps): Promise<void> => {
   await set(ref(db, `users/${userId}/todo/` + uid), {
+    uid,
     userId,
     title,
     description,
@@ -87,8 +94,8 @@ const SignUpWithEmail = async ({
 
     const activeUserData: UserDataProps = {
       uid: user.uid,
-      name: user.displayName,
-      email: user.email,
+      name: user.displayName !== null ? user.displayName : '',
+      email: user.email !== null ? user.email : '',
     }
 
     await WriteUserData(activeUserData)
@@ -157,8 +164,8 @@ const SignInWithGoogle = async (): Promise<Record<string, any> | string> => {
 
     const activeUserData: UserDataProps = {
       uid: user.uid,
-      name: user.displayName,
-      email: user.email,
+      name: user.displayName !== null ? user.displayName : '',
+      email: user.email !== null ? user.email : '',
     }
 
     await WriteUserData(activeUserData)
