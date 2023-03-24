@@ -1,4 +1,5 @@
 import { BsStarFill } from 'react-icons/bs'
+import { VscCircleFilled } from 'react-icons/vsc'
 import { useMyContext } from '@/utils/provider'
 import { ReactElement } from 'react'
 import { TodoDataProps } from '@/utils/types'
@@ -16,8 +17,18 @@ export default function TodoTask({
 
   return (
     <section className="todotaskcont">
-      <div className={`todotaskicon-${theme}`}>
-        {important && <BsStarFill size="100%" />}
+      <div
+        className={
+          important
+            ? `todotaskicon-${theme}-important`
+            : `todotaskicon-${theme}-basic`
+        }
+      >
+        {important ? (
+          <BsStarFill size="100%" />
+        ) : (
+          <VscCircleFilled size="100%" />
+        )}
       </div>
       <label
         htmlFor={title}
