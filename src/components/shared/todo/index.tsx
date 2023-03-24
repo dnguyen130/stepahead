@@ -2,9 +2,22 @@ import { ReactElement } from 'react'
 import { useMyContext } from '@/utils/provider'
 import TodoTask from './todoTask'
 import { TodoDataProps } from '@/utils/types'
+import { DeleteTodo } from '@/utils/functions'
+import { onValue, ref } from 'firebase/database'
+import { db } from '@/utils/firebase'
 
 export default function Todo(): ReactElement {
-  const { theme, todos } = useMyContext()
+  const { theme, currentUser, todos, setTodos } = useMyContext()
+
+  const todoRef = ref(db, `users/${currentUser.uid}/todos`)
+  onValue(todoRef, (snapshot) => {
+    const data = snapshot.val()
+    console.log(data)
+  })
+
+  const DeleteATodo = async (todo: TodoDataProps): Promise<void> => {
+    await DeleteTodo(todo)
+  }
 
   let sortedArray: TodoDataProps[] = []
   const sortedTodos = (): TodoDataProps[] => {
@@ -34,6 +47,7 @@ export default function Todo(): ReactElement {
             <div key={i}>
               <TodoTask
                 key={i}
+                uid={o.uid}
                 userId={o.userId}
                 title={o.title}
                 description={o.description}
@@ -43,6 +57,12 @@ export default function Todo(): ReactElement {
                 dueTime={o.dueTime}
                 important={o.important}
                 complete={o.complete}
+                onDeleteClick={async () => {
+                  await DeleteATodo(o)
+                }}
+                onCompleteClick={async () => {
+                  await DeleteATodo(o)
+                }}
               />
               {/* Remove last underline in list */}
               {i + 1 !== sortedArray.length && <div className="underline" />}

@@ -67,7 +67,8 @@ export default function CreateTaskForm(): ReactElement {
 
   const ConfirmTodo = async (): Promise<void> => {
     const userId = currentUser.uid
-    await CreateTodo({
+    const Key = await CreateTodo({
+      uid: '',
       userId,
       title: currentEvent.title,
       description: currentEvent.description,
@@ -81,6 +82,7 @@ export default function CreateTaskForm(): ReactElement {
     setTodos([
       ...todos,
       {
+        uid: Key,
         userId,
         title: currentEvent.title,
         description: currentEvent.description,
@@ -120,7 +122,7 @@ export default function CreateTaskForm(): ReactElement {
           })
         }}
       />
-      <div className="createtaskrow">
+      <div>
         <h4>Date and Time</h4>
         <div className="createtaskdatetime">
           <DatePicker
@@ -143,6 +145,7 @@ export default function CreateTaskForm(): ReactElement {
         </div>
       </div>
       <FormControlLabel
+        className="createtaskimportant"
         value="important"
         control={
           <Checkbox
@@ -158,15 +161,18 @@ export default function CreateTaskForm(): ReactElement {
         label="Important"
         labelPlacement="start"
       />
-      <div className="createtaskgroup half">
+      <div className="createtaskgroup">
         <button
+          className="createtaskbutton"
           onClick={() => {
             setCurrentEvent(defaultCurrentEventProps)
           }}
         >
           Reset
         </button>
-        <button onClick={ConfirmTodo}>Confirm</button>
+        <button className="createtaskbutton" onClick={ConfirmTodo}>
+          Confirm
+        </button>
       </div>
     </div>
   )

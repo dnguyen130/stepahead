@@ -1,8 +1,9 @@
 import { BsStarFill } from 'react-icons/bs'
 import { VscCircleFilled } from 'react-icons/vsc'
+import { IoMdCheckmarkCircle, IoMdCloseCircle } from 'react-icons/io'
 import { useMyContext } from '@/utils/provider'
 import { ReactElement } from 'react'
-import { TodoDataProps } from '@/utils/types'
+import { TodoTaskProps } from '@/utils/types'
 
 export default function TodoTask({
   userId,
@@ -12,7 +13,9 @@ export default function TodoTask({
   dueDate,
   important,
   complete,
-}: TodoDataProps): ReactElement {
+  onDeleteClick,
+  onCompleteClick,
+}: TodoTaskProps): ReactElement {
   const { theme } = useMyContext()
 
   return (
@@ -30,22 +33,13 @@ export default function TodoTask({
           <VscCircleFilled size="100%" />
         )}
       </div>
-      <label
-        htmlFor={title}
-        className="todotasktitle"
-        style={{
-          textDecoration: complete ? 'line-through' : 'none',
-        }}
-      >
-        {title}
-      </label>
-      <input
-        id={title}
-        type="checkbox"
-        className="todotaskcheckbox"
-        name="task"
-        onChange={() => (complete = !complete)}
-      />
+      <h3 className="todotasktitle">{title}</h3>
+      <div className="todotaskicondelete" onClick={onDeleteClick}>
+        <IoMdCloseCircle size="80%" />
+      </div>
+      <div className="todotaskiconcomplete" onClick={onCompleteClick}>
+        <IoMdCheckmarkCircle size="80%" />
+      </div>
     </section>
   )
 }

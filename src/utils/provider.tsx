@@ -43,6 +43,7 @@ const initialStates = {
 
   todos: [
     {
+      uid: '',
       userId: '',
       title: '',
       description: '',

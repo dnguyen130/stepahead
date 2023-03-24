@@ -10,6 +10,7 @@ export interface SignInProps {
 }
 
 export interface TodoDataProps {
+  uid: string
   userId: string
   title: string
   description: string
@@ -19,4 +20,9 @@ export interface TodoDataProps {
   dueTime: string
   important: boolean
   complete: boolean
+}
+
+export interface TodoTaskProps extends TodoDataProps {
+  onDeleteClick: () => Promise<void>
+  onCompleteClick: () => Promise<void>
 }

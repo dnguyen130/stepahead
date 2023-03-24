@@ -55,9 +55,7 @@ export default function CreateTask(): ReactElement {
               <MdClose size="100%" />
             </button>
           </header>
-          <div className="createtask-content">
-            <CreateTaskForm />
-          </div>
+          <CreateTaskForm />
         </motion.div>
       )}
     </AnimatePresence>

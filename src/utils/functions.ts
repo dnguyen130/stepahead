@@ -4,7 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from 'firebase/auth'
-import { ref, set, get, child, push, update } from 'firebase/database'
+import { ref, set, get, child, push, update, remove } from 'firebase/database'
 import { FirebaseError } from 'firebase/app'
 import { auth, db, googleProvider } from './firebase'
 import { UserDataProps, TodoDataProps, SignInProps } from './types'
@@ -37,6 +37,7 @@ const GetAllTodos = async (userId: string): Promise<TodoDataProps | null> => {
 }
 
 const CreateTodo = async ({
+  uid,
   userId,
   title,
   description,
@@ -46,8 +47,9 @@ const CreateTodo = async ({
   dueTime,
   important,
   complete,
-}: TodoDataProps): Promise<void> => {
+}: TodoDataProps): Promise<string> => {
   const todoData = {
+    uid: '',
     userId,
     title,
     description,
@@ -65,6 +67,21 @@ const CreateTodo = async ({
     const updates: Record<string, any> = {}
     updates[`/users/${userId}/todos/` + newTodoKey] = todoData
     await update(ref(db), updates)
+    return newTodoKey
+  } else {
+    return ''
+  }
+}
+
+const DeleteTodo = async (todo: TodoDataProps): Promise<void> => {
+  try {
+    const todoRef = ref(db, `users/${todo.userId}/todos/${todo.uid}`)
+    await remove(todoRef)
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      console.log(error.message)
+    }
+    console.log(error)
   }
 }
 
@@ -181,6 +198,7 @@ const SignOut = async (): Promise<void> => {
 export {
   CreateTodo,
   GetAllTodos,
+  DeleteTodo,
   SignInWithGoogle,
   SignOut,
   SignUpWithEmail,
