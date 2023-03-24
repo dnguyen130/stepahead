@@ -64,7 +64,6 @@ const CreateTodo = async ({
   if (newTodoKey !== null) {
     const updates: Record<string, any> = {}
     updates[`/users/${userId}/todos/` + newTodoKey] = todoData
-    console.log(updates)
     await update(ref(db), updates)
   }
 }
@@ -153,7 +152,12 @@ const SignInWithGoogle = async (): Promise<Record<string, any> | string> => {
       email: user.email !== null ? user.email : '',
     }
 
-    await WriteUserData(activeUserData)
+    const userRef = await get(ref(db, 'users/' + user.uid))
+    if (userRef.exists()) {
+      console.log('user exists')
+    } else {
+      await WriteUserData(activeUserData)
+    }
 
     return user
   } catch (err) {
