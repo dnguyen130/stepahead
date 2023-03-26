@@ -37,7 +37,6 @@ const GetAllTodos = async (userId: string): Promise<TodoDataProps | null> => {
 }
 
 const CreateTodo = async ({
-  uid,
   userId,
   title,
   description,
@@ -64,6 +63,7 @@ const CreateTodo = async ({
   const newTodoKey = push(child(ref(db), 'todos')).key
 
   if (newTodoKey !== null) {
+    // Add uid to database write
     const updates: Record<string, any> = {}
     updates[`/users/${userId}/todos/` + newTodoKey] = todoData
     await update(ref(db), updates)
@@ -76,6 +76,7 @@ const CreateTodo = async ({
 const DeleteTodo = async (todo: TodoDataProps): Promise<void> => {
   try {
     const todoRef = ref(db, `users/${todo.userId}/todos/${todo.uid}`)
+    console.log(todo)
     await remove(todoRef)
   } catch (error) {
     if (error instanceof FirebaseError) {

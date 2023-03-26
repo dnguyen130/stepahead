@@ -79,8 +79,6 @@ export default function App(): ReactElement {
           const initialTodosArray: TodoDataProps[] = Object.values(res)
           setTodos(initialTodosArray)
           setInitialLoad(true)
-        } else {
-          setTodos([])
         }
       }
       GetInitialTodos(currentUser.uid).then(

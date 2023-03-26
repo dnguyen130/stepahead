@@ -12,7 +12,6 @@ export default function ProtectedRoute({
   const { currentUser } = useMyContext()
 
   if (currentUser.uid === '') {
-    console.log('fire')
     return <Navigate to="/" replace />
   }
   return children

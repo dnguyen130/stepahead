@@ -6,17 +6,75 @@ import { DeleteTodo } from '@/utils/functions'
 import { onValue, ref } from 'firebase/database'
 import { db } from '@/utils/firebase'
 
+function areArraysEqual(
+  array1: TodoDataProps[],
+  array2: TodoDataProps[]
+): boolean {
+  // If the arrays have different length, they are not equal
+  if (array1.length !== array2.length) {
+    return false
+  }
+
+  // Iterate over each element of the arrays and compare them
+  for (let i = 0; i < array1.length; i++) {
+    const obj1 = array1[i]
+    const obj2 = array2[i]
+
+    // If the objects are not equal, the arrays are not equal
+    if (!areObjectsEqual(obj1, obj2)) {
+      return false
+    }
+  }
+
+  // If we reach this point, the arrays are equal
+  return true
+}
+
+function areObjectsEqual(
+  obj1: Record<string, any>,
+  obj2: Record<string, any>
+): boolean {
+  // If the objects have different number of keys, they are not equal
+  const keys1 = Object.keys(obj1)
+  const keys2 = Object.keys(obj2)
+  if (keys1.length !== keys2.length) {
+    return false
+  }
+
+  // Iterate over each key of the objects and compare their values
+  for (const key of keys1) {
+    const value1 = obj1[key]
+    const value2 = obj2[key]
+
+    // If the values are not equal, the objects are not equal
+    if (value1 !== value2) {
+      return false
+    }
+  }
+
+  // If we reach this point, the objects are equal
+  return true
+}
+
 export default function Todo(): ReactElement {
   const { theme, currentUser, todos, setTodos } = useMyContext()
-
   const todoRef = ref(db, `users/${currentUser.uid}/todos`)
-  onValue(todoRef, (snapshot) => {
-    const data = snapshot.val()
-    console.log(data)
-  })
 
   const DeleteATodo = async (todo: TodoDataProps): Promise<void> => {
     await DeleteTodo(todo)
+    onValue(todoRef, (snapshot) => {
+      const data = snapshot.val()
+      console.log(data)
+      if (data !== null) {
+        const dataArray = Object.values<TodoDataProps>(data)
+        if (!areArraysEqual(dataArray, todos)) {
+          setTodos(dataArray)
+          console.log(dataArray, todos)
+        }
+      } else if (data === null) {
+        setTodos([])
+      }
+    })
   }
 
   let sortedArray: TodoDataProps[] = []

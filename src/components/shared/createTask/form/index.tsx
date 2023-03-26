@@ -95,6 +95,7 @@ export default function CreateTaskForm(): ReactElement {
       },
     ])
     alert('Todo Successfully Created')
+    console.log(todos)
     setActiveModal(false)
   }
 
