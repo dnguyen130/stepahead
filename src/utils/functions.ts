@@ -65,6 +65,7 @@ const CreateTodo = async ({
   if (newTodoKey !== null) {
     // Add uid to database write
     const updates: Record<string, any> = {}
+    todoData.uid = newTodoKey
     updates[`/users/${userId}/todos/` + newTodoKey] = todoData
     await update(ref(db), updates)
     return newTodoKey
