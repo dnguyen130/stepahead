@@ -1,6 +1,7 @@
 import { ReactElement, useState } from 'react'
 import { styled } from '@mui/material'
 import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 import styles from '@/styles/variables/export.module.scss'
 import TimePicker from 'react-time-picker'
 import DatePicker from 'react-date-picker'
@@ -41,6 +42,11 @@ const CssTextField = styled(TextField)({
       borderColor: styles.bgLight,
     },
   },
+})
+
+const CssButton = styled(Button)({
+  fontFamily: `"Ubuntu", "Arial", sans-serif`,
+  backgroundColor: styles.buttonActiveLight,
 })
 
 export default function CreateTaskForm(): ReactElement {
@@ -123,7 +129,7 @@ export default function CreateTaskForm(): ReactElement {
           })
         }}
       />
-      <div>
+      <div className="datetimecont">
         <h4>Date and Time</h4>
         <div className="createtaskdatetime">
           <DatePicker
@@ -163,17 +169,30 @@ export default function CreateTaskForm(): ReactElement {
         labelPlacement="start"
       />
       <div className="createtaskgroup">
-        <button
-          className="createtaskbutton"
+        <CssButton
+          variant="contained"
           onClick={() => {
             setCurrentEvent(defaultCurrentEventProps)
           }}
+          sx={{
+            '&: hover': {
+              backgroundColor: styles.dangerLight,
+            },
+          }}
         >
           Reset
-        </button>
-        <button className="createtaskbutton" onClick={ConfirmTodo}>
+        </CssButton>
+        <CssButton
+          variant="contained"
+          onClick={ConfirmTodo}
+          sx={{
+            '&: hover': {
+              backgroundColor: styles.successLight,
+            },
+          }}
+        >
           Confirm
-        </button>
+        </CssButton>
       </div>
     </div>
   )

@@ -124,7 +124,7 @@ h4 {
 
 .createtaskinput {
   font-size: 1rem;
-  width: calc(100% - 10px);
+  width: calc(100% - 40px);
 }
 
 .createtaskgroup {
@@ -141,12 +141,23 @@ h4 {
 }
 
 .createtaskdatetime {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   column-gap: 10px;
   row-gap: 10px;
 
   @media (min-width: $tablet) {
-    grid-template-columns: 1fr 1fr;
+    flex-direction: row;
+  }
+}
+
+.datetimecont {
+  width: calc(100% - 40px);
+  max-width: 350px;
+
+  @media (min-width: $tablet) {
+    max-width: auto;
   }
 }
 
@@ -157,6 +168,19 @@ h4 {
 .createtaskbutton {
   width: 100px;
   height: 40px;
+  border: 0;
+  background-color: transparent;
+  border: 5px solid $buttonactivelight;
+  color: $bglight;
+  font-family: $sansserif;
+  font-weight: 400;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $iconactivelight;
+  }
 }
 
 // React Date Time Picker
@@ -191,7 +215,7 @@ h4 {
 .react-date-picker__button:enabled:hover .react-date-picker__clear-button__icon,
 .react-time-picker__button:enabled:hover
   .react-time-picker__clear-button__icon {
-  stroke: rgba(255, 0, 0, 0.7) !important;
+  stroke: $dangerlight !important;
 }
 
 .react-date-picker__button:enabled:focus .react-date-picker__button__icon,
@@ -203,7 +227,7 @@ h4 {
   .react-date-picker__button__icon,
 .react-time-picker__clock-button:enabled:hover
   .react-time-picker__button__icon {
-  stroke: rgba(0, 255, 0, 0.7) !important;
+  stroke: $successlight !important;
 }
 
 .react-date-picker__calendar-button:enabled:focus
@@ -223,5 +247,5 @@ h4 {
 
 .react-date-picker__inputGroup__input:invalid,
 .react-time-picker__inputGroup__input:invalid {
-  background: rgba(255, 0, 0, 0.4) !important;
+  background: $dangerlight !important;
 }

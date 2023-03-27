@@ -44,7 +44,7 @@ export default function CreateTask(): ReactElement {
                 setActiveTab('journal')
               }}
             >
-              Journal Entry
+              Journal
             </button>
             <button
               className="exitbutton"
