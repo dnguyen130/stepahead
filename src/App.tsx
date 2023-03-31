@@ -13,6 +13,7 @@ import AddButtonDesktop from '@/components/desktop/addbutton'
 import Loading from './components/shared/loading'
 import CreateTask from './components/shared/createTask'
 import BackgroundDim from './components/shared/backgroundDim'
+import TodoSummary from './components/shared/todoSummary'
 
 const AnimatedOutlet = (): ReactElement => {
   const o = useOutlet()
@@ -109,6 +110,7 @@ export default function App(): ReactElement {
     <div className={loading ? 'maincont noscroll' : 'maincont'}>
       <Loading />
       <CreateTask />
+      <TodoSummary />
       <BackgroundDim />
       <AnimatePresence mode="wait">
         {currentUser.uid !== '' && !loading && (

@@ -123,7 +123,7 @@ export default function Todo(): ReactElement {
                 }}
                 onTodoClick={(e) => {
                   e.stopPropagation()
-                  setActiveModal('tasksummary')
+                  setActiveModal('todosummary')
                 }}
               />
               {/* Remove last underline in list */}
