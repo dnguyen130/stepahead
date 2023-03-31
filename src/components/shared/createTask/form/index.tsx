@@ -9,16 +9,6 @@ import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { CreateTodo } from '@/utils/functions'
 import { useMyContext } from '@/utils/provider'
-interface CurrentEventProps {
-  title: string
-  description: string
-  currentDate: Date
-  currentTime: string
-  dueDate: Date
-  dueTime: string | null
-  important: boolean
-  complete: boolean
-}
 
 const CssTextField = styled(TextField)({
   input: {
@@ -50,7 +40,14 @@ const CssButton = styled(Button)({
 })
 
 export default function CreateTaskForm(): ReactElement {
-  const { currentUser, setActiveModal, todos, setTodos } = useMyContext()
+  const {
+    currentUser,
+    setActiveModal,
+    todos,
+    setTodos,
+    currentEvent,
+    setCurrentEvent,
+  } = useMyContext()
   const [formError, setFormError] = useState('')
 
   const defaultCurrentEventProps = {
@@ -63,10 +60,6 @@ export default function CreateTaskForm(): ReactElement {
     important: false,
     complete: false,
   }
-
-  const [currentEvent, setCurrentEvent] = useState<CurrentEventProps>(
-    defaultCurrentEventProps
-  )
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrentEvent({ ...currentEvent, important: event.target.checked })
@@ -108,7 +101,7 @@ export default function CreateTaskForm(): ReactElement {
         },
       ])
       alert('Todo Successfully Created')
-      setActiveModal(false)
+      setActiveModal('')
     }
   }
 
@@ -155,7 +148,7 @@ export default function CreateTaskForm(): ReactElement {
               setCurrentEvent({
                 ...currentEvent,
                 dueTime:
-                  newValue !== null ? newValue.toLocaleString('en-GB') : null,
+                  newValue !== null ? newValue.toLocaleString('en-GB') : '',
               })
             }}
           />

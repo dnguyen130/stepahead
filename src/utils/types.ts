@@ -23,7 +23,18 @@ export interface TodoDataProps {
 }
 
 export interface TodoTaskProps extends TodoDataProps {
-  onDeleteClick: () => Promise<void>
-  onCompleteClick: () => Promise<void>
-  onTodoClick: () => void
+  onDeleteClick: (e: any) => Promise<void>
+  onCompleteClick: (e: any) => Promise<void>
+  onTodoClick: (e: any) => void
+}
+
+export interface CurrentEventProps {
+  title: string
+  description: string
+  currentDate: Date
+  currentTime: string
+  dueDate: Date
+  dueTime: string
+  important: boolean
+  complete: boolean
 }

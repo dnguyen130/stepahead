@@ -8,17 +8,17 @@ export default function AddButtonMobile(): ReactElement {
   return (
     <button
       className={
-        activeModal
+        activeModal !== ''
           ? `addbuttonmobile-active-${theme}`
           : `addbuttonmobile-${theme}`
       }
       onClick={() => {
-        setActiveModal(true)
+        setActiveModal('createtask')
       }}
     >
       <div
         className={
-          activeModal
+          activeModal !== ''
             ? `addiconmobile-active-${theme}`
             : `addiconmobile-${theme}`
         }

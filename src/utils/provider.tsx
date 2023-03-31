@@ -8,7 +8,7 @@ import {
   ReactElement,
 } from 'react'
 
-import { UserDataProps, TodoDataProps } from './types'
+import { UserDataProps, TodoDataProps, CurrentEventProps } from './types'
 
 interface ContextType {
   theme: string
@@ -19,10 +19,12 @@ interface ContextType {
   setLoading: Dispatch<SetStateAction<boolean>>
   initialLoad: boolean
   setInitialLoad: Dispatch<SetStateAction<boolean>>
-  activeModal: boolean
-  setActiveModal: Dispatch<SetStateAction<boolean>>
+  activeModal: string
+  setActiveModal: Dispatch<SetStateAction<string>>
   todos: TodoDataProps[]
   setTodos: Dispatch<SetStateAction<TodoDataProps[]>>
+  currentEvent: CurrentEventProps
+  setCurrentEvent: Dispatch<SetStateAction<CurrentEventProps>>
 }
 
 const initialStates = {
@@ -38,7 +40,7 @@ const initialStates = {
   initialLoad: false,
   setInitialLoad: () => {},
 
-  activeModal: false,
+  activeModal: '',
   setActiveModal: () => {},
 
   todos: [
@@ -56,6 +58,18 @@ const initialStates = {
     },
   ],
   setTodos: () => {},
+
+  currentEvent: {
+    title: '',
+    description: '',
+    currentDate: new Date(),
+    currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
+    dueDate: new Date(),
+    dueTime: '',
+    important: false,
+    complete: false,
+  },
+  setCurrentEvent: () => {},
 }
 
 const Context = createContext<ContextType>(initialStates)
@@ -71,6 +85,7 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
   const [initialLoad, setInitialLoad] = useState(initialStates.initialLoad)
   const [activeModal, setActiveModal] = useState(initialStates.activeModal)
   const [todos, setTodos] = useState(initialStates.todos)
+  const [currentEvent, setCurrentEvent] = useState(initialStates.currentEvent)
 
   return (
     <Context.Provider
@@ -87,6 +102,8 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
         setActiveModal,
         todos,
         setTodos,
+        currentEvent,
+        setCurrentEvent,
       }}
     >
       {children}
@@ -108,6 +125,8 @@ export function useMyContext(): ContextType {
     setActiveModal,
     todos,
     setTodos,
+    currentEvent,
+    setCurrentEvent,
   } = useContext(Context)
   return {
     theme,
@@ -122,5 +141,7 @@ export function useMyContext(): ContextType {
     setActiveModal,
     todos,
     setTodos,
+    currentEvent,
+    setCurrentEvent,
   }
 }

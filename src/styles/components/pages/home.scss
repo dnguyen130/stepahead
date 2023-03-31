@@ -59,7 +59,16 @@
   place-items: center;
   grid-template-columns: 30px 1fr 30px 30px;
   column-gap: 10px;
-  height: 40px;
+  height: 50px;
+  padding: 0 10px;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: background-color 0.2s;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 }
 
 @mixin todotaskicon($color) {
@@ -114,12 +123,21 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: color 0.2s;
 }
 
 .todotaskiconcomplete {
-  color: #0c8944;
+  color: $successlight;
+
+  &:hover {
+    color: $successhover;
+  }
 }
 
 .todotaskicondelete {
-  color: #ce2d1e;
+  color: $dangerlight;
+
+  &:hover {
+    color: $dangerhover;
+  }
 }

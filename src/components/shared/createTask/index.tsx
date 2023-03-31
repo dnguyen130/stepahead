@@ -10,7 +10,7 @@ export default function CreateTask(): ReactElement {
 
   return (
     <AnimatePresence mode="wait">
-      {activeModal && (
+      {activeModal === 'createtask' && (
         <motion.div
           className="createtaskcont"
           initial={{ opacity: 0 }}
@@ -49,7 +49,7 @@ export default function CreateTask(): ReactElement {
             <button
               className="exitbutton"
               onClick={() => {
-                setActiveModal(false)
+                setActiveModal('')
               }}
             >
               <MdClose size="100%" />

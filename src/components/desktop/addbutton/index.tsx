@@ -9,19 +9,20 @@ export default function AddButtonDesktop(): ReactElement {
   return (
     <button
       className={
-        activeModal
+        activeModal !== ''
           ? `addbuttondesktop-active-${theme}`
           : `addbuttondesktop-${theme}`
       }
       onClick={() => {
-        setActiveModal(true)
+        setActiveModal('createtask')
       }}
     >
       <IconContext.Provider
         value={{
-          className: activeModal
-            ? `addicondesktop-active-${theme}`
-            : `addicondesktop-${theme}`,
+          className:
+            activeModal !== ''
+              ? `addicondesktop-active-${theme}`
+              : `addicondesktop-${theme}`,
         }}
       >
         <FaPlus size="100%" />

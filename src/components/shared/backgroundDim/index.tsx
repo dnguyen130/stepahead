@@ -7,11 +7,11 @@ export default function BackgroundDim(): ReactElement {
     <div
       className="backgrounddim"
       style={{
-        opacity: activeModal ? 0.3 : 0,
-        pointerEvents: activeModal ? 'auto' : 'none',
+        opacity: activeModal !== '' ? 0.3 : 0,
+        pointerEvents: activeModal !== '' ? 'auto' : 'none',
       }}
       onClick={() => {
-        setActiveModal(false)
+        setActiveModal('')
       }}
     />
   )
