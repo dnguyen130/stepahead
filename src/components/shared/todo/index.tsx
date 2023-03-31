@@ -57,7 +57,14 @@ function areObjectsEqual(
 }
 
 export default function Todo(): ReactElement {
-  const { theme, currentUser, todos, setTodos, setActiveModal } = useMyContext()
+  const {
+    theme,
+    currentUser,
+    todos,
+    setTodos,
+    setActiveModal,
+    setCurrentEvent,
+  } = useMyContext()
   const todoRef = ref(db, `users/${currentUser.uid}/todos`)
 
   const DeleteATodo = async (todo: TodoDataProps): Promise<void> => {
@@ -124,6 +131,16 @@ export default function Todo(): ReactElement {
                 onTodoClick={(e) => {
                   e.stopPropagation()
                   setActiveModal('todosummary')
+                  setCurrentEvent({
+                    title: o.title,
+                    description: o.description,
+                    currentDate: new Date(o.creationDate),
+                    currentTime: o.creationTime,
+                    dueDate: new Date(o.dueDate),
+                    dueTime: o.dueTime,
+                    important: o.important,
+                    complete: o.complete,
+                  })
                 }}
               />
               {/* Remove last underline in list */}

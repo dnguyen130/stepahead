@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { MdClose } from 'react-icons/md'
 
 export default function TodoSummary(): ReactElement {
-  const { activeModal, setActiveModal } = useMyContext()
+  const { activeModal, setActiveModal, currentEvent } = useMyContext()
 
   return (
     <AnimatePresence mode="wait">
@@ -29,6 +29,24 @@ export default function TodoSummary(): ReactElement {
               <MdClose size="100%" />
             </button>
           </header>
+          <section className="todosummarycontent">
+            <h2 className="todosummarytitle">{currentEvent.title}</h2>
+            <p className="todosummarytitle">{currentEvent.description}</p>
+            <p className="todosummarytitle">
+              {currentEvent.currentDate.toDateString()}
+            </p>
+            <p className="todosummarytitle">{currentEvent.currentTime}</p>
+            <p className="todosummarytitle">
+              {currentEvent.dueDate.toDateString()}
+            </p>
+            <p className="todosummarytitle">{currentEvent.dueTime}</p>
+            <p className="todosummarytitle">
+              {currentEvent.important.toString()}
+            </p>
+            <p className="todosummarytitle">
+              {currentEvent.complete.toString()}
+            </p>
+          </section>
         </motion.div>
       )}
     </AnimatePresence>
