@@ -64,12 +64,10 @@ export default function Todo(): ReactElement {
     await DeleteTodo(todo)
     onValue(todoRef, (snapshot) => {
       const data = snapshot.val()
-      console.log(data)
       if (data !== null) {
         const dataArray = Object.values<TodoDataProps>(data)
         if (!areArraysEqual(dataArray, todos)) {
           setTodos(dataArray)
-          console.log(dataArray, todos)
         }
       } else if (data === null) {
         setTodos([])
@@ -120,6 +118,9 @@ export default function Todo(): ReactElement {
                 }}
                 onCompleteClick={async () => {
                   await DeleteATodo(o)
+                }}
+                onTodoClick={() => {
+                  console.log('todo')
                 }}
               />
               {/* Remove last underline in list */}

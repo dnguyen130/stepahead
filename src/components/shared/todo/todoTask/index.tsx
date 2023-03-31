@@ -15,11 +15,12 @@ export default function TodoTask({
   complete,
   onDeleteClick,
   onCompleteClick,
+  onTodoClick,
 }: TodoTaskProps): ReactElement {
   const { theme } = useMyContext()
 
   return (
-    <section className="todotaskcont">
+    <section className="todotaskcont" onClick={onTodoClick}>
       <div
         className={
           important

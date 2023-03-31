@@ -51,6 +51,7 @@ const CssButton = styled(Button)({
 
 export default function CreateTaskForm(): ReactElement {
   const { currentUser, setActiveModal, todos, setTodos } = useMyContext()
+  const [formError, setFormError] = useState('')
 
   const defaultCurrentEventProps = {
     title: '',
@@ -73,22 +74,14 @@ export default function CreateTaskForm(): ReactElement {
 
   const ConfirmTodo = async (): Promise<void> => {
     const userId = currentUser.uid
-    const Key = await CreateTodo({
-      uid: '',
-      userId,
-      title: currentEvent.title,
-      description: currentEvent.description,
-      creationDate: currentEvent.currentDate.toDateString(),
-      creationTime: currentEvent.currentTime,
-      dueDate: currentEvent.dueDate.toDateString(),
-      dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
-      important: currentEvent.important,
-      complete: false,
-    })
-    setTodos([
-      ...todos,
-      {
-        uid: Key,
+
+    // Form validation
+    if (currentEvent.title === '') {
+      setFormError('title')
+      alert('Please give your event a name.')
+    } else {
+      const Key = await CreateTodo({
+        uid: '',
         userId,
         title: currentEvent.title,
         description: currentEvent.description,
@@ -98,23 +91,39 @@ export default function CreateTaskForm(): ReactElement {
         dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
         important: currentEvent.important,
         complete: false,
-      },
-    ])
-    alert('Todo Successfully Created')
-    console.log(todos)
-    setActiveModal(false)
+      })
+      setTodos([
+        ...todos,
+        {
+          uid: Key,
+          userId,
+          title: currentEvent.title,
+          description: currentEvent.description,
+          creationDate: currentEvent.currentDate.toDateString(),
+          creationTime: currentEvent.currentTime,
+          dueDate: currentEvent.dueDate.toDateString(),
+          dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
+          important: currentEvent.important,
+          complete: false,
+        },
+      ])
+      alert('Todo Successfully Created')
+      setActiveModal(false)
+    }
   }
 
   return (
     <div className="createtaskform">
       <CssTextField
         required
+        error={formError === 'title'}
         className="createtaskinput"
         label="Title"
         variant="outlined"
         value={currentEvent.title}
         onChange={(newValue) => {
           setCurrentEvent({ ...currentEvent, title: newValue.target.value })
+          setFormError('')
         }}
       />
       <CssTextField
@@ -134,6 +143,7 @@ export default function CreateTaskForm(): ReactElement {
         <div className="createtaskdatetime">
           <DatePicker
             required
+            minDate={new Date()}
             value={currentEvent.dueDate}
             onChange={(newValue: Date) => {
               setCurrentEvent({ ...currentEvent, dueDate: newValue })

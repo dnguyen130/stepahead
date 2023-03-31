@@ -25,4 +25,5 @@ export interface TodoDataProps {
 export interface TodoTaskProps extends TodoDataProps {
   onDeleteClick: () => Promise<void>
   onCompleteClick: () => Promise<void>
+  onTodoClick: () => void
 }

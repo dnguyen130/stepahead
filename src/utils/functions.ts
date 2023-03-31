@@ -77,7 +77,6 @@ const CreateTodo = async ({
 const DeleteTodo = async (todo: TodoDataProps): Promise<void> => {
   try {
     const todoRef = ref(db, `users/${todo.userId}/todos/${todo.uid}`)
-    console.log(todo)
     await remove(todoRef)
   } catch (error) {
     if (error instanceof FirebaseError) {
