@@ -12,14 +12,17 @@ import { useMyContext } from '@/utils/provider'
 
 const CssTextField = styled(TextField)({
   input: {
+    fontFamily: `"Ubuntu", "Arial", sans-serif`,
+    fontSize: '1em',
     color: styles.bgLight,
   },
   '& label': {
     color: styles.bgLight,
     fontFamily: `"Ubuntu", "Arial", sans-serif`,
+    fontWeight: 500,
   },
   '& label.Mui-focused': {
-    color: styles.bgLight,
+    color: styles.iconActiveLight,
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
@@ -29,7 +32,7 @@ const CssTextField = styled(TextField)({
       borderColor: styles.bgLight,
     },
     '&.Mui-focused fieldset': {
-      borderColor: styles.bgLight,
+      borderColor: styles.iconActiveLight,
     },
   },
 })
@@ -49,6 +52,8 @@ export default function CreateTaskForm(): ReactElement {
     setCurrentEvent,
   } = useMyContext()
   const [formError, setFormError] = useState('')
+
+  const [focus, setFocus] = useState('')
 
   const defaultCurrentEventProps = {
     title: '',
@@ -72,6 +77,9 @@ export default function CreateTaskForm(): ReactElement {
     if (currentEvent.title === '') {
       setFormError('title')
       alert('Please give your event a name.')
+    } else if (currentEvent.dueDate === null) {
+      setFormError('date')
+      alert('Missing Due Date')
     } else {
       const Key = await CreateTodo({
         uid: '',
@@ -121,7 +129,7 @@ export default function CreateTaskForm(): ReactElement {
       />
       <CssTextField
         className="createtaskinput"
-        label="Short Description"
+        label="Short Description (Optional)"
         variant="outlined"
         value={currentEvent.description}
         onChange={(newValue) => {
@@ -132,15 +140,24 @@ export default function CreateTaskForm(): ReactElement {
         }}
       />
       <div className="datetimecont">
-        <h4>Date and Time</h4>
+        <h4 className={focus !== '' ? 'dateheaderactive' : 'dateheader'}>
+          Date and Time
+        </h4>
         <div className="createtaskdatetime">
           <DatePicker
+            onCalendarOpen={() => {
+              setFocus('calendar')
+            }}
+            onCalendarClose={() => {
+              setFocus('')
+            }}
             required
             minDate={new Date()}
             value={currentEvent.dueDate}
             onChange={(newValue: Date) => {
               setCurrentEvent({ ...currentEvent, dueDate: newValue })
             }}
+            className={focus === 'calendar' ? 'activedateborder' : 'dateborder'}
           />
           <TimePicker
             value={currentEvent.dueTime !== null ? currentEvent.dueTime : ''}
