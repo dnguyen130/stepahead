@@ -1,11 +1,11 @@
 import { ReactElement, useState } from 'react'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
-import CreateTaskForm from './form'
+import CreateTaskForm, { defaultCurrentEventProps } from './form'
 import { MdClose } from 'react-icons/md'
 
 export default function CreateTask(): ReactElement {
-  const { activeModal, setActiveModal } = useMyContext()
+  const { activeModal, setActiveModal, setCurrentEvent } = useMyContext()
   const [activeTab, setActiveTab] = useState('event')
 
   return (
@@ -50,6 +50,7 @@ export default function CreateTask(): ReactElement {
               className="exitbutton"
               onClick={() => {
                 setActiveModal('')
+                setCurrentEvent(defaultCurrentEventProps)
               }}
             >
               <MdClose size="100%" />

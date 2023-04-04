@@ -39,6 +39,18 @@ const CssButton = styled(Button)({
   backgroundColor: styles.buttonActiveLight,
 })
 
+export const defaultCurrentEventProps = {
+  uid: '',
+  title: '',
+  description: '',
+  currentDate: new Date(),
+  currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
+  dueDate: new Date(),
+  dueTime: '',
+  important: false,
+  complete: false,
+}
+
 export default function CreateTaskForm(): ReactElement {
   const {
     currentUser,
@@ -49,17 +61,6 @@ export default function CreateTaskForm(): ReactElement {
     setCurrentEvent,
   } = useMyContext()
   const [formError, setFormError] = useState('')
-
-  const defaultCurrentEventProps = {
-    title: '',
-    description: '',
-    currentDate: new Date(),
-    currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
-    dueDate: new Date(),
-    dueTime: '',
-    important: false,
-    complete: false,
-  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrentEvent({ ...currentEvent, important: event.target.checked })
@@ -74,7 +75,7 @@ export default function CreateTaskForm(): ReactElement {
       alert('Please give your event a name.')
     } else {
       const Key = await CreateTodo({
-        uid: '',
+        uid: currentEvent.uid !== '' ? currentEvent.uid : '',
         userId,
         title: currentEvent.title,
         description: currentEvent.description,
@@ -85,21 +86,39 @@ export default function CreateTaskForm(): ReactElement {
         important: currentEvent.important,
         complete: false,
       })
-      setTodos([
-        ...todos,
-        {
-          uid: Key,
-          userId,
-          title: currentEvent.title,
-          description: currentEvent.description,
-          creationDate: currentEvent.currentDate.toDateString(),
-          creationTime: currentEvent.currentTime,
-          dueDate: currentEvent.dueDate.toDateString(),
-          dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
-          important: currentEvent.important,
-          complete: false,
-        },
-      ])
+      const updatedTodos = todos.map((todo) => {
+        if (todo.uid === currentEvent.uid) {
+          return {
+            ...todo,
+            title: currentEvent.title,
+            description: currentEvent.description,
+            dueDate: currentEvent.dueDate.toDateString(),
+            dueTime: currentEvent.dueTime,
+            important: currentEvent.important,
+          }
+        }
+        return todo
+      })
+      if (!updatedTodos.some((todo) => todo.uid === currentEvent.uid)) {
+        setTodos([
+          ...todos,
+          {
+            uid: currentEvent.uid !== '' ? currentEvent.uid : Key,
+            userId,
+            title: currentEvent.title,
+            description: currentEvent.description,
+            creationDate: currentEvent.currentDate.toDateString(),
+            creationTime: currentEvent.currentTime,
+            dueDate: currentEvent.dueDate.toDateString(),
+            dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
+            important: currentEvent.important,
+            complete: false,
+          },
+        ])
+      } else {
+        setTodos(updatedTodos)
+      }
+      setCurrentEvent(defaultCurrentEventProps)
       alert('Todo Successfully Created')
       setActiveModal('')
     }

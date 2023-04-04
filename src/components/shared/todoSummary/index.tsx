@@ -2,9 +2,15 @@ import { ReactElement } from 'react'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MdClose } from 'react-icons/md'
+import { defaultCurrentEventProps } from '../createTask/form'
 
 export default function TodoSummary(): ReactElement {
-  const { activeModal, setActiveModal, currentEvent } = useMyContext()
+  const { activeModal, setActiveModal, currentEvent, setCurrentEvent } =
+    useMyContext()
+
+  function EditTodo(): void {
+    setActiveModal('createtask')
+  }
 
   return (
     <AnimatePresence mode="wait">
@@ -24,6 +30,7 @@ export default function TodoSummary(): ReactElement {
               className="exitbutton"
               onClick={() => {
                 setActiveModal('')
+                setCurrentEvent(defaultCurrentEventProps)
               }}
             >
               <MdClose size="100%" />
@@ -34,6 +41,7 @@ export default function TodoSummary(): ReactElement {
             <p className="todosummarytitle">{currentEvent.description}</p>
             <p className="todosummarytitle">
               {currentEvent.currentDate.toDateString()}
+              {currentEvent.uid}
             </p>
             <p className="todosummarytitle">{currentEvent.currentTime}</p>
             <p className="todosummarytitle">
@@ -46,6 +54,13 @@ export default function TodoSummary(): ReactElement {
             <p className="todosummarytitle">
               {currentEvent.complete.toString()}
             </p>
+            <button
+              onClick={() => {
+                EditTodo()
+              }}
+            >
+              Edit
+            </button>
           </section>
         </motion.div>
       )}

@@ -60,6 +60,7 @@ const initialStates = {
   setTodos: () => {},
 
   currentEvent: {
+    uid: '',
     title: '',
     description: '',
     currentDate: new Date(),

@@ -132,6 +132,7 @@ export default function Todo(): ReactElement {
                   e.stopPropagation()
                   setActiveModal('todosummary')
                   setCurrentEvent({
+                    uid: o.uid,
                     title: o.title,
                     description: o.description,
                     currentDate: new Date(o.creationDate),

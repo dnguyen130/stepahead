@@ -37,6 +37,7 @@ const GetAllTodos = async (userId: string): Promise<TodoDataProps | null> => {
 }
 
 const CreateTodo = async ({
+  uid,
   userId,
   title,
   description,

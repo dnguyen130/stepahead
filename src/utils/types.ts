@@ -29,6 +29,7 @@ export interface TodoTaskProps extends TodoDataProps {
 }
 
 export interface CurrentEventProps {
+  uid: string
   title: string
   description: string
   currentDate: Date
