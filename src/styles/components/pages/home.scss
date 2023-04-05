@@ -24,7 +24,7 @@
   place-items: flex-start center;
   padding-bottom: 95px;
 
-  @media (min-width: $tablet) {
+  @media (min-width: $desktop) {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
     padding-bottom: 0;
@@ -38,6 +38,13 @@
   box-shadow: inset 7px 7px 19px $shadowdark, inset -7px -7px 19px $shadowlight;
   padding: 20px;
   position: relative;
+}
+
+.todocont-light h2 {
+  margin: 0 0 10px;
+  line-height: 1em;
+  width: 100%;
+  text-align: center;
 }
 
 .calendarcont-light {
@@ -57,9 +64,9 @@
 .todotaskcont {
   display: grid;
   place-items: center;
-  grid-template-columns: 30px 1fr 30px 30px;
+  grid-template-columns: 30px 1fr 1fr 30px 30px;
   column-gap: 10px;
-  height: 50px;
+  min-height: 50px;
   padding: 0 10px;
   cursor: pointer;
   margin: 10px 0;
@@ -141,4 +148,23 @@
   &:hover {
     color: $dangerhover;
   }
+}
+
+.todotasktitlecombo {
+  justify-self: flex-start;
+
+  @media (min-width: $mobilelarge) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+  }
+}
+
+.tododaysimportant {
+  color: $dangerlight;
+  text-align: center;
+}
+
+.tododays {
+  text-align: center;
 }

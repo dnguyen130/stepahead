@@ -6,6 +6,10 @@ import { DeleteTodo } from '@/utils/functions'
 import { onValue, ref } from 'firebase/database'
 import { db } from '@/utils/firebase'
 
+interface TodoProps {
+  todoType: string
+}
+
 function areArraysEqual(
   array1: TodoDataProps[],
   array2: TodoDataProps[]
@@ -56,7 +60,7 @@ function areObjectsEqual(
   return true
 }
 
-export default function Todo(): ReactElement {
+export default function Todo({ todoType }: TodoProps): ReactElement {
   const {
     theme,
     currentUser,
@@ -82,8 +86,8 @@ export default function Todo(): ReactElement {
     })
   }
 
-  let sortedArray: TodoDataProps[] = []
   const sortedTodos = (): TodoDataProps[] => {
+    let sortedArray: TodoDataProps[] = []
     if (todos !== null) {
       const todoMap = Object.values(todos)
       const todoArray = [...todoMap]
@@ -100,58 +104,185 @@ export default function Todo(): ReactElement {
     return sortedArray
   }
 
-  sortedTodos()
+  const todayTodos = (): TodoDataProps[] => {
+    if (todos !== null) {
+      const todoArray = sortedTodos().filter(
+        (todo) => todo.dueDate === new Date().toDateString()
+      )
+      console.log(todoArray)
+      return todoArray
+    } else {
+      return []
+    }
+  }
 
-  return (
-    <section className={`todocont-${theme}`}>
-      {sortedArray.length !== 0 &&
-        sortedArray.map((o, i) => {
-          return (
-            <div key={i}>
-              <TodoTask
-                key={i}
-                uid={o.uid}
-                userId={o.userId}
-                title={o.title}
-                description={o.description}
-                creationDate={o.creationDate}
-                creationTime={o.creationTime}
-                dueDate={o.dueDate}
-                dueTime={o.dueTime}
-                important={o.important}
-                complete={o.complete}
-                onDeleteClick={async (e) => {
-                  e.stopPropagation()
-                  await DeleteATodo(o)
-                }}
-                onCompleteClick={async (e) => {
-                  e.stopPropagation()
-                  await DeleteATodo(o)
-                }}
-                onTodoClick={(e) => {
-                  e.stopPropagation()
-                  setActiveModal('todosummary')
-                  setCurrentEvent({
-                    uid: o.uid,
-                    title: o.title,
-                    description: o.description,
-                    currentDate: new Date(o.creationDate),
-                    currentTime: o.creationTime,
-                    dueDate: new Date(o.dueDate),
-                    dueTime: o.dueTime,
-                    important: o.important,
-                    complete: o.complete,
-                  })
-                }}
-              />
-              {/* Remove last underline in list */}
-              {i + 1 !== sortedArray.length && <div className="underline" />}
-            </div>
-          )
-        })}
-      {sortedArray.length === 0 && (
-        <div className="notaskscont">No Tasks Created</div>
-      )}
-    </section>
-  )
+  function DaysLeft(date: string): number {
+    const dueDate = new Date(date).valueOf()
+    const currentDate = new Date().valueOf()
+    const diffTime = dueDate - currentDate
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    return diffDays
+  }
+
+  function GenerateDaysMessage(daysLeft: number, time: string): string {
+    if (daysLeft === 0 && time !== '') {
+      return `Due today at ${convertTimeString(time)}`
+    } else if (daysLeft === 0 && time === '') {
+      return 'Due today'
+    } else {
+      return `${daysLeft} days left`
+    }
+  }
+
+  function recentChecker(date: string): boolean {
+    if (DaysLeft(date) > 0 && DaysLeft(date) <= 7) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  function convertTimeString(timeString: string): string {
+    let [hours, minutes] = timeString.split(':')
+    let hour = parseInt(hours)
+    const amPm = hour < 12 ? 'AM' : 'PM'
+    if (hour === 0) {
+      hour = 12
+    } else if (hour > 12) {
+      hour -= 12
+    }
+
+    const stringHour = hour.toString()
+
+    if (minutes.length === 1) {
+      minutes = '0' + minutes
+    }
+
+    return stringHour + ':' + minutes + ' ' + amPm
+  }
+
+  const upcomingTodos = (): TodoDataProps[] => {
+    if (todos !== null) {
+      const todoArray = sortedTodos().filter((todo) =>
+        recentChecker(todo.dueDate)
+      )
+      return todoArray
+    } else {
+      return []
+    }
+  }
+
+  if (todoType === 'today') {
+    return (
+      <section className={`todocont-${theme}`}>
+        <h2>Today&apos;s Tasks</h2>
+        {todayTodos().length !== 0 &&
+          todayTodos().map((o, i) => {
+            return (
+              <div key={i}>
+                <TodoTask
+                  key={i}
+                  uid={o.uid}
+                  userId={o.userId}
+                  todoDays={GenerateDaysMessage(DaysLeft(o.dueDate), o.dueTime)}
+                  title={o.title}
+                  description={o.description}
+                  creationDate={o.creationDate}
+                  creationTime={o.creationTime}
+                  dueDate={o.dueDate}
+                  dueTime={o.dueTime}
+                  important={o.important}
+                  complete={o.complete}
+                  onDeleteClick={async (e) => {
+                    e.stopPropagation()
+                    await DeleteATodo(o)
+                  }}
+                  onCompleteClick={async (e) => {
+                    e.stopPropagation()
+                    await DeleteATodo(o)
+                  }}
+                  onTodoClick={(e) => {
+                    e.stopPropagation()
+                    setActiveModal('todosummary')
+                    setCurrentEvent({
+                      uid: o.uid,
+                      title: o.title,
+                      description: o.description,
+                      currentDate: new Date(o.creationDate),
+                      currentTime: o.creationTime,
+                      dueDate: new Date(o.dueDate),
+                      dueTime: o.dueTime,
+                      important: o.important,
+                      complete: o.complete,
+                    })
+                  }}
+                />
+                {/* Remove last underline in list */}
+                {i + 1 !== todayTodos().length && <div className="underline" />}
+              </div>
+            )
+          })}
+        {todayTodos().length === 0 && (
+          <div className="notaskscont">No tasks due today</div>
+        )}
+      </section>
+    )
+  } else {
+    return (
+      <section className={`todocont-${theme}`}>
+        <h2>Upcoming Tasks</h2>
+        {upcomingTodos().length !== 0 &&
+          upcomingTodos().map((o, i) => {
+            return (
+              <div key={i}>
+                <TodoTask
+                  key={i}
+                  todoDays={GenerateDaysMessage(DaysLeft(o.dueDate), o.dueTime)}
+                  uid={o.uid}
+                  userId={o.userId}
+                  title={o.title}
+                  description={o.description}
+                  creationDate={o.creationDate}
+                  creationTime={o.creationTime}
+                  dueDate={o.dueDate}
+                  dueTime={o.dueTime}
+                  important={o.important}
+                  complete={o.complete}
+                  onDeleteClick={async (e) => {
+                    e.stopPropagation()
+                    await DeleteATodo(o)
+                  }}
+                  onCompleteClick={async (e) => {
+                    e.stopPropagation()
+                    await DeleteATodo(o)
+                  }}
+                  onTodoClick={(e) => {
+                    e.stopPropagation()
+                    setActiveModal('todosummary')
+                    setCurrentEvent({
+                      uid: o.uid,
+                      title: o.title,
+                      description: o.description,
+                      currentDate: new Date(o.creationDate),
+                      currentTime: o.creationTime,
+                      dueDate: new Date(o.dueDate),
+                      dueTime: o.dueTime,
+                      important: o.important,
+                      complete: o.complete,
+                    })
+                  }}
+                />
+                {/* Remove last underline in list */}
+                {i + 1 !== upcomingTodos().length && (
+                  <div className="underline" />
+                )}
+              </div>
+            )
+          })}
+        {upcomingTodos().length === 0 && (
+          <div className="notaskscont">No tasks due today</div>
+        )}
+      </section>
+    )
+  }
 }

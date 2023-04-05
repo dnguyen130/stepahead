@@ -31,7 +31,6 @@ export default function App(): ReactElement {
     setInitialLoad,
     todos,
     setTodos,
-    journals,
     setJournals,
   } = useMyContext()
   const location = useLocation()
