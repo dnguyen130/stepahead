@@ -39,3 +39,20 @@ export interface CurrentEventProps {
   important: boolean
   complete: boolean
 }
+
+export interface JournalProps {
+  uid: string
+  userId: string
+  title: string
+  content: string
+  creationDate: string
+  creationTime: string
+}
+
+export interface CurrentJournalProps {
+  uid: string
+  title: string
+  content: string
+  currentDate: Date
+  currentTime: string
+}

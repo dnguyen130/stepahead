@@ -68,6 +68,7 @@ export default function CreateTaskForm(): ReactElement {
 
   const ConfirmTodo = async (): Promise<void> => {
     const userId = currentUser.uid
+    console.log(currentEvent.uid)
 
     // Form validation
     if (currentEvent.title === '') {
@@ -75,7 +76,7 @@ export default function CreateTaskForm(): ReactElement {
       alert('Please give your event a name.')
     } else {
       const Key = await CreateTodo({
-        uid: currentEvent.uid !== '' ? currentEvent.uid : '',
+        uid: currentEvent.uid,
         userId,
         title: currentEvent.title,
         description: currentEvent.description,
@@ -86,6 +87,9 @@ export default function CreateTaskForm(): ReactElement {
         important: currentEvent.important,
         complete: false,
       })
+
+      console.log(currentEvent)
+
       const updatedTodos = todos.map((todo) => {
         if (todo.uid === currentEvent.uid) {
           return {
@@ -99,6 +103,7 @@ export default function CreateTaskForm(): ReactElement {
         }
         return todo
       })
+      // If the created todo does not exist already
       if (!updatedTodos.some((todo) => todo.uid === currentEvent.uid)) {
         setTodos([
           ...todos,
@@ -115,11 +120,14 @@ export default function CreateTaskForm(): ReactElement {
             complete: false,
           },
         ])
+        alert('Todo Successfully Created')
+        // If the todo is being edited
       } else {
         setTodos(updatedTodos)
+        alert('Todo Successfully Edited')
       }
+      console.log(todos)
       setCurrentEvent(defaultCurrentEventProps)
-      alert('Todo Successfully Created')
       setActiveModal('')
     }
   }
@@ -151,7 +159,7 @@ export default function CreateTaskForm(): ReactElement {
         }}
       />
       <div className="datetimecont">
-        <h4>Date and Time</h4>
+        <h4>Date* and Time</h4>
         <div className="createtaskdatetime">
           <DatePicker
             required

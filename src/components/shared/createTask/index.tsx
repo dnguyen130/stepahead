@@ -1,7 +1,8 @@
 import { ReactElement, useState } from 'react'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
-import CreateTaskForm, { defaultCurrentEventProps } from './form'
+import CreateTaskForm, { defaultCurrentEventProps } from './todoForm'
+import CreateJournalForm from './journalForm'
 import { MdClose } from 'react-icons/md'
 
 export default function CreateTask(): ReactElement {
@@ -56,7 +57,8 @@ export default function CreateTask(): ReactElement {
               <MdClose size="100%" />
             </button>
           </header>
-          <CreateTaskForm />
+          {activeTab === 'event' && <CreateTaskForm />}
+          {activeTab === 'journal' && <CreateJournalForm />}
         </motion.div>
       )}
     </AnimatePresence>

@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MdClose } from 'react-icons/md'
-import { defaultCurrentEventProps } from '../createTask/form'
+import { defaultCurrentEventProps } from '../createTask/todoForm'
 
 export default function TodoSummary(): ReactElement {
   const { activeModal, setActiveModal, currentEvent, setCurrentEvent } =

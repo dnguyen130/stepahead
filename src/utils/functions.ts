@@ -7,7 +7,12 @@ import {
 import { ref, set, get, child, push, update, remove } from 'firebase/database'
 import { FirebaseError } from 'firebase/app'
 import { auth, db, googleProvider } from './firebase'
-import { UserDataProps, TodoDataProps, SignInProps } from './types'
+import {
+  UserDataProps,
+  TodoDataProps,
+  SignInProps,
+  JournalProps,
+} from './types'
 
 const WriteUserData = async ({
   uid,
@@ -36,8 +41,25 @@ const GetAllTodos = async (userId: string): Promise<TodoDataProps | null> => {
   }
 }
 
+const GetAllJournals = async (userId: string): Promise<JournalProps | null> => {
+  const dbRef = ref(db)
+  try {
+    const initialJournalData = await get(
+      child(dbRef, `users/${userId}/journals`)
+    )
+    if (initialJournalData.exists()) {
+      return initialJournalData.val()
+    } else {
+      console.log('No data available')
+      return null
+    }
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
 const CreateTodo = async ({
-  uid,
   userId,
   title,
   description,
@@ -70,6 +92,36 @@ const CreateTodo = async ({
     updates[`/users/${userId}/todos/` + newTodoKey] = todoData
     await update(ref(db), updates)
     return newTodoKey
+  } else {
+    return ''
+  }
+}
+
+const CreateJournal = async ({
+  userId,
+  title,
+  content,
+  creationDate,
+  creationTime,
+}: JournalProps): Promise<string> => {
+  const journalData = {
+    uid: '',
+    userId,
+    title,
+    content,
+    creationDate,
+    creationTime,
+  }
+
+  const newJournalKey = push(child(ref(db), 'journals')).key
+
+  if (newJournalKey !== null) {
+    // Add uid to database write
+    const updates: Record<string, any> = {}
+    journalData.uid = newJournalKey
+    updates[`/users/${userId}/journals/` + newJournalKey] = journalData
+    await update(ref(db), updates)
+    return newJournalKey
   } else {
     return ''
   }
@@ -205,4 +257,6 @@ export {
   SignOut,
   SignUpWithEmail,
   LogInWithEmail,
+  GetAllJournals,
+  CreateJournal,
 }
