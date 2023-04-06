@@ -2,8 +2,7 @@ import { ReactElement } from 'react'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MdClose } from 'react-icons/md'
-import { defaultCurrentEventProps } from '../createTask/todoForm'
-import { convertTimeString } from '../todo'
+import { ConvertTimeString } from '@/utils/functions'
 import Button from '@mui/material/Button'
 import { styled } from '@mui/material'
 import styles from '@/styles/variables/export.module.scss'
@@ -26,6 +25,18 @@ export default function TodoSummary(): ReactElement {
 
   function EditTodo(): void {
     setActiveModal('createtask')
+  }
+
+  const defaultCurrentEventProps = {
+    uid: currentEvent.uid !== '' ? currentEvent.uid : '',
+    title: '',
+    description: '',
+    currentDate: new Date(),
+    currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
+    dueDate: new Date(),
+    dueTime: '',
+    important: false,
+    complete: false,
   }
 
   return (
@@ -60,12 +71,12 @@ export default function TodoSummary(): ReactElement {
             <p className="todosummarysub">
               Created{' '}
               {currentEvent.currentDate.toLocaleString('en-us', options)} at{' '}
-              {convertTimeString(currentEvent.currentTime)}
+              {ConvertTimeString(currentEvent.currentTime)}
             </p>
             <p className="todosummarysub">
               Due {currentEvent.dueDate.toLocaleString('en-us', options)}
               {currentEvent.dueTime !== '' &&
-                ` at ${convertTimeString(currentEvent.dueTime)}`}
+                ` at ${ConvertTimeString(currentEvent.dueTime)}`}
             </p>
             <CssButton
               variant="contained"

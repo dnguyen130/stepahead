@@ -35,14 +35,6 @@ const CssButton = styled(Button)({
   backgroundColor: styles.buttonActiveLight,
 })
 
-export const defaultJournalProps = {
-  uid: '',
-  title: '',
-  content: '',
-  currentDate: new Date(),
-  currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
-}
-
 export default function CreateJournalForm(): ReactElement {
   const {
     currentUser,
@@ -53,6 +45,14 @@ export default function CreateJournalForm(): ReactElement {
     setCurrentJournal,
   } = useMyContext()
   const [formError, setFormError] = useState('')
+
+  const defaultJournalProps = {
+    uid: currentJournal.uid !== '' ? currentJournal.uid : '',
+    title: '',
+    content: '',
+    currentDate: new Date(),
+    currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
+  }
 
   const ConfirmJournal = async (): Promise<void> => {
     const userId = currentUser.uid

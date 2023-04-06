@@ -1,13 +1,26 @@
 import { ReactElement, useState } from 'react'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
-import CreateTaskForm, { defaultCurrentEventProps } from './todoForm'
+import CreateTaskForm from './todoForm'
 import CreateJournalForm from './journalForm'
 import { MdClose } from 'react-icons/md'
 
 export default function CreateTask(): ReactElement {
-  const { activeModal, setActiveModal, setCurrentEvent } = useMyContext()
+  const { activeModal, setActiveModal, currentEvent, setCurrentEvent } =
+    useMyContext()
   const [activeTab, setActiveTab] = useState('event')
+
+  const defaultCurrentEventProps = {
+    uid: currentEvent.uid !== '' ? currentEvent.uid : '',
+    title: '',
+    description: '',
+    currentDate: new Date(),
+    currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
+    dueDate: new Date(),
+    dueTime: '',
+    important: false,
+    complete: false,
+  }
 
   return (
     <AnimatePresence mode="wait">

@@ -39,18 +39,6 @@ const CssButton = styled(Button)({
   backgroundColor: styles.buttonActiveLight,
 })
 
-export const defaultCurrentEventProps = {
-  uid: '',
-  title: '',
-  description: '',
-  currentDate: new Date(),
-  currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
-  dueDate: new Date(),
-  dueTime: '',
-  important: false,
-  complete: false,
-}
-
 export default function CreateTaskForm(): ReactElement {
   const {
     currentUser,
@@ -61,6 +49,18 @@ export default function CreateTaskForm(): ReactElement {
     setCurrentEvent,
   } = useMyContext()
   const [formError, setFormError] = useState('')
+
+  const defaultCurrentEventProps = {
+    uid: currentEvent.uid !== '' ? currentEvent.uid : '',
+    title: '',
+    description: '',
+    currentDate: new Date(),
+    currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
+    dueDate: new Date(),
+    dueTime: '',
+    important: false,
+    complete: false,
+  }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setCurrentEvent({ ...currentEvent, important: event.target.checked })
