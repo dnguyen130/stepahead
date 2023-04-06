@@ -87,11 +87,8 @@ export default function Todo({ todoType }: TodoProps): ReactElement {
             (todo) => todo.dueDate < new Date().toDateString()
           )
         }
-        case 'all': {
-          return sortedTodos()
-        }
         default: {
-          return []
+          return sortedTodos()
         }
       }
     } else {

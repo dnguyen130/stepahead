@@ -130,7 +130,7 @@ export default function CreateJournalForm(): ReactElement {
       <CssTextField
         className="createtaskinput"
         multiline
-        minRows={6}
+        minRows={8}
         label="Content*"
         variant="outlined"
         value={currentJournal.content}

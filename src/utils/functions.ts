@@ -130,11 +130,8 @@ function GenerateTodoEmptyText(todoType: string): string {
     case 'expired': {
       return 'No tasks overdue'
     }
-    case 'all': {
-      return 'No tasks for now'
-    }
     default: {
-      return 'No tasks'
+      return 'No tasks for now'
     }
   }
 }
