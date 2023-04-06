@@ -3,7 +3,7 @@ import { styled } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import styles from '@/styles/variables/export.module.scss'
-import { CreateJournal } from '@/utils/functions'
+import { CreateJournal } from '@/utils/firebasefunctions'
 import { useMyContext } from '@/utils/provider'
 
 const CssTextField = styled(TextField)({

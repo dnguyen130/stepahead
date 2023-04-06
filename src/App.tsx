@@ -4,7 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { auth } from '@/utils/firebase'
-import { GetAllJournals, GetAllTodos } from './utils/functions'
+import { GetAllJournals, GetAllTodos } from './utils/firebasefunctions'
 import { JournalProps, TodoDataProps } from './utils/types'
 
 import Navbar from '@/components/desktop/navbar'

@@ -1,4 +1,4 @@
-import { SignOut } from '@/utils/functions'
+import { SignOut } from '@/utils/firebasefunctions'
 import { ReactElement } from 'react'
 import { useNavigate } from 'react-router-dom'
 

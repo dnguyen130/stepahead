@@ -7,7 +7,7 @@ import TimePicker from 'react-time-picker'
 import DatePicker from 'react-date-picker'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import { CreateTodo } from '@/utils/functions'
+import { CreateTodo } from '@/utils/firebasefunctions'
 import { useMyContext } from '@/utils/provider'
 
 const CssTextField = styled(TextField)({
@@ -68,7 +68,6 @@ export default function CreateTaskForm(): ReactElement {
 
   const ConfirmTodo = async (): Promise<void> => {
     const userId = currentUser.uid
-    console.log(currentEvent.uid)
 
     // Form validation
     if (currentEvent.title === '') {
@@ -87,8 +86,6 @@ export default function CreateTaskForm(): ReactElement {
         important: currentEvent.important,
         complete: false,
       })
-
-      console.log(currentEvent)
 
       const updatedTodos = todos.map((todo) => {
         if (todo.uid === currentEvent.uid) {
