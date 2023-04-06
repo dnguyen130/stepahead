@@ -3,6 +3,22 @@ import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { MdClose } from 'react-icons/md'
 import { defaultCurrentEventProps } from '../createTask/todoForm'
+import { convertTimeString } from '../todo'
+import Button from '@mui/material/Button'
+import { styled } from '@mui/material'
+import styles from '@/styles/variables/export.module.scss'
+
+const options: Record<string, string | number> = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}
+
+const CssButton = styled(Button)({
+  fontFamily: `"Ubuntu", "Arial", sans-serif`,
+  backgroundColor: styles.buttonActiveLight,
+})
 
 export default function TodoSummary(): ReactElement {
   const { activeModal, setActiveModal, currentEvent, setCurrentEvent } =
@@ -38,29 +54,32 @@ export default function TodoSummary(): ReactElement {
           </header>
           <section className="todosummarycontent">
             <h2 className="todosummarytitle">{currentEvent.title}</h2>
-            <p className="todosummarytitle">{currentEvent.description}</p>
-            <p className="todosummarytitle">
-              {currentEvent.currentDate.toDateString()}
-              {currentEvent.uid}
+            {currentEvent.description !== '' && (
+              <p className="todosummarysub">{currentEvent.description}</p>
+            )}
+            <p className="todosummarysub">
+              Created{' '}
+              {currentEvent.currentDate.toLocaleString('en-us', options)} at{' '}
+              {convertTimeString(currentEvent.currentTime)}
             </p>
-            <p className="todosummarytitle">{currentEvent.currentTime}</p>
-            <p className="todosummarytitle">
-              {currentEvent.dueDate.toDateString()}
+            <p className="todosummarysub">
+              Due {currentEvent.dueDate.toLocaleString('en-us', options)}
+              {currentEvent.dueTime !== '' &&
+                ` at ${convertTimeString(currentEvent.dueTime)}`}
             </p>
-            <p className="todosummarytitle">{currentEvent.dueTime}</p>
-            <p className="todosummarytitle">
-              {currentEvent.important.toString()}
-            </p>
-            <p className="todosummarytitle">
-              {currentEvent.complete.toString()}
-            </p>
-            <button
+            <CssButton
+              variant="contained"
+              sx={{
+                '&: hover': {
+                  backgroundColor: styles.successLight,
+                },
+              }}
               onClick={() => {
                 EditTodo()
               }}
             >
               Edit
-            </button>
+            </CssButton>
           </section>
         </motion.div>
       )}

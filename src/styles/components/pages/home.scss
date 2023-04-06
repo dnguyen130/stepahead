@@ -8,6 +8,7 @@
     'main';
   row-gap: 25px;
   place-items: flex-start center;
+  padding-bottom: 95px;
 
   @media (min-width: $tablet) {
     height: auto;
@@ -22,7 +23,6 @@
   row-gap: 25px;
   column-gap: 25px;
   place-items: flex-start center;
-  padding-bottom: 95px;
 
   @media (min-width: $desktop) {
     grid-template-columns: 1fr 1fr;

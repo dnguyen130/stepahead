@@ -9,5 +9,21 @@
 .todosummarycontent {
   height: 100%;
   margin-bottom: 5px;
+  padding: 5px;
   color: $bglight;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+}
+
+.todosummarytitle {
+  line-height: 1.1em;
+  margin: 0;
+  font-weight: 400;
+  text-align: center;
+}
+
+.todosummarysub {
+  margin: 0;
 }

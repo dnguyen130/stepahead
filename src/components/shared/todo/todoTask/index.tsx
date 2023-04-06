@@ -33,7 +33,9 @@ export default function TodoTask({
       <h3 className="todotasktitle">{title}</h3>
       <div
         className={
-          todoDays.includes('Due today') ? 'tododaysimportant' : 'tododays'
+          todoDays.includes('Due today') || todoDays.includes('Expired')
+            ? 'tododaysimportant'
+            : 'tododays'
         }
       >
         {todoDays}

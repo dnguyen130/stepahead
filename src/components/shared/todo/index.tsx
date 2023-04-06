@@ -60,6 +60,55 @@ function areObjectsEqual(
   return true
 }
 
+export function DaysLeft(date: string): number {
+  const dueDate = new Date(date).valueOf()
+  const currentDate = new Date().valueOf()
+  const diffTime = dueDate - currentDate
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  return diffDays
+}
+
+function GenerateDaysMessage(daysLeft: number, time: string): string {
+  if (daysLeft === 0 && time !== '') {
+    return `Due today at ${convertTimeString(time)}`
+  } else if (daysLeft === 0 && time === '') {
+    return 'Due today'
+  } else if (daysLeft > 0) {
+    return `${daysLeft} days left`
+  } else if (daysLeft === -1) {
+    return `Expired by ${Math.abs(daysLeft)} day`
+  } else {
+    return `Expired by ${Math.abs(daysLeft)} days`
+  }
+}
+
+function recentChecker(date: string): boolean {
+  if (DaysLeft(date) > 0 && DaysLeft(date) <= 7) {
+    return true
+  } else {
+    return false
+  }
+}
+
+export function convertTimeString(timeString: string): string {
+  let [hours, minutes] = timeString.split(':')
+  let hour = parseInt(hours)
+  const amPm = hour < 12 ? 'AM' : 'PM'
+  if (hour === 0) {
+    hour = 12
+  } else if (hour > 12) {
+    hour -= 12
+  }
+
+  const stringHour = hour.toString()
+
+  if (minutes.length === 1) {
+    minutes = '0' + minutes
+  }
+
+  return stringHour + ':' + minutes + ' ' + amPm
+}
+
 export default function Todo({ todoType }: TodoProps): ReactElement {
   const {
     theme,
@@ -92,10 +141,19 @@ export default function Todo({ todoType }: TodoProps): ReactElement {
       const todoMap = Object.values(todos)
       const todoArray = [...todoMap]
       sortedArray = todoArray.sort((key1, key2): number => {
-        const importantkey1 = key1.important
-        const importantkey2 = key2.important
-        if (!importantkey1 && importantkey2) {
+        const dueDate1 = key1.dueDate
+        const dueDate2 = key2.dueDate
+        const dueTime1 = key1.dueTime
+        const dueTime2 = key2.dueTime
+
+        if (dueDate1 > dueDate2) {
           return 1
+        } else if (dueDate1 === dueDate2) {
+          if (dueTime1 > dueTime2) {
+            return 1
+          } else {
+            return -1
+          }
         } else {
           return -1
         }
@@ -114,51 +172,6 @@ export default function Todo({ todoType }: TodoProps): ReactElement {
     } else {
       return []
     }
-  }
-
-  function DaysLeft(date: string): number {
-    const dueDate = new Date(date).valueOf()
-    const currentDate = new Date().valueOf()
-    const diffTime = dueDate - currentDate
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    return diffDays
-  }
-
-  function GenerateDaysMessage(daysLeft: number, time: string): string {
-    if (daysLeft === 0 && time !== '') {
-      return `Due today at ${convertTimeString(time)}`
-    } else if (daysLeft === 0 && time === '') {
-      return 'Due today'
-    } else {
-      return `${daysLeft} days left`
-    }
-  }
-
-  function recentChecker(date: string): boolean {
-    if (DaysLeft(date) > 0 && DaysLeft(date) <= 7) {
-      return true
-    } else {
-      return false
-    }
-  }
-
-  function convertTimeString(timeString: string): string {
-    let [hours, minutes] = timeString.split(':')
-    let hour = parseInt(hours)
-    const amPm = hour < 12 ? 'AM' : 'PM'
-    if (hour === 0) {
-      hour = 12
-    } else if (hour > 12) {
-      hour -= 12
-    }
-
-    const stringHour = hour.toString()
-
-    if (minutes.length === 1) {
-      minutes = '0' + minutes
-    }
-
-    return stringHour + ':' + minutes + ' ' + amPm
   }
 
   const upcomingTodos = (): TodoDataProps[] => {
@@ -227,7 +240,7 @@ export default function Todo({ todoType }: TodoProps): ReactElement {
         )}
       </section>
     )
-  } else {
+  } else if (todoType === 'upcoming') {
     return (
       <section className={`todocont-${theme}`}>
         <h2>Upcoming Tasks</h2>
@@ -280,6 +293,63 @@ export default function Todo({ todoType }: TodoProps): ReactElement {
             )
           })}
         {upcomingTodos().length === 0 && (
+          <div className="notaskscont">No tasks due today</div>
+        )}
+      </section>
+    )
+  } else {
+    return (
+      <section className={`todocont-${theme}`}>
+        <h2>All Tasks</h2>
+        {sortedTodos().length !== 0 &&
+          sortedTodos().map((o, i) => {
+            return (
+              <div key={i}>
+                <TodoTask
+                  key={i}
+                  todoDays={GenerateDaysMessage(DaysLeft(o.dueDate), o.dueTime)}
+                  uid={o.uid}
+                  userId={o.userId}
+                  title={o.title}
+                  description={o.description}
+                  creationDate={o.creationDate}
+                  creationTime={o.creationTime}
+                  dueDate={o.dueDate}
+                  dueTime={o.dueTime}
+                  important={o.important}
+                  complete={o.complete}
+                  onDeleteClick={async (e) => {
+                    e.stopPropagation()
+                    await DeleteATodo(o)
+                  }}
+                  onCompleteClick={async (e) => {
+                    e.stopPropagation()
+                    await DeleteATodo(o)
+                  }}
+                  onTodoClick={(e) => {
+                    e.stopPropagation()
+                    setActiveModal('todosummary')
+                    setCurrentEvent({
+                      uid: o.uid,
+                      title: o.title,
+                      description: o.description,
+                      currentDate: new Date(o.creationDate),
+                      currentTime: o.creationTime,
+                      dueDate: new Date(o.dueDate),
+                      dueTime: o.dueTime,
+                      important: o.important,
+                      complete: o.complete,
+                    })
+                  }}
+                />
+                {/* Remove last underline in list */}
+                {i + 1 !== sortedTodos().length && (
+                  <div className="underline" />
+                )}
+              </div>
+            )
+          })}
+        {sortedTodos().length === 0 && (
           <div className="notaskscont">No tasks due today</div>
         )}
       </section>
