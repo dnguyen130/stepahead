@@ -8,7 +8,13 @@ import {
   ReactElement,
 } from 'react'
 
-import { UserDataProps, TodoDataProps, CurrentEventProps } from './types'
+import {
+  UserDataProps,
+  TodoDataProps,
+  CurrentEventProps,
+  JournalProps,
+  CurrentJournalProps,
+} from './types'
 
 interface ContextType {
   theme: string
@@ -25,6 +31,10 @@ interface ContextType {
   setTodos: Dispatch<SetStateAction<TodoDataProps[]>>
   currentEvent: CurrentEventProps
   setCurrentEvent: Dispatch<SetStateAction<CurrentEventProps>>
+  journals: JournalProps[]
+  setJournals: Dispatch<SetStateAction<JournalProps[]>>
+  currentJournal: CurrentJournalProps
+  setCurrentJournal: Dispatch<SetStateAction<CurrentJournalProps>>
 }
 
 const initialStates = {
@@ -60,6 +70,7 @@ const initialStates = {
   setTodos: () => {},
 
   currentEvent: {
+    uid: '',
     title: '',
     description: '',
     currentDate: new Date(),
@@ -70,6 +81,28 @@ const initialStates = {
     complete: false,
   },
   setCurrentEvent: () => {},
+
+  journals: [
+    {
+      uid: '',
+      userId: '',
+      title: '',
+      content: '',
+      creationDate: '',
+      creationTime: '',
+    },
+  ],
+  setJournals: () => {},
+
+  currentJournal: {
+    uid: '',
+    title: '',
+    content: '',
+    currentDate: new Date(),
+    currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
+  },
+
+  setCurrentJournal: () => {},
 }
 
 const Context = createContext<ContextType>(initialStates)
@@ -86,6 +119,10 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
   const [activeModal, setActiveModal] = useState(initialStates.activeModal)
   const [todos, setTodos] = useState(initialStates.todos)
   const [currentEvent, setCurrentEvent] = useState(initialStates.currentEvent)
+  const [journals, setJournals] = useState(initialStates.journals)
+  const [currentJournal, setCurrentJournal] = useState(
+    initialStates.currentJournal
+  )
 
   return (
     <Context.Provider
@@ -104,6 +141,10 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
         setTodos,
         currentEvent,
         setCurrentEvent,
+        journals,
+        setJournals,
+        currentJournal,
+        setCurrentJournal,
       }}
     >
       {children}
@@ -127,6 +168,10 @@ export function useMyContext(): ContextType {
     setTodos,
     currentEvent,
     setCurrentEvent,
+    journals,
+    setJournals,
+    currentJournal,
+    setCurrentJournal,
   } = useContext(Context)
   return {
     theme,
@@ -143,5 +188,9 @@ export function useMyContext(): ContextType {
     setTodos,
     currentEvent,
     setCurrentEvent,
+    journals,
+    setJournals,
+    currentJournal,
+    setCurrentJournal,
   }
 }

@@ -1,207 +1,148 @@
-import {
-  signInWithPopup,
-  signOut,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from 'firebase/auth'
-import { ref, set, get, child, push, update, remove } from 'firebase/database'
-import { FirebaseError } from 'firebase/app'
-import { auth, db, googleProvider } from './firebase'
-import { UserDataProps, TodoDataProps, SignInProps } from './types'
+import { TodoDataProps } from './types'
 
-const WriteUserData = async ({
-  uid,
-  name,
-  email,
-}: UserDataProps): Promise<void> => {
-  await set(ref(db, 'users/' + uid), {
-    name,
-    email,
-  })
-}
+function AreArraysEqual(
+  array1: TodoDataProps[],
+  array2: TodoDataProps[]
+): boolean {
+  // If the arrays have different length, they are not equal
+  if (array1.length !== array2.length) {
+    return false
+  }
 
-const GetAllTodos = async (userId: string): Promise<TodoDataProps | null> => {
-  const dbRef = ref(db)
-  try {
-    const initialTodoData = await get(child(dbRef, `users/${userId}/todos`))
-    if (initialTodoData.exists()) {
-      return initialTodoData.val()
-    } else {
-      console.log('No data available')
-      return null
+  // Iterate over each element of the arrays and compare them
+  for (let i = 0; i < array1.length; i++) {
+    const obj1 = array1[i]
+    const obj2 = array2[i]
+
+    // If the objects are not equal, the arrays are not equal
+    if (!AreObjectsEqual(obj1, obj2)) {
+      return false
     }
-  } catch (error) {
-    console.log(error)
-    return null
   }
+
+  // If we reach this point, the arrays are equal
+  return true
 }
 
-const CreateTodo = async ({
-  userId,
-  title,
-  description,
-  creationDate,
-  creationTime,
-  dueDate,
-  dueTime,
-  important,
-  complete,
-}: TodoDataProps): Promise<string> => {
-  const todoData = {
-    uid: '',
-    userId,
-    title,
-    description,
-    creationDate,
-    creationTime,
-    dueDate,
-    dueTime,
-    important,
-    complete,
+function AreObjectsEqual(
+  obj1: Record<string, any>,
+  obj2: Record<string, any>
+): boolean {
+  // If the objects have different number of keys, they are not equal
+  const keys1 = Object.keys(obj1)
+  const keys2 = Object.keys(obj2)
+  if (keys1.length !== keys2.length) {
+    return false
   }
 
-  const newTodoKey = push(child(ref(db), 'todos')).key
+  // Iterate over each key of the objects and compare their values
+  for (const key of keys1) {
+    const value1 = obj1[key]
+    const value2 = obj2[key]
 
-  if (newTodoKey !== null) {
-    // Add uid to database write
-    const updates: Record<string, any> = {}
-    todoData.uid = newTodoKey
-    updates[`/users/${userId}/todos/` + newTodoKey] = todoData
-    await update(ref(db), updates)
-    return newTodoKey
+    // If the values are not equal, the objects are not equal
+    if (value1 !== value2) {
+      return false
+    }
+  }
+
+  // If we reach this point, the objects are equal
+  return true
+}
+
+function DaysLeft(date: string): number {
+  const dueDate = new Date(date).valueOf()
+  const currentDate = new Date().valueOf()
+  const diffTime = dueDate - currentDate
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  return diffDays
+}
+
+function GenerateDaysMessage(daysLeft: number, time: string): string {
+  if (daysLeft === 0 && time !== '') {
+    return `Due today at ${ConvertTimeString(time)}`
+  } else if (daysLeft === 0 && time === '') {
+    return 'Due today'
+  } else if (daysLeft > 0) {
+    return `${daysLeft} days left`
+  } else if (daysLeft === -1) {
+    return `Expired by ${Math.abs(daysLeft)} day`
   } else {
-    return ''
+    return `Expired by ${Math.abs(daysLeft)} days`
   }
 }
 
-const DeleteTodo = async (todo: TodoDataProps): Promise<void> => {
-  try {
-    const todoRef = ref(db, `users/${todo.userId}/todos/${todo.uid}`)
-    await remove(todoRef)
-  } catch (error) {
-    if (error instanceof FirebaseError) {
-      console.log(error.message)
-    }
-    console.log(error)
+function RecentChecker(date: string): boolean {
+  if (DaysLeft(date) > 0 && DaysLeft(date) <= 7) {
+    return true
+  } else {
+    return false
   }
 }
 
-const SignUpWithEmail = async ({
-  email,
-  password,
-}: SignInProps): Promise<Record<string, any> | string> => {
-  try {
-    const res = await createUserWithEmailAndPassword(auth, email, password)
-    const user = res.user
+function ConvertTimeString(timeString: string): string {
+  let [hours, minutes] = timeString.split(':')
+  let hour = parseInt(hours)
+  const amPm = hour < 12 ? 'AM' : 'PM'
+  if (hour === 0) {
+    hour = 12
+  } else if (hour > 12) {
+    hour -= 12
+  }
 
-    const activeUserData: UserDataProps = {
-      uid: user.uid,
-      name: user.displayName !== null ? user.displayName : '',
-      email: user.email !== null ? user.email : '',
+  const stringHour = hour.toString()
+
+  if (minutes.length === 1) {
+    minutes = '0' + minutes
+  }
+
+  return stringHour + ':' + minutes + ' ' + amPm
+}
+
+function GenerateTodoTitle(todoType: string): string {
+  switch (todoType) {
+    case 'upcoming': {
+      return 'Upcoming Tasks'
     }
-
-    await WriteUserData(activeUserData)
-
-    return res
-  } catch (err) {
-    if (err instanceof FirebaseError) {
-      const errorCode = err.code
-      if (errorCode === 'auth/email-already-in-use') {
-        alert('Email already in use')
-        return err.code
-      } else if (errorCode === 'auth/invalid-email') {
-        alert('Invalid Email')
-        return err.code
-      } else if (password === '') {
-        alert('Invalid Password')
-        return err.code
-      } else if (errorCode === 'auth/weak-password') {
-        alert('Password must be at least 6 characters')
-        return err.code
-      } else {
-        console.log(err.message)
-        return err.message
-      }
-    } else {
-      console.log(err)
-      return 'error'
+    case 'today': {
+      return "Today's Tasks"
+    }
+    case 'expired': {
+      return 'Overdue Tasks'
+    }
+    case 'all': {
+      return 'All Tasks'
+    }
+    default: {
+      return 'Tasks'
     }
   }
 }
 
-const LogInWithEmail = async ({
-  email,
-  password,
-}: SignInProps): Promise<Record<string, any> | string> => {
-  try {
-    const res = await signInWithEmailAndPassword(auth, email, password)
-    return res
-  } catch (err) {
-    if (err instanceof FirebaseError) {
-      const errorCode = err.code
-      if (errorCode === 'auth/invalid-email') {
-        alert('Invalid Email')
-        return err.code
-      } else if (password === '') {
-        alert('Invalid Password')
-        return err.code
-      } else if (errorCode === 'auth/wrong-password') {
-        alert('Incorrect Password')
-        return err.code
-      } else {
-        console.log(err.message)
-        return err.message
-      }
-    } else {
-      console.log(err)
-      return 'error'
+function GenerateTodoEmptyText(todoType: string): string {
+  switch (todoType) {
+    case 'upcoming': {
+      return 'No upcoming tasks'
     }
-  }
-}
-
-const SignInWithGoogle = async (): Promise<Record<string, any> | string> => {
-  try {
-    const res = await signInWithPopup(auth, googleProvider)
-    const user = res.user
-
-    const activeUserData: UserDataProps = {
-      uid: user.uid,
-      name: user.displayName !== null ? user.displayName : '',
-      email: user.email !== null ? user.email : '',
+    case 'today': {
+      return 'No tasks due today'
     }
-
-    const userRef = await get(ref(db, 'users/' + user.uid))
-    if (userRef.exists()) {
-      console.log('user exists')
-    } else {
-      await WriteUserData(activeUserData)
+    case 'expired': {
+      return 'No tasks overdue'
     }
-
-    return user
-  } catch (err) {
-    if (err instanceof FirebaseError) {
-      return err.code
-    } else {
-      console.log(err)
-      return 'error'
+    default: {
+      return 'No tasks for now'
     }
-  }
-}
-
-const SignOut = async (): Promise<void> => {
-  try {
-    await signOut(auth)
-  } catch (err) {
-    console.log(err)
   }
 }
 
 export {
-  CreateTodo,
-  GetAllTodos,
-  DeleteTodo,
-  SignInWithGoogle,
-  SignOut,
-  SignUpWithEmail,
-  LogInWithEmail,
+  AreArraysEqual,
+  AreObjectsEqual,
+  GenerateDaysMessage,
+  RecentChecker,
+  DaysLeft,
+  ConvertTimeString,
+  GenerateTodoTitle,
+  GenerateTodoEmptyText,
 }

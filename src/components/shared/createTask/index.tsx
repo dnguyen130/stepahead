@@ -1,12 +1,26 @@
 import { ReactElement, useState } from 'react'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
-import CreateTaskForm from './form'
+import CreateTaskForm from './todoForm'
+import CreateJournalForm from './journalForm'
 import { MdClose } from 'react-icons/md'
 
 export default function CreateTask(): ReactElement {
-  const { activeModal, setActiveModal } = useMyContext()
+  const { activeModal, setActiveModal, currentEvent, setCurrentEvent } =
+    useMyContext()
   const [activeTab, setActiveTab] = useState('event')
+
+  const defaultCurrentEventProps = {
+    uid: currentEvent.uid !== '' ? currentEvent.uid : '',
+    title: '',
+    description: '',
+    currentDate: new Date(),
+    currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
+    dueDate: new Date(),
+    dueTime: '',
+    important: false,
+    complete: false,
+  }
 
   return (
     <AnimatePresence mode="wait">
@@ -50,12 +64,14 @@ export default function CreateTask(): ReactElement {
               className="exitbutton"
               onClick={() => {
                 setActiveModal('')
+                setCurrentEvent(defaultCurrentEventProps)
               }}
             >
               <MdClose size="100%" />
             </button>
           </header>
-          <CreateTaskForm />
+          {activeTab === 'event' && <CreateTaskForm />}
+          {activeTab === 'journal' && <CreateJournalForm />}
         </motion.div>
       )}
     </AnimatePresence>

@@ -7,7 +7,7 @@ import TimePicker from 'react-time-picker'
 import DatePicker from 'react-date-picker'
 import Checkbox from '@mui/material/Checkbox'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import { CreateTodo } from '@/utils/functions'
+import { CreateTodo } from '@/utils/firebasefunctions'
 import { useMyContext } from '@/utils/provider'
 
 const CssTextField = styled(TextField)({
@@ -56,6 +56,7 @@ export default function CreateTaskForm(): ReactElement {
   const [focus, setFocus] = useState('')
 
   const defaultCurrentEventProps = {
+    uid: currentEvent.uid !== '' ? currentEvent.uid : '',
     title: '',
     description: '',
     currentDate: new Date(),
@@ -82,7 +83,7 @@ export default function CreateTaskForm(): ReactElement {
       alert('Missing Due Date')
     } else {
       const Key = await CreateTodo({
-        uid: '',
+        uid: currentEvent.uid,
         userId,
         title: currentEvent.title,
         description: currentEvent.description,
@@ -93,22 +94,45 @@ export default function CreateTaskForm(): ReactElement {
         important: currentEvent.important,
         complete: false,
       })
-      setTodos([
-        ...todos,
-        {
-          uid: Key,
-          userId,
-          title: currentEvent.title,
-          description: currentEvent.description,
-          creationDate: currentEvent.currentDate.toDateString(),
-          creationTime: currentEvent.currentTime,
-          dueDate: currentEvent.dueDate.toDateString(),
-          dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
-          important: currentEvent.important,
-          complete: false,
-        },
-      ])
-      alert('Todo Successfully Created')
+
+      const updatedTodos = todos.map((todo) => {
+        if (todo.uid === currentEvent.uid) {
+          return {
+            ...todo,
+            title: currentEvent.title,
+            description: currentEvent.description,
+            dueDate: currentEvent.dueDate.toDateString(),
+            dueTime: currentEvent.dueTime,
+            important: currentEvent.important,
+          }
+        }
+        return todo
+      })
+      // If the created todo does not exist already
+      if (!updatedTodos.some((todo) => todo.uid === currentEvent.uid)) {
+        setTodos([
+          ...todos,
+          {
+            uid: currentEvent.uid !== '' ? currentEvent.uid : Key,
+            userId,
+            title: currentEvent.title,
+            description: currentEvent.description,
+            creationDate: currentEvent.currentDate.toDateString(),
+            creationTime: currentEvent.currentTime,
+            dueDate: currentEvent.dueDate.toDateString(),
+            dueTime: currentEvent.dueTime !== null ? currentEvent.dueTime : '',
+            important: currentEvent.important,
+            complete: false,
+          },
+        ])
+        alert('Todo Successfully Created')
+        // If the todo is being edited
+      } else {
+        setTodos(updatedTodos)
+        alert('Todo Successfully Edited')
+      }
+      console.log(todos)
+      setCurrentEvent(defaultCurrentEventProps)
       setActiveModal('')
     }
   }
@@ -141,7 +165,7 @@ export default function CreateTaskForm(): ReactElement {
       />
       <div className="datetimecont">
         <h4 className={focus !== '' ? 'dateheaderactive' : 'dateheader'}>
-          Date and Time
+          Date* and Time
         </h4>
         <div className="createtaskdatetime">
           <DatePicker

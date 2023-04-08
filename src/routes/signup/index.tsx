@@ -1,5 +1,5 @@
 import { ReactElement, useState } from 'react'
-import { SignUpWithEmail } from '@/utils/functions'
+import { SignUpWithEmail } from '@/utils/firebasefunctions'
 import { useNavigate } from 'react-router-dom'
 
 export default function SignUp(): ReactElement {

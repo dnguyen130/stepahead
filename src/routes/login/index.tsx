@@ -1,4 +1,4 @@
-import { SignInWithGoogle, LogInWithEmail } from '@/utils/functions'
+import { SignInWithGoogle, LogInWithEmail } from '@/utils/firebasefunctions'
 import { ReactElement, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'

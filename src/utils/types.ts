@@ -26,9 +26,11 @@ export interface TodoTaskProps extends TodoDataProps {
   onDeleteClick: (e: any) => Promise<void>
   onCompleteClick: (e: any) => Promise<void>
   onTodoClick: (e: any) => void
+  todoDays: string
 }
 
 export interface CurrentEventProps {
+  uid: string
   title: string
   description: string
   currentDate: Date
@@ -37,4 +39,21 @@ export interface CurrentEventProps {
   dueTime: string
   important: boolean
   complete: boolean
+}
+
+export interface JournalProps {
+  uid: string
+  userId: string
+  title: string
+  content: string
+  creationDate: string
+  creationTime: string
+}
+
+export interface CurrentJournalProps {
+  uid: string
+  title: string
+  content: string
+  currentDate: Date
+  currentTime: string
 }

@@ -4,8 +4,8 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { auth } from '@/utils/firebase'
-import { GetAllTodos } from './utils/functions'
-import { TodoDataProps } from './utils/types'
+import { GetAllJournals, GetAllTodos } from './utils/firebasefunctions'
+import { JournalProps, TodoDataProps } from './utils/types'
 
 import Navbar from '@/components/desktop/navbar'
 import Navbarmobile from '@/components/mobile/navbar'
@@ -31,6 +31,7 @@ export default function App(): ReactElement {
     setInitialLoad,
     todos,
     setTodos,
+    setJournals,
   } = useMyContext()
   const location = useLocation()
   const navigate = useNavigate()
@@ -39,6 +40,7 @@ export default function App(): ReactElement {
     onAuthStateChanged(auth, (user) => {
       if (user !== null) {
         setTodos([])
+        setJournals([])
         setLoading(true)
         setCurrentUser({
           uid: user.uid,
@@ -55,6 +57,7 @@ export default function App(): ReactElement {
           email: '',
         })
         setTodos([])
+        setJournals([])
         if (location.pathname !== '/' && location.pathname !== '/signup') {
           navigate('/')
         }
@@ -72,17 +75,20 @@ export default function App(): ReactElement {
 
   useEffect(() => {
     if (currentUser.uid !== '') {
-      const GetInitialTodos = async (uid: string): Promise<void> => {
+      const GetInitialData = async (uid: string): Promise<void> => {
         const res = await GetAllTodos(uid)
+        const res2 = await GetAllJournals(uid)
 
         // GetAllTodos returns null if no todo data has been created or an error occurs
-        if (res !== null) {
+        if (res !== null && res2 !== null) {
           const initialTodosArray: TodoDataProps[] = Object.values(res)
           setTodos(initialTodosArray)
+          const initialJournalsArray: JournalProps[] = Object.values(res2)
+          setJournals(initialJournalsArray)
           setInitialLoad(true)
         }
       }
-      GetInitialTodos(currentUser.uid).then(
+      GetInitialData(currentUser.uid).then(
         () => {},
         () => {}
       )

@@ -6,16 +6,12 @@ import { ReactElement } from 'react'
 import { TodoTaskProps } from '@/utils/types'
 
 export default function TodoTask({
-  userId,
   title,
-  description,
-  creationDate,
-  dueDate,
   important,
-  complete,
   onDeleteClick,
   onCompleteClick,
   onTodoClick,
+  todoDays,
 }: TodoTaskProps): ReactElement {
   const { theme } = useMyContext()
 
@@ -35,6 +31,15 @@ export default function TodoTask({
         )}
       </div>
       <h3 className="todotasktitle">{title}</h3>
+      <div
+        className={
+          todoDays.includes('Due today') || todoDays.includes('Expired')
+            ? 'tododaysimportant'
+            : 'tododays'
+        }
+      >
+        {todoDays}
+      </div>
       <div className="todotaskicondelete" onClick={onDeleteClick}>
         <IoMdCloseCircle size="80%" />
       </div>
