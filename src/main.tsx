@@ -7,7 +7,7 @@ import { AppProvider } from '@/utils/provider'
 import Root from '@/App'
 import ErrorPage from '@/components/error'
 import Home from '@/routes/home'
-import Calendar from '@/routes/calendar'
+import Tasks from '@/routes/tasks'
 import Journal from '@/routes/journal'
 import Profile from '@/routes/profile'
 import Login from '@/routes/login'
@@ -24,8 +24,8 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'calendar',
-        element: <Calendar />,
+        path: 'tasks',
+        element: <Tasks />,
       },
       {
         path: 'journal',

@@ -63,8 +63,10 @@ function GenerateDaysMessage(daysLeft: number, time: string): string {
     return `Due today at ${ConvertTimeString(time)}`
   } else if (daysLeft === 0 && time === '') {
     return 'Due today'
-  } else if (daysLeft > 0) {
+  } else if (daysLeft > 1) {
     return `${daysLeft} days left`
+  } else if (daysLeft === 1) {
+    return `${daysLeft} day left`
   } else if (daysLeft === -1) {
     return `Expired by ${Math.abs(daysLeft)} day`
   } else {
@@ -73,7 +75,7 @@ function GenerateDaysMessage(daysLeft: number, time: string): string {
 }
 
 function RecentChecker(date: string): boolean {
-  if (DaysLeft(date) > 0 && DaysLeft(date) <= 7) {
+  if (DaysLeft(date) >= 0 && DaysLeft(date) <= 7) {
     return true
   } else {
     return false

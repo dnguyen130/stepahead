@@ -79,12 +79,14 @@ export default function Todo({ todoType }: TodoProps): ReactElement {
         }
         case 'today': {
           return sortedTodos().filter(
-            (todo) => todo.dueDate === new Date().toDateString()
+            (todo) =>
+              Date.parse(todo.dueDate) === Date.parse(new Date().toDateString())
           )
         }
         case 'expired': {
           return sortedTodos().filter(
-            (todo) => todo.dueDate < new Date().toDateString()
+            (todo) =>
+              Date.parse(todo.dueDate) < Date.parse(new Date().toDateString())
           )
         }
         default: {

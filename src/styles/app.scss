@@ -12,9 +12,10 @@
 @import './components/shared/createtask.scss';
 @import './components/shared/backgrounddim.scss';
 @import './components/shared/todosummary.scss';
+@import './components/pages/task.scss';
 
 @mixin container($bg, $txt) {
-  max-width: 100vw;
+  width: 100vw;
   display: grid;
   justify-items: center;
   padding: 25px 25px 0;
@@ -24,9 +25,9 @@
   color: $txt;
 
   @media (min-width: $tablet) {
-    width: calc(100vw - 150px);
+    width: calc(100vw - 100px);
     height: 100vh;
-    margin-left: 120px;
+    margin-left: 100px;
   }
 
   @media only screen and (max-height: $maxphonewidth) and (orientation: landscape) {

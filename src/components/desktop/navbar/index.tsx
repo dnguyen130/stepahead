@@ -8,8 +8,8 @@ export default function Navbar(): ReactElement {
 
   return (
     <nav className={`navbar-cont-${theme}`}>
-      <NavbarButton icon={<FaHome size="100%" />} navLink="/dashboard" />
-      <NavbarButton icon={<FaCalendar size="100%" />} navLink="calendar" />
+      <NavbarButton icon={<FaHome size="100%" />} navLink="dashboard" />
+      <NavbarButton icon={<FaCalendar size="100%" />} navLink="tasks" />
       <NavbarButton icon={<FaBook size="100%" />} navLink="journal" />
       <NavbarButton icon={<FaUserCircle size="100%" />} navLink="profile" />
     </nav>

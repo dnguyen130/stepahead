@@ -35,6 +35,8 @@ interface ContextType {
   setJournals: Dispatch<SetStateAction<JournalProps[]>>
   currentJournal: CurrentJournalProps
   setCurrentJournal: Dispatch<SetStateAction<CurrentJournalProps>>
+  taskFilter: string
+  setTaskFilter: Dispatch<SetStateAction<string>>
 }
 
 const initialStates = {
@@ -103,6 +105,9 @@ const initialStates = {
   },
 
   setCurrentJournal: () => {},
+
+  taskFilter: 'all',
+  setTaskFilter: () => {},
 }
 
 const Context = createContext<ContextType>(initialStates)
@@ -123,6 +128,7 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
   const [currentJournal, setCurrentJournal] = useState(
     initialStates.currentJournal
   )
+  const [taskFilter, setTaskFilter] = useState(initialStates.taskFilter)
 
   return (
     <Context.Provider
@@ -145,6 +151,8 @@ export function AppProvider({ children }: AppProviderProps): ReactElement {
         setJournals,
         currentJournal,
         setCurrentJournal,
+        taskFilter,
+        setTaskFilter,
       }}
     >
       {children}
@@ -172,6 +180,8 @@ export function useMyContext(): ContextType {
     setJournals,
     currentJournal,
     setCurrentJournal,
+    taskFilter,
+    setTaskFilter,
   } = useContext(Context)
   return {
     theme,
@@ -192,5 +202,7 @@ export function useMyContext(): ContextType {
     setJournals,
     currentJournal,
     setCurrentJournal,
+    taskFilter,
+    setTaskFilter,
   }
 }
