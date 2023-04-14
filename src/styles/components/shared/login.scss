@@ -1,8 +1,10 @@
 @mixin logincontainer($bg, $txt) {
   width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  place-items: center flex-start;
+  justify-content: center;
+  align-items: center;
   padding: 25px;
   overflow-y: auto;
 
@@ -15,14 +17,78 @@
 }
 
 .login {
-  width: auto;
-  height: auto;
+  width: 320px;
+  height: 650px;
   display: grid;
   place-items: center center;
-  grid-template-rows: 100px auto;
+  grid-template-rows: 1fr auto;
+  background-color: $bg2light;
+  border-radius: 10px;
+  background: #2f6eb8;
+  box-shadow: inset 29px 29px 58px #24558e, inset -29px -29px 58px #3a87e2,
+    10px 10px 20px black;
 }
 
 .inputcont {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  align-self: flex-end;
+}
+
+.inputcont p {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.loginlogo {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: $bglight;
+}
+
+.loginlogo h1 {
+  font-family: $styled;
+  font-size: 2.5rem;
+  margin: 0;
+  line-height: 2.5rem;
+}
+
+.loginbutton {
+  border: 0;
+  height: 40px;
+  width: 100%;
+  background-color: $bglight;
+  border-radius: 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.loginbuttonicon {
+  border: 0;
+  height: 40px;
+  width: 100%;
+  background-color: $bglight;
+  border-radius: 20px;
+  margin: 10px 0;
+  cursor: pointer;
+  font-size: 1rem;
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  place-items: center center;
+}
+
+.loginbuttonicon h2,
+.loginbutton h2 {
+  margin: 0;
+  font-size: 1rem;
 }

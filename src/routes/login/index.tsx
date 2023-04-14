@@ -3,6 +3,36 @@ import { ReactElement, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useMyContext } from '@/utils/provider'
+import { MdPlaylistAddCheck } from 'react-icons/md'
+import { styled } from '@mui/material'
+import TextField from '@mui/material/TextField'
+import styles from '@/styles/variables/export.module.scss'
+import { FcGoogle } from 'react-icons/fc'
+
+const CssTextField = styled(TextField)({
+  margin: '10px 0',
+  input: {
+    color: styles.bgLight,
+  },
+  '& label': {
+    color: styles.bgLight,
+    fontFamily: `"Ubuntu", "Arial", sans-serif`,
+  },
+  '& label.Mui-focused': {
+    color: styles.bgLight,
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: styles.bgLight,
+    },
+    '&:hover fieldset': {
+      borderColor: styles.bgLight,
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: styles.bgLight,
+    },
+  },
+})
 
 export default function Login(): ReactElement {
   const navigate = useNavigate()
@@ -48,33 +78,50 @@ export default function Login(): ReactElement {
             duration: 0.2,
           }}
         >
-          <div>Login Page</div>
+          <div className="loginlogo">
+            <MdPlaylistAddCheck size="100%" />
+            <h1>Let&apos;s get ahead</h1>
+          </div>
           <div className="inputcont">
-            <label htmlFor="email">Username</label>
-            <input
-              id="email"
+            <CssTextField
+              required
               type="email"
-              onChange={(e) => {
+              label="Email"
+              variant="outlined"
+              value={loginCredentials.email}
+              onChange={(newValue) => {
                 setLoginCredentials({
                   ...loginCredentials,
-                  email: e.target.value,
+                  email: newValue.target.value,
                 })
               }}
             />
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
+            <CssTextField
+              required
               type="password"
-              onChange={(e) => {
+              label="Password"
+              variant="outlined"
+              value={loginCredentials.password}
+              onChange={(newValue) => {
                 setLoginCredentials({
                   ...loginCredentials,
-                  password: e.target.value,
+                  password: newValue.target.value,
                 })
               }}
             />
-            <button onClick={GoogleSignIn}>Google Sign In</button>
-            <button onClick={NavigateToSignUp}>Sign Up</button>
-            <button onClick={Login}>Login</button>
+            <button className="loginbutton" onClick={Login}>
+              <div></div>
+              <h2>Login</h2>
+            </button>
+            <p>or</p>
+            <button className="loginbutton" onClick={NavigateToSignUp}>
+              <div></div>
+              <h2>Sign Up</h2>
+            </button>
+            <button className="loginbuttonicon" onClick={GoogleSignIn}>
+              <FcGoogle size="100%" />
+              <h2>Google Sign In</h2>
+            </button>
           </div>
         </motion.div>
       )}

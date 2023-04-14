@@ -1,6 +1,35 @@
 import { ReactElement, useState } from 'react'
 import { SignUpWithEmail } from '@/utils/firebasefunctions'
 import { useNavigate } from 'react-router-dom'
+import { MdPlaylistAddCheck } from 'react-icons/md'
+import TextField from '@mui/material/TextField'
+import { styled } from '@mui/material'
+import styles from '@/styles/variables/export.module.scss'
+
+const CssTextField = styled(TextField)({
+  margin: '10px 0',
+  input: {
+    color: styles.bgLight,
+  },
+  '& label': {
+    color: styles.bgLight,
+    fontFamily: `"Ubuntu", "Arial", sans-serif`,
+  },
+  '& label.Mui-focused': {
+    color: styles.bgLight,
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: styles.bgLight,
+    },
+    '&:hover fieldset': {
+      borderColor: styles.bgLight,
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: styles.bgLight,
+    },
+  },
+})
 
 export default function SignUp(): ReactElement {
   const navigate = useNavigate()
@@ -29,43 +58,56 @@ export default function SignUp(): ReactElement {
 
   return (
     <div className="login">
-      <div>Sign Up Page</div>
+      <div className="loginlogo">
+        <MdPlaylistAddCheck size="100%" />
+        <h1>Let&apos;s get ahead</h1>
+      </div>
       <div className="inputcont">
-        <label htmlFor="email">email</label>
-        <input
+        <CssTextField
+          required
           type="email"
-          id="email"
-          onChange={(e) => {
+          label="Email"
+          variant="outlined"
+          value={signUpCredentials.email}
+          onChange={(newValue) => {
             setSignUpCredentials({
               ...signUpCredentials,
-              email: e.target.value,
+              email: newValue.target.value,
             })
           }}
         />
-        <label htmlFor="password">Password</label>
-        <input
+        <CssTextField
+          required
           type="password"
-          id="password"
-          onChange={(e) => {
+          label="Password"
+          variant="outlined"
+          value={signUpCredentials.email}
+          onChange={(newValue) => {
             setSignUpCredentials({
               ...signUpCredentials,
-              password: e.target.value,
+              password: newValue.target.value,
             })
           }}
         />
-        <label htmlFor="confirmPassword">Confirm Password</label>
-        <input
+        <CssTextField
+          required
           type="password"
-          id="confirmPassword"
-          onChange={(e) => {
+          label="Confirm Password"
+          variant="outlined"
+          value={signUpCredentials.confirmPassword}
+          onChange={(newValue) => {
             setSignUpCredentials({
               ...signUpCredentials,
-              confirmPassword: e.target.value,
+              confirmPassword: newValue.target.value,
             })
           }}
         />
-        <button onClick={SignUp}>Sign Up</button>
-        <button onClick={ReturnToLogin}>Return to Login</button>
+        <button className="loginbutton" onClick={SignUp}>
+          <h2>Sign Up</h2>
+        </button>
+        <button className="loginbutton" onClick={ReturnToLogin}>
+          <h2>Return to Login</h2>
+        </button>
       </div>
     </div>
   )
