@@ -50,12 +50,12 @@ export default function Todo({ todoType }: TodoProps): ReactElement {
       const todoMap = Object.values(todos)
       const todoArray = [...todoMap]
       sortedArray = todoArray.sort((key1, key2): number => {
-        const dueDate1 = key1.dueDate
-        const dueDate2 = key2.dueDate
+        const dueDate1 = Date.parse(key1.dueDate)
+        const dueDate2 = Date.parse(key2.dueDate)
         const dueTime1 = key1.dueTime
         const dueTime2 = key2.dueTime
 
-        if (dueDate1 > dueDate2) {
+        if (dueDate1 < dueDate2) {
           return 1
         } else if (dueDate1 === dueDate2) {
           if (dueTime1 > dueTime2) {
