@@ -12,7 +12,7 @@ export default function Tasks(): ReactElement {
         <h1 className="homecontgreeting">Tasks</h1>
         <TodoSwitches />
       </header>
-      <Todo todoType={taskFilter} />
+      <Todo todoType={taskFilter} journal={false} />
     </section>
   )
 }

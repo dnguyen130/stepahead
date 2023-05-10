@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
 import { useMyContext } from '@/utils/provider'
 import TodoTask from './todoTask'
-import { TodoDataProps } from '@/utils/types'
-import { DeleteTodo } from '@/utils/firebasefunctions'
+import { TodoDataProps, JournalProps } from '@/utils/types'
+import { DeleteTodo, DeleteJournal } from '@/utils/firebasefunctions'
 import {
   AreArraysEqual,
   RecentChecker,
@@ -15,19 +15,23 @@ import { onValue, ref } from 'firebase/database'
 import { db } from '@/utils/firebase'
 
 interface TodoProps {
+  journal: boolean
   todoType: string
 }
 
-export default function Todo({ todoType }: TodoProps): ReactElement {
+export default function Todo({ todoType, journal }: TodoProps): ReactElement {
   const {
     theme,
     currentUser,
     todos,
     setTodos,
+    journals,
+    setJournals,
     setActiveModal,
     setCurrentEvent,
   } = useMyContext()
   const todoRef = ref(db, `users/${currentUser.uid}/todos`)
+  const journalRef = ref(db, `users/${currentUser.uid}/journals`)
 
   const DeleteATodo = async (todo: TodoDataProps): Promise<void> => {
     await DeleteTodo(todo)
@@ -44,6 +48,21 @@ export default function Todo({ todoType }: TodoProps): ReactElement {
     })
   }
 
+  const DeleteAJournal = async (journal: JournalProps): Promise<void> => {
+    await DeleteJournal(journal)
+    onValue(journalRef, (snapshot) => {
+      const data = snapshot.val()
+      if (data !== null) {
+        const dataArray = Object.values<JournalProps>(data)
+        if (!AreArraysEqual(dataArray, todos)) {
+          setJournals(dataArray)
+        }
+      } else if (data === null) {
+        setJournals([])
+      }
+    })
+  }
+
   const sortedTodos = (): TodoDataProps[] => {
     let sortedArray: TodoDataProps[] = []
     if (todos !== null) {
@@ -54,6 +73,33 @@ export default function Todo({ todoType }: TodoProps): ReactElement {
         const dueDate2 = Date.parse(key2.dueDate)
         const dueTime1 = key1.dueTime
         const dueTime2 = key2.dueTime
+
+        if (dueDate1 < dueDate2) {
+          return 1
+        } else if (dueDate1 === dueDate2) {
+          if (dueTime1 > dueTime2) {
+            return 1
+          } else {
+            return -1
+          }
+        } else {
+          return -1
+        }
+      })
+    }
+    return sortedArray
+  }
+
+  const sortedJournals = (): JournalProps[] => {
+    let sortedArray: JournalProps[] = []
+    if (journals !== null) {
+      const journalMap = Object.values(journals)
+      const journalArray = [...journalMap]
+      sortedArray = journalArray.sort((key1, key2): number => {
+        const dueDate1 = Date.parse(key1.creationDate)
+        const dueDate2 = Date.parse(key2.creationDate)
+        const dueTime1 = key1.creationTime
+        const dueTime2 = key2.creationTime
 
         if (dueDate1 < dueDate2) {
           return 1
@@ -98,60 +144,118 @@ export default function Todo({ todoType }: TodoProps): ReactElement {
     }
   }
 
-  return (
-    <section className={`todocont-${theme}`}>
-      <h2>{GenerateTodoTitle(todoType)}</h2>
-      {filteredTodos(todoType).length !== 0 &&
-        filteredTodos(todoType).map((o, i) => {
-          return (
-            <div key={i}>
-              <TodoTask
-                key={i}
-                todoDays={GenerateDaysMessage(DaysLeft(o.dueDate), o.dueTime)}
-                uid={o.uid}
-                userId={o.userId}
-                title={o.title}
-                description={o.description}
-                creationDate={o.creationDate}
-                creationTime={o.creationTime}
-                dueDate={o.dueDate}
-                dueTime={o.dueTime}
-                important={o.important}
-                complete={o.complete}
-                onDeleteClick={async (e) => {
-                  e.stopPropagation()
-                  await DeleteATodo(o)
-                }}
-                onCompleteClick={async (e) => {
-                  e.stopPropagation()
-                  await DeleteATodo(o)
-                }}
-                onTodoClick={(e) => {
-                  e.stopPropagation()
-                  setActiveModal('todosummary')
-                  setCurrentEvent({
-                    uid: o.uid,
-                    title: o.title,
-                    description: o.description,
-                    currentDate: new Date(o.creationDate),
-                    currentTime: o.creationTime,
-                    dueDate: new Date(o.dueDate),
-                    dueTime: o.dueTime,
-                    important: o.important,
-                    complete: o.complete,
-                  })
-                }}
-              />
-              {/* Remove last underline in list */}
-              {i + 1 !== filteredTodos(todoType).length && (
-                <div className="underline" />
-              )}
-            </div>
-          )
-        })}
-      {filteredTodos(todoType).length === 0 && (
-        <div className="notaskscont">{GenerateTodoEmptyText(todoType)}</div>
-      )}
-    </section>
-  )
+  if (journal) {
+    return (
+      <section className={`todocont-${theme}`}>
+        {sortedJournals().length !== 0 &&
+          sortedJournals().map((o, i) => {
+            return (
+              <div key={i}>
+                <TodoTask
+                  key={i}
+                  todoDays={GenerateDaysMessage(DaysLeft(o.dueDate), o.dueTime)}
+                  uid={o.uid}
+                  userId={o.userId}
+                  title={o.title}
+                  description={o.description}
+                  creationDate={o.creationDate}
+                  creationTime={o.creationTime}
+                  dueDate={o.dueDate}
+                  dueTime={o.dueTime}
+                  important={o.important}
+                  complete={o.complete}
+                  onDeleteClick={async (e) => {
+                    e.stopPropagation()
+                    await DeleteATodo(o)
+                  }}
+                  onCompleteClick={async (e) => {
+                    e.stopPropagation()
+                    await DeleteATodo(o)
+                  }}
+                  onTodoClick={(e) => {
+                    e.stopPropagation()
+                    setActiveModal('todosummary')
+                    setCurrentEvent({
+                      uid: o.uid,
+                      title: o.title,
+                      description: o.description,
+                      currentDate: new Date(o.creationDate),
+                      currentTime: o.creationTime,
+                      dueDate: new Date(o.dueDate),
+                      dueTime: o.dueTime,
+                      important: o.important,
+                      complete: o.complete,
+                    })
+                  }}
+                />
+                {/* Remove last underline in list */}
+                {i + 1 !== filteredTodos(todoType).length && (
+                  <div className="underline" />
+                )}
+              </div>
+            )
+          })}
+        {filteredTodos(todoType).length === 0 && (
+          <div className="notaskscont">No journal entries</div>
+        )}
+      </section>
+    )
+  } else {
+    return (
+      <section className={`todocont-${theme}`}>
+        <h2>{GenerateTodoTitle(todoType)}</h2>
+        {filteredTodos(todoType).length !== 0 &&
+          filteredTodos(todoType).map((o, i) => {
+            return (
+              <div key={i}>
+                <TodoTask
+                  key={i}
+                  todoDays={GenerateDaysMessage(DaysLeft(o.dueDate), o.dueTime)}
+                  uid={o.uid}
+                  userId={o.userId}
+                  title={o.title}
+                  description={o.description}
+                  creationDate={o.creationDate}
+                  creationTime={o.creationTime}
+                  dueDate={o.dueDate}
+                  dueTime={o.dueTime}
+                  important={o.important}
+                  complete={o.complete}
+                  onDeleteClick={async (e) => {
+                    e.stopPropagation()
+                    await DeleteATodo(o)
+                  }}
+                  onCompleteClick={async (e) => {
+                    e.stopPropagation()
+                    await DeleteATodo(o)
+                  }}
+                  onTodoClick={(e) => {
+                    e.stopPropagation()
+                    setActiveModal('todosummary')
+                    setCurrentEvent({
+                      uid: o.uid,
+                      title: o.title,
+                      description: o.description,
+                      currentDate: new Date(o.creationDate),
+                      currentTime: o.creationTime,
+                      dueDate: new Date(o.dueDate),
+                      dueTime: o.dueTime,
+                      important: o.important,
+                      complete: o.complete,
+                    })
+                  }}
+                />
+                {/* Remove last underline in list */}
+                {i + 1 !== filteredTodos(todoType).length && (
+                  <div className="underline" />
+                )}
+              </div>
+            )
+          })}
+        {filteredTodos(todoType).length === 0 && (
+          <div className="notaskscont">{GenerateTodoEmptyText(todoType)}</div>
+        )}
+      </section>
+    )
+  }
 }

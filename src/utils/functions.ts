@@ -1,8 +1,8 @@
-import { TodoDataProps } from './types'
+import { TodoDataProps, JournalProps } from './types'
 
 function AreArraysEqual(
-  array1: TodoDataProps[],
-  array2: TodoDataProps[]
+  array1: TodoDataProps[] | JournalProps[],
+  array2: TodoDataProps[] | JournalProps[]
 ): boolean {
   // If the arrays have different length, they are not equal
   if (array1.length !== array2.length) {

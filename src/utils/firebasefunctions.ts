@@ -139,6 +139,21 @@ const DeleteTodo = async (todo: TodoDataProps): Promise<void> => {
   }
 }
 
+const DeleteJournal = async (journal: JournalProps): Promise<void> => {
+  try {
+    const journalRef = ref(
+      db,
+      `users/${journal.userId}/journals/${journal.uid}`
+    )
+    await remove(journalRef)
+  } catch (error) {
+    if (error instanceof FirebaseError) {
+      console.log(error.message)
+    }
+    console.log(error)
+  }
+}
+
 const SignUpWithEmail = async ({
   email,
   password,
@@ -259,4 +274,5 @@ export {
   LogInWithEmail,
   GetAllJournals,
   CreateJournal,
+  DeleteJournal,
 }
