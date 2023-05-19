@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 import { useMyContext } from '@/utils/provider'
 import TodoTask from './todoTask'
+import JournalTask from './journalTask'
 import { TodoDataProps, JournalProps } from '@/utils/types'
 import { DeleteTodo, DeleteJournal } from '@/utils/firebasefunctions'
 import {
@@ -27,6 +28,7 @@ export default function Todo({ todoType, journal }: TodoProps): ReactElement {
     setTodos,
     journals,
     setJournals,
+    setCurrentJournal,
     setActiveModal,
     setCurrentEvent,
   } = useMyContext()
@@ -151,40 +153,31 @@ export default function Todo({ todoType, journal }: TodoProps): ReactElement {
           sortedJournals().map((o, i) => {
             return (
               <div key={i}>
-                <TodoTask
+                <JournalTask
                   key={i}
-                  todoDays={GenerateDaysMessage(DaysLeft(o.dueDate), o.dueTime)}
                   uid={o.uid}
                   userId={o.userId}
                   title={o.title}
-                  description={o.description}
+                  content={o.content}
                   creationDate={o.creationDate}
                   creationTime={o.creationTime}
-                  dueDate={o.dueDate}
-                  dueTime={o.dueTime}
-                  important={o.important}
-                  complete={o.complete}
                   onDeleteClick={async (e) => {
                     e.stopPropagation()
-                    await DeleteATodo(o)
+                    await DeleteAJournal(o)
                   }}
                   onCompleteClick={async (e) => {
                     e.stopPropagation()
-                    await DeleteATodo(o)
+                    await DeleteAJournal(o)
                   }}
                   onTodoClick={(e) => {
                     e.stopPropagation()
                     setActiveModal('todosummary')
-                    setCurrentEvent({
+                    setCurrentJournal({
                       uid: o.uid,
                       title: o.title,
-                      description: o.description,
+                      content: o.content,
                       currentDate: new Date(o.creationDate),
                       currentTime: o.creationTime,
-                      dueDate: new Date(o.dueDate),
-                      dueTime: o.dueTime,
-                      important: o.important,
-                      complete: o.complete,
                     })
                   }}
                 />
@@ -195,7 +188,7 @@ export default function Todo({ todoType, journal }: TodoProps): ReactElement {
               </div>
             )
           })}
-        {filteredTodos(todoType).length === 0 && (
+        {sortedJournals().length === 0 && (
           <div className="notaskscont">No journal entries</div>
         )}
       </section>
