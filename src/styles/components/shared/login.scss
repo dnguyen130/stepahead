@@ -22,11 +22,8 @@
   display: grid;
   place-items: center center;
   grid-template-rows: 1fr auto;
-  background-color: $bg2light;
   border-radius: 10px;
-  background: #2f6eb8;
-  box-shadow: inset 29px 29px 58px #24558e, inset -29px -29px 58px #3a87e2,
-    10px 10px 20px black;
+  box-shadow: inset 15px 15px 30px #cec6ac, inset -15px -15px 30px #fffffc;
 }
 
 .inputcont {
@@ -48,7 +45,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: $bglight;
+  color: $bg2light;
 }
 
 .loginlogo h1 {
@@ -62,7 +59,7 @@
   border: 0;
   height: 40px;
   width: 100%;
-  background-color: $bglight;
+  background-color: $bg2light;
   border-radius: 20px;
   margin: 10px 0;
   cursor: pointer;
@@ -71,13 +68,14 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  color: $bglight;
 }
 
 .loginbuttonicon {
   border: 0;
   height: 40px;
   width: 100%;
-  background-color: $bglight;
+  background-color: $bg2light;
   border-radius: 20px;
   margin: 10px 0;
   cursor: pointer;
@@ -85,6 +83,7 @@
   display: grid;
   grid-template-columns: 50px 1fr;
   place-items: center center;
+  color: $bglight;
 }
 
 .loginbuttonicon h2,

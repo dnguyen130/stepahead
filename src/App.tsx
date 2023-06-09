@@ -119,21 +119,24 @@ export default function App(): ReactElement {
       <TodoSummary />
       <BackgroundDim />
       <AnimatePresence mode="wait">
-        {currentUser.uid !== '' && !loading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, transitionEnd: { display: 'none' } }}
-            transition={{
-              type: 'linear',
-              duration: 0.2,
-            }}
-          >
-            <Navbar key="navbar" />
-            <Navbarmobile key="navbarmobile" />
-            <AddButtonDesktop key="addbutton" />
-          </motion.div>
-        )}
+        {currentUser.uid !== '' &&
+          !loading &&
+          location.pathname !== '/' &&
+          location.pathname !== '/signup' && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transitionEnd: { display: 'none' } }}
+              transition={{
+                type: 'linear',
+                duration: 0.2,
+              }}
+            >
+              <Navbar key="navbar" />
+              <Navbarmobile key="navbarmobile" />
+              <AddButtonDesktop key="addbutton" />
+            </motion.div>
+          )}
       </AnimatePresence>
       <AnimatePresence mode="wait">
         <motion.div

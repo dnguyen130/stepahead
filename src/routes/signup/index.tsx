@@ -9,24 +9,24 @@ import styles from '@/styles/variables/export.module.scss'
 const CssTextField = styled(TextField)({
   margin: '10px 0',
   input: {
-    color: styles.bgLight,
+    color: styles.bg2Light,
   },
   '& label': {
-    color: styles.bgLight,
+    color: styles.bg2Light,
     fontFamily: `"Ubuntu", "Arial", sans-serif`,
   },
   '& label.Mui-focused': {
-    color: styles.bgLight,
+    color: styles.bg2Light,
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
-      borderColor: styles.bgLight,
+      borderColor: styles.bg2Light,
     },
     '&:hover fieldset': {
-      borderColor: styles.bgLight,
+      borderColor: styles.bg2Light,
     },
     '&.Mui-focused fieldset': {
-      borderColor: styles.bgLight,
+      borderColor: styles.bg2Light,
     },
   },
 })
@@ -81,7 +81,7 @@ export default function SignUp(): ReactElement {
           type="password"
           label="Password"
           variant="outlined"
-          value={signUpCredentials.email}
+          value={signUpCredentials.password}
           onChange={(newValue) => {
             setSignUpCredentials({
               ...signUpCredentials,

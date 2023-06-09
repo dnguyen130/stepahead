@@ -7,29 +7,26 @@ import { MdPlaylistAddCheck } from 'react-icons/md'
 import { styled } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import styles from '@/styles/variables/export.module.scss'
-import { FcGoogle } from 'react-icons/fc'
+import { FaGoogle } from 'react-icons/fa'
 
 const CssTextField = styled(TextField)({
   margin: '10px 0',
-  input: {
-    color: styles.bgLight,
-  },
   '& label': {
-    color: styles.bgLight,
+    color: styles.bg2Light,
     fontFamily: `"Ubuntu", "Arial", sans-serif`,
   },
   '& label.Mui-focused': {
-    color: styles.bgLight,
+    color: styles.bg2Light,
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
-      borderColor: styles.bgLight,
+      borderColor: styles.bg2Light,
     },
     '&:hover fieldset': {
-      borderColor: styles.bgLight,
+      borderColor: styles.bg2Light,
     },
     '&.Mui-focused fieldset': {
-      borderColor: styles.bgLight,
+      borderColor: styles.bg2Light,
     },
   },
 })
@@ -113,13 +110,12 @@ export default function Login(): ReactElement {
               <div></div>
               <h2>Login</h2>
             </button>
-            <p>or</p>
             <button className="loginbutton" onClick={NavigateToSignUp}>
               <div></div>
               <h2>Sign Up</h2>
             </button>
             <button className="loginbuttonicon" onClick={GoogleSignIn}>
-              <FcGoogle size="100%" />
+              <FaGoogle size="70%" />
               <h2>Google Sign In</h2>
             </button>
           </div>
