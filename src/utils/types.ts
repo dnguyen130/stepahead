@@ -50,6 +50,12 @@ export interface JournalProps {
   creationTime: string
 }
 
+export interface JournalTaskProps extends JournalProps {
+  onDeleteClick: (e: any) => Promise<void>
+  onCompleteClick: (e: any) => Promise<void>
+  onTodoClick: (e: any) => void
+}
+
 export interface CurrentJournalProps {
   uid: string
   title: string

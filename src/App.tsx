@@ -80,9 +80,12 @@ export default function App(): ReactElement {
         const res2 = await GetAllJournals(uid)
 
         // GetAllTodos returns null if no todo data has been created or an error occurs
-        if (res !== null && res2 !== null) {
+        if (res !== null) {
           const initialTodosArray: TodoDataProps[] = Object.values(res)
           setTodos(initialTodosArray)
+        }
+
+        if (res2 !== null) {
           const initialJournalsArray: JournalProps[] = Object.values(res2)
           setJournals(initialJournalsArray)
           setInitialLoad(true)

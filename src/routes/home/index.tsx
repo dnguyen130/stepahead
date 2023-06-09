@@ -52,8 +52,8 @@ export default function Home(): ReactElement {
         <h2 className="homecontdate">{today} </h2>
       </header>
       <section className="content">
-        <Todo todoType="today" />
-        <Todo todoType="upcoming" />
+        <Todo todoType="today" journal={false} />
+        <Todo todoType="upcoming" journal={false} />
       </section>
     </section>
   )

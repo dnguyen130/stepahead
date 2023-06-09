@@ -81,6 +81,24 @@
   }
 }
 
+.journaltaskcont {
+  display: grid;
+  place-items: center;
+  grid-template-columns: 30px 1fr 1fr 30px;
+  column-gap: 10px;
+  min-height: 50px;
+  padding: 0 10px;
+  cursor: pointer;
+  margin: 10px 0;
+  transition: background-color 0.2s;
+  border-radius: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
 @mixin todotaskicon($color) {
   width: 20px;
   height: 20px;
