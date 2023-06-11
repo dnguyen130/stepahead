@@ -8,11 +8,19 @@ import { useMyContext } from '@/utils/provider'
 
 const CssTextField = styled(TextField)({
   input: {
+    fontFamily: `"Ubuntu", "Arial", sans-serif`,
+    fontSize: '1em',
+    color: styles.bgLight,
+  },
+  textarea: {
+    fontFamily: `"Ubuntu", "Arial", sans-serif`,
+    fontSize: '1em',
     color: styles.bgLight,
   },
   '& label': {
     color: styles.bgLight,
     fontFamily: `"Ubuntu", "Arial", sans-serif`,
+    fontWeight: 500,
   },
   '& label.Mui-focused': {
     color: styles.bgLight,

@@ -6,8 +6,14 @@ import CreateJournalForm from './journalForm'
 import { MdClose } from 'react-icons/md'
 
 export default function CreateTask(): ReactElement {
-  const { activeModal, setActiveModal, currentEvent, setCurrentEvent } =
-    useMyContext()
+  const {
+    activeModal,
+    setActiveModal,
+    currentEvent,
+    setCurrentEvent,
+    currentJournal,
+    setCurrentJournal,
+  } = useMyContext()
   const [activeTab, setActiveTab] = useState('event')
 
   const defaultCurrentEventProps = {
@@ -20,6 +26,14 @@ export default function CreateTask(): ReactElement {
     dueTime: '',
     important: false,
     complete: false,
+  }
+
+  const defaultJournalProps = {
+    uid: currentJournal.uid !== '' ? currentJournal.uid : '',
+    title: '',
+    content: '',
+    currentDate: new Date(),
+    currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
   }
 
   return (
@@ -65,6 +79,7 @@ export default function CreateTask(): ReactElement {
               onClick={() => {
                 setActiveModal('')
                 setCurrentEvent(defaultCurrentEventProps)
+                setCurrentJournal(defaultJournalProps)
               }}
             >
               <MdClose size="100%" />
