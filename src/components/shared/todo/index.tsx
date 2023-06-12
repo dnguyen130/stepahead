@@ -171,7 +171,7 @@ export default function Todo({ todoType, journal }: TodoProps): ReactElement {
                   }}
                   onTodoClick={(e) => {
                     e.stopPropagation()
-                    setActiveModal('todosummary')
+                    setActiveModal('journalsummary')
                     setCurrentJournal({
                       uid: o.uid,
                       title: o.title,

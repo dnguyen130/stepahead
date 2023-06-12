@@ -11,9 +11,11 @@ export default function Profile(): ReactElement {
   }
 
   return (
-    <div>
-      <h1>THIS IS THE PROFILE PAGE</h1>
+    <section className="homecont">
+      <header>
+        <h1 className="homecontgreeting">Profile</h1>
+      </header>
       <button onClick={SignOutAndRedirect}>Sign Out</button>
-    </div>
+    </section>
   )
 }

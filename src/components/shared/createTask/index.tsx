@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 import { useMyContext } from '@/utils/provider'
 import { AnimatePresence, motion } from 'framer-motion'
 import CreateTaskForm from './todoForm'
@@ -14,7 +14,6 @@ export default function CreateTask(): ReactElement {
     currentJournal,
     setCurrentJournal,
   } = useMyContext()
-  const [activeTab, setActiveTab] = useState('event')
 
   const defaultCurrentEventProps = {
     uid: currentEvent.uid !== '' ? currentEvent.uid : '',
@@ -38,7 +37,10 @@ export default function CreateTask(): ReactElement {
 
   return (
     <AnimatePresence mode="wait">
-      {activeModal === 'createtask' && (
+      {(activeModal === 'createtask' ||
+        activeModal === 'createjournal' ||
+        activeModal === 'edittask' ||
+        activeModal === 'editjournal') && (
         <motion.div
           className="createtaskcont"
           initial={{ opacity: 0 }}
@@ -52,24 +54,30 @@ export default function CreateTask(): ReactElement {
           <header className="createtaskheader">
             <button
               className={
-                activeTab === 'event'
+                activeModal === 'createtask' || activeModal === 'edittask'
                   ? 'createtasktab-active'
                   : 'createtasktab-inactive'
               }
+              style={{
+                visibility: activeModal === 'createtask' ? 'visible' : 'hidden',
+              }}
               onClick={() => {
-                setActiveTab('event')
+                setActiveModal('creattask')
               }}
             >
               Event
             </button>
             <button
               className={
-                activeTab === 'journal'
+                activeModal === 'createjournal' || activeModal === 'editjournal'
                   ? 'createtasktab-active'
                   : 'createtasktab-inactive'
               }
+              style={{
+                visibility: activeModal === 'createtask' ? 'visible' : 'hidden',
+              }}
               onClick={() => {
-                setActiveTab('journal')
+                setActiveModal('createjournal')
               }}
             >
               Journal
@@ -85,8 +93,11 @@ export default function CreateTask(): ReactElement {
               <MdClose size="100%" />
             </button>
           </header>
-          {activeTab === 'event' && <CreateTaskForm />}
-          {activeTab === 'journal' && <CreateJournalForm />}
+          {(activeModal === 'createtask' || activeModal === 'edittask') && (
+            <CreateTaskForm />
+          )}
+          {(activeModal === 'createjournal' ||
+            activeModal === 'editjournal') && <CreateJournalForm />}
         </motion.div>
       )}
     </AnimatePresence>

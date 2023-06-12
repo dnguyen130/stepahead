@@ -20,11 +20,17 @@ const CssButton = styled(Button)({
 })
 
 export default function TodoSummary(): ReactElement {
-  const { activeModal, setActiveModal, currentEvent, setCurrentEvent } =
-    useMyContext()
+  const {
+    activeModal,
+    setActiveModal,
+    currentEvent,
+    setCurrentEvent,
+    currentJournal,
+    setCurrentJournal,
+  } = useMyContext()
 
-  function EditTodo(): void {
-    setActiveModal('createtask')
+  function EditTodo(type: string): void {
+    setActiveModal(type === 'todosummary' ? 'edittask' : 'editjournal')
   }
 
   const defaultCurrentEventProps = {
@@ -39,9 +45,17 @@ export default function TodoSummary(): ReactElement {
     complete: false,
   }
 
+  const defaultJournalProps = {
+    uid: currentJournal.uid !== '' ? currentJournal.uid : '',
+    title: '',
+    content: '',
+    currentDate: new Date(),
+    currentTime: new Date().toLocaleTimeString('en-GB', { timeStyle: 'short' }),
+  }
+
   return (
     <AnimatePresence mode="wait">
-      {activeModal === 'todosummary' && (
+      {(activeModal === 'todosummary' || activeModal === 'journalsummary') && (
         <motion.div
           className="createtaskcont"
           initial={{ opacity: 0 }}
@@ -58,26 +72,34 @@ export default function TodoSummary(): ReactElement {
               onClick={() => {
                 setActiveModal('')
                 setCurrentEvent(defaultCurrentEventProps)
+                setCurrentJournal(defaultJournalProps)
               }}
             >
               <MdClose size="100%" />
             </button>
           </header>
           <section className="todosummarycontent">
-            <h2 className="todosummarytitle">{currentEvent.title}</h2>
-            {currentEvent.description !== '' && (
-              <p className="todosummarysub">{currentEvent.description}</p>
+            <h2 className="todosummarytitle">
+              {activeModal === 'todosummary'
+                ? currentEvent.title
+                : currentJournal.title}
+            </h2>
+            <p className="todosummarysub">{currentEvent.description}</p>
+            {currentJournal.content !== '' && (
+              <p className="todosummarysub">{currentJournal.content}</p>
             )}
-            <p className="todosummarysub">
-              Created{' '}
-              {currentEvent.currentDate.toLocaleString('en-us', options)} at{' '}
-              {ConvertTimeString(currentEvent.currentTime)}
-            </p>
-            <p className="todosummarysub">
-              Due {currentEvent.dueDate.toLocaleString('en-us', options)}
-              {currentEvent.dueTime !== '' &&
-                ` at ${ConvertTimeString(currentEvent.dueTime)}`}
-            </p>
+            <div className="todosummarydates">
+              <p className="todosummarysub">
+                Created{' '}
+                {currentEvent.currentDate.toLocaleString('en-us', options)} at{' '}
+                {ConvertTimeString(currentEvent.currentTime)}
+              </p>
+              <p className="todosummarysub">
+                Due {currentEvent.dueDate.toLocaleString('en-us', options)}
+                {currentEvent.dueTime !== '' &&
+                  ` at ${ConvertTimeString(currentEvent.dueTime)}`}
+              </p>
+            </div>
             <CssButton
               variant="contained"
               sx={{
@@ -86,7 +108,7 @@ export default function TodoSummary(): ReactElement {
                 },
               }}
               onClick={() => {
-                EditTodo()
+                EditTodo(activeModal)
               }}
             >
               Edit
