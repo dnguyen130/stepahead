@@ -3,7 +3,7 @@ import { useMyContext } from '@/utils/provider'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
-const filterCategories = ['all', 'expired', 'upcoming', 'today', 'complete']
+const filterCategories = ['all', 'expired', 'upcoming', 'complete']
 
 export default function TodoSwitches(): ReactElement {
   const { taskFilter, setTaskFilter } = useMyContext()
@@ -21,6 +21,7 @@ export default function TodoSwitches(): ReactElement {
     <div className="todoSwitchcont">
       <ToggleButtonGroup
         exclusive
+        size="small"
         value={taskFilter}
         onChange={handleChange}
         className="tasktogglegroup"

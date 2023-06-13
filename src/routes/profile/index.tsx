@@ -24,13 +24,18 @@ export default function Profile(): ReactElement {
         <h1 className="homecontgreeting">Profile</h1>
       </header>
       <main className="profilecont">
-        <p className="profileinfo">Todos Created: {todos.length}</p>
+        <p className="profileinfo">Tasks Created: {todos.length}</p>
         <p className="profileinfo">
-          Todos Completed: {CalculateCompletedTodos(todos)}
+          Tasks Completed: {CalculateCompletedTodos(todos)}
         </p>
         <p className="profileinfo">Journal Entries: {journals.length}</p>
-        <button onClick={SignOutAndRedirect}>Sign Out</button>
       </main>
+      <button
+        className="loginbutton signoutbutton"
+        onClick={SignOutAndRedirect}
+      >
+        <h2>Sign Out</h2>
+      </button>
     </section>
   )
 }
