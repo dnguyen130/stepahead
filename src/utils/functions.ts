@@ -58,8 +58,14 @@ function DaysLeft(date: string): number {
   return diffDays
 }
 
-function GenerateDaysMessage(daysLeft: number, time: string): string {
-  if (daysLeft === 0 && time !== '') {
+function GenerateDaysMessage(
+  daysLeft: number,
+  time: string,
+  complete: boolean
+): string {
+  if (complete) {
+    return 'Complete!'
+  } else if (daysLeft === 0 && time !== '') {
     return `Due today at ${ConvertTimeString(time)}`
   } else if (daysLeft === 0 && time === '') {
     return 'Due today'
@@ -74,8 +80,10 @@ function GenerateDaysMessage(daysLeft: number, time: string): string {
   }
 }
 
-function RecentChecker(date: string): boolean {
-  if (DaysLeft(date) >= 0 && DaysLeft(date) <= 7) {
+function RecentChecker(date: string, complete: boolean): boolean {
+  if (complete) {
+    return false
+  } else if (DaysLeft(date) >= 0 && DaysLeft(date) <= 7) {
     return true
   } else {
     return false
@@ -107,7 +115,10 @@ function GenerateTodoTitle(todoType: string): string {
       return 'Upcoming Tasks'
     }
     case 'today': {
-      return "Today's Tasks"
+      return `Today's Tasks`
+    }
+    case 'complete': {
+      return 'Tasks Completed'
     }
     case 'expired': {
       return 'Overdue Tasks'

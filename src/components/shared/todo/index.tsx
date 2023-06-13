@@ -3,7 +3,11 @@ import { useMyContext } from '@/utils/provider'
 import TodoTask from './todoTask'
 import JournalTask from './journalTask'
 import { TodoDataProps, JournalProps } from '@/utils/types'
-import { DeleteTodo, DeleteJournal } from '@/utils/firebasefunctions'
+import {
+  DeleteTodo,
+  DeleteJournal,
+  CompleteATodo,
+} from '@/utils/firebasefunctions'
 import {
   AreArraysEqual,
   RecentChecker,
@@ -37,6 +41,32 @@ export default function Todo({ todoType, journal }: TodoProps): ReactElement {
 
   const DeleteATodo = async (todo: TodoDataProps): Promise<void> => {
     await DeleteTodo(todo)
+    onValue(todoRef, (snapshot) => {
+      const data = snapshot.val()
+      if (data !== null) {
+        const dataArray = Object.values<TodoDataProps>(data)
+        if (!AreArraysEqual(dataArray, todos)) {
+          setTodos(dataArray)
+        }
+      } else if (data === null) {
+        setTodos([])
+      }
+    })
+  }
+
+  const CompleteTodo = async (todo: TodoDataProps): Promise<void> => {
+    await CompleteATodo({
+      uid: todo.uid,
+      userId: todo.userId,
+      title: todo.title,
+      description: todo.description,
+      creationDate: todo.creationDate,
+      creationTime: todo.creationTime,
+      dueDate: todo.dueDate,
+      dueTime: todo.dueTime !== null ? todo.dueTime : '',
+      important: todo.important,
+      complete: true,
+    })
     onValue(todoRef, (snapshot) => {
       const data = snapshot.val()
       if (data !== null) {
@@ -123,12 +153,15 @@ export default function Todo({ todoType, journal }: TodoProps): ReactElement {
     if (todos !== null) {
       switch (todoType) {
         case 'upcoming': {
-          return sortedTodos().filter((todo) => RecentChecker(todo.dueDate))
+          return sortedTodos().filter((todo) =>
+            RecentChecker(todo.dueDate, todo.complete)
+          )
         }
         case 'today': {
           return sortedTodos().filter(
             (todo) =>
-              Date.parse(todo.dueDate) === Date.parse(new Date().toDateString())
+              Date.parse(todo.dueDate) ===
+                Date.parse(new Date().toDateString()) && !todo.complete
           )
         }
         case 'expired': {
@@ -136,6 +169,9 @@ export default function Todo({ todoType, journal }: TodoProps): ReactElement {
             (todo) =>
               Date.parse(todo.dueDate) < Date.parse(new Date().toDateString())
           )
+        }
+        case 'complete': {
+          return sortedTodos().filter((todo) => todo.complete)
         }
         default: {
           return sortedTodos()
@@ -203,7 +239,11 @@ export default function Todo({ todoType, journal }: TodoProps): ReactElement {
               <div key={i}>
                 <TodoTask
                   key={i}
-                  todoDays={GenerateDaysMessage(DaysLeft(o.dueDate), o.dueTime)}
+                  todoDays={GenerateDaysMessage(
+                    DaysLeft(o.dueDate),
+                    o.dueTime,
+                    o.complete
+                  )}
                   uid={o.uid}
                   userId={o.userId}
                   title={o.title}
@@ -220,7 +260,7 @@ export default function Todo({ todoType, journal }: TodoProps): ReactElement {
                   }}
                   onCompleteClick={async (e) => {
                     e.stopPropagation()
-                    await DeleteATodo(o)
+                    await CompleteTodo(o)
                   }}
                   onTodoClick={(e) => {
                     e.stopPropagation()

@@ -13,6 +13,7 @@
 @import './components/shared/backgrounddim.scss';
 @import './components/shared/todosummary.scss';
 @import './components/pages/task.scss';
+@import './components/pages/profile.scss';
 
 @mixin container($bg, $txt) {
   width: 100vw;

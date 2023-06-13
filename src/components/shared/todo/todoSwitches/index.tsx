@@ -3,7 +3,7 @@ import { useMyContext } from '@/utils/provider'
 import ToggleButton from '@mui/material/ToggleButton'
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup'
 
-const filterCategories = ['all', 'expired', 'today', 'upcoming']
+const filterCategories = ['all', 'expired', 'upcoming', 'today', 'complete']
 
 export default function TodoSwitches(): ReactElement {
   const { taskFilter, setTaskFilter } = useMyContext()
@@ -12,7 +12,6 @@ export default function TodoSwitches(): ReactElement {
     _event: React.MouseEvent<HTMLElement>,
     newFilter: string
   ): void => {
-    console.log(taskFilter)
     if (newFilter !== null) {
       setTaskFilter(newFilter)
     }

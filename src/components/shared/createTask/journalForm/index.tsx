@@ -79,8 +79,6 @@ export default function CreateJournalForm(): ReactElement {
         creationTime: currentJournal.currentTime,
       })
 
-      console.log(currentJournal)
-
       const updatedJournals = journals.map((journal) => {
         if (journal.uid === currentJournal.uid) {
           return {
@@ -92,9 +90,7 @@ export default function CreateJournalForm(): ReactElement {
         return journal
       })
       // If the created todo does not exist already
-      console.log(
-        !updatedJournals.some((journal) => journal.uid === currentJournal.uid)
-      )
+
       if (
         !updatedJournals.some((journal) => journal.uid === currentJournal.uid)
       ) {
@@ -115,7 +111,6 @@ export default function CreateJournalForm(): ReactElement {
         setJournals(updatedJournals)
         alert('Journal Entry Successfully Edited')
       }
-      console.log(journals)
       setCurrentJournal(defaultJournalProps)
       setActiveModal('')
     }

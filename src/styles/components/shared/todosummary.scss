@@ -15,6 +15,9 @@
   flex-direction: column;
   height: 100%;
   justify-content: space-around;
+  width: 90%;
+  align-items: center;
+  text-align: left;
 }
 
 .todosummarytitle {
@@ -26,9 +29,18 @@
 
 .todosummarysub {
   margin: 0;
+  width: 100%;
+}
+
+.todosummaryjournal {
+  width: 90%;
+  height: 150px;
+  overflow: scroll;
+  white-space: pre-wrap;
 }
 
 .todosummarydates {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }

@@ -32,11 +32,9 @@ const GetAllTodos = async (userId: string): Promise<TodoDataProps | null> => {
     if (initialTodoData.exists()) {
       return initialTodoData.val()
     } else {
-      console.log('No data available')
       return null
     }
   } catch (error) {
-    console.log(error)
     return null
   }
 }
@@ -50,11 +48,9 @@ const GetAllJournals = async (userId: string): Promise<JournalProps | null> => {
     if (initialJournalData.exists()) {
       return initialJournalData.val()
     } else {
-      console.log('No data available')
       return null
     }
   } catch (error) {
-    console.log(error)
     return null
   }
 }
@@ -95,6 +91,36 @@ const CreateTodo = async ({
   } else {
     return ''
   }
+}
+
+const CompleteATodo = async ({
+  uid,
+  userId,
+  title,
+  description,
+  creationDate,
+  creationTime,
+  dueDate,
+  dueTime,
+  important,
+}: TodoDataProps): Promise<string> => {
+  const todoData = {
+    uid,
+    userId,
+    title,
+    description,
+    creationDate,
+    creationTime,
+    dueDate,
+    dueTime,
+    important,
+    complete: true,
+  }
+
+  const updates: Record<string, any> = {}
+  updates[`/users/${userId}/todos/` + uid] = todoData
+  await update(ref(db), updates)
+  return uid
 }
 
 const CreateJournal = async ({
@@ -187,7 +213,6 @@ const SignUpWithEmail = async ({
         alert('Password must be at least 6 characters')
         return err.code
       } else {
-        console.log(err.message)
         return err.message
       }
     } else {
@@ -217,7 +242,6 @@ const LogInWithEmail = async ({
         alert('Incorrect Password')
         return err.code
       } else {
-        console.log(err.message)
         return err.message
       }
     } else {
@@ -250,7 +274,6 @@ const SignInWithGoogle = async (): Promise<Record<string, any> | string> => {
     if (err instanceof FirebaseError) {
       return err.code
     } else {
-      console.log(err)
       return 'error'
     }
   }
@@ -268,6 +291,7 @@ export {
   CreateTodo,
   GetAllTodos,
   DeleteTodo,
+  CompleteATodo,
   SignInWithGoogle,
   SignOut,
   SignUpWithEmail,

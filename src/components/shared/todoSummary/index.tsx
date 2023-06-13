@@ -17,6 +17,7 @@ const options: Record<string, string | number> = {
 const CssButton = styled(Button)({
   fontFamily: `"Ubuntu", "Arial", sans-serif`,
   backgroundColor: styles.buttonActiveLight,
+  width: '200px',
 })
 
 export default function TodoSummary(): ReactElement {
@@ -86,19 +87,29 @@ export default function TodoSummary(): ReactElement {
             </h2>
             <p className="todosummarysub">{currentEvent.description}</p>
             {currentJournal.content !== '' && (
-              <p className="todosummarysub">{currentJournal.content}</p>
+              <p className="todosummaryjournal">{currentJournal.content}</p>
             )}
             <div className="todosummarydates">
               <p className="todosummarysub">
                 Created{' '}
-                {currentEvent.currentDate.toLocaleString('en-us', options)} at{' '}
-                {ConvertTimeString(currentEvent.currentTime)}
+                {activeModal === 'todosummary'
+                  ? currentEvent.currentDate.toLocaleString('en-us', options)
+                  : currentJournal.currentDate.toLocaleString(
+                      'en-us',
+                      options
+                    )}{' '}
+                at{' '}
+                {activeModal === 'todosummary'
+                  ? ConvertTimeString(currentEvent.currentTime)
+                  : ConvertTimeString(currentJournal.currentTime)}
               </p>
-              <p className="todosummarysub">
-                Due {currentEvent.dueDate.toLocaleString('en-us', options)}
-                {currentEvent.dueTime !== '' &&
-                  ` at ${ConvertTimeString(currentEvent.dueTime)}`}
-              </p>
+              {activeModal === 'todosummary' && (
+                <p className="todosummarysub">
+                  Due {currentEvent.dueDate.toLocaleString('en-us', options)}
+                  {currentEvent.dueTime !== '' &&
+                    ` at ${ConvertTimeString(currentEvent.dueTime)}`}
+                </p>
+              )}
             </div>
             <CssButton
               variant="contained"

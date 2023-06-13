@@ -131,7 +131,6 @@ export default function CreateTaskForm(): ReactElement {
         setTodos(updatedTodos)
         alert('Todo Successfully Edited')
       }
-      console.log(todos)
       setCurrentEvent(defaultCurrentEventProps)
       setActiveModal('')
     }
