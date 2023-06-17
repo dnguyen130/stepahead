@@ -268,9 +268,7 @@ const SignInWithGoogle = async (): Promise<Record<string, any> | string> => {
     }
 
     const userRef = await get(ref(db, 'users/' + user.uid))
-    if (userRef.exists()) {
-      console.log('user exists')
-    } else {
+    if (!userRef.exists()) {
       await WriteUserData(activeUserData)
     }
 

@@ -108,9 +108,7 @@ export default function CreateTaskForm(): ReactElement {
         }
         return todo
       })
-      console.log(todos, updatedTodos, currentEvent)
       // If the created todo does not exist already
-      console.log(!updatedTodos.some((todo) => todo.uid === currentEvent.uid))
       if (!updatedTodos.some((todo) => todo.uid === currentEvent.uid)) {
         setTodos([
           ...todos,

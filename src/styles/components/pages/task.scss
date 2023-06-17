@@ -1,3 +1,9 @@
 .tasktogglegroup {
   margin: 10px 0 0;
 }
+
+.todoswitchcont {
+  max-width: 300px;
+  @media (min-width: $tablet) {
+  }
+}
