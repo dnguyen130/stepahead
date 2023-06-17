@@ -56,6 +56,7 @@ const GetAllJournals = async (userId: string): Promise<JournalProps | null> => {
 }
 
 const CreateTodo = async ({
+  uid,
   userId,
   title,
   description,
@@ -67,7 +68,7 @@ const CreateTodo = async ({
   complete,
 }: TodoDataProps): Promise<string> => {
   const todoData = {
-    uid: '',
+    uid,
     userId,
     title,
     description,
@@ -84,8 +85,12 @@ const CreateTodo = async ({
   if (newTodoKey !== null) {
     // Add uid to database write
     const updates: Record<string, any> = {}
-    todoData.uid = newTodoKey
-    updates[`/users/${userId}/todos/` + newTodoKey] = todoData
+    todoData.uid = uid !== '' ? uid : newTodoKey
+    if (uid !== '') {
+      updates[`/users/${userId}/todos/` + uid] = todoData
+    } else {
+      updates[`/users/${userId}/todos/` + newTodoKey] = todoData
+    }
     await update(ref(db), updates)
     return newTodoKey
   } else {

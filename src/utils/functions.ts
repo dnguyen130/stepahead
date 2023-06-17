@@ -83,7 +83,7 @@ function GenerateDaysMessage(
 function RecentChecker(date: string, complete: boolean): boolean {
   if (complete) {
     return false
-  } else if (DaysLeft(date) >= 0 && DaysLeft(date) <= 7) {
+  } else if (DaysLeft(date) >= 1 && DaysLeft(date) <= 7) {
     return true
   } else {
     return false

@@ -151,6 +151,7 @@ export default function Todo({ todoType, journal }: TodoProps): ReactElement {
 
   const filteredTodos = (todoType: string): TodoDataProps[] => {
     if (todos !== null) {
+      console.log(todos)
       switch (todoType) {
         case 'upcoming': {
           return sortedTodos().filter((todo) =>

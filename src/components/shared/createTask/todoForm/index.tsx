@@ -56,7 +56,7 @@ export default function CreateTaskForm(): ReactElement {
   const [focus, setFocus] = useState('')
 
   const defaultCurrentEventProps = {
-    uid: currentEvent.uid !== '' ? currentEvent.uid : '',
+    uid: '',
     title: '',
     description: '',
     currentDate: new Date(),
@@ -83,7 +83,7 @@ export default function CreateTaskForm(): ReactElement {
       alert('Missing Due Date')
     } else {
       const Key = await CreateTodo({
-        uid: currentEvent.uid,
+        uid: currentEvent.uid !== '' ? currentEvent.uid : '',
         userId,
         title: currentEvent.title,
         description: currentEvent.description,
@@ -94,8 +94,8 @@ export default function CreateTaskForm(): ReactElement {
         important: currentEvent.important,
         complete: false,
       })
-
       const updatedTodos = todos.map((todo) => {
+        // If editing, update everything but UID
         if (todo.uid === currentEvent.uid) {
           return {
             ...todo,
@@ -108,12 +108,14 @@ export default function CreateTaskForm(): ReactElement {
         }
         return todo
       })
+      console.log(todos, updatedTodos, currentEvent)
       // If the created todo does not exist already
+      console.log(!updatedTodos.some((todo) => todo.uid === currentEvent.uid))
       if (!updatedTodos.some((todo) => todo.uid === currentEvent.uid)) {
         setTodos([
           ...todos,
           {
-            uid: currentEvent.uid !== '' ? currentEvent.uid : Key,
+            uid: Key,
             userId,
             title: currentEvent.title,
             description: currentEvent.description,
