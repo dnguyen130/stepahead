@@ -3,11 +3,11 @@ import { ReactElement, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useMyContext } from '@/utils/provider'
-import { MdPlaylistAddCheck } from 'react-icons/md'
 import { styled } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import styles from '@/styles/variables/export.module.scss'
 import { FaGoogle } from 'react-icons/fa'
+import { Helmet } from 'react-helmet'
 
 const CssTextField = styled(TextField)({
   margin: '10px 0',
@@ -65,6 +65,9 @@ export default function Login(): ReactElement {
 
   return (
     <AnimatePresence mode="wait">
+      <Helmet>
+        <title>Step Ahead</title>
+      </Helmet>
       {!loading && (
         <motion.div
           className="login"
@@ -76,7 +79,9 @@ export default function Login(): ReactElement {
           }}
         >
           <div className="loginlogo">
-            <MdPlaylistAddCheck size="100%" />
+            {/* <MdPlaylistAddCheck size="100%" /> */}
+            <img src="/logo1.svg" alt="logo" className="loginimage" />
+
             <h1>Let&apos;s get ahead</h1>
           </div>
           <div className="inputcont">

@@ -5,6 +5,7 @@ import { MdPlaylistAddCheck } from 'react-icons/md'
 import TextField from '@mui/material/TextField'
 import { styled } from '@mui/material'
 import styles from '@/styles/variables/export.module.scss'
+import { Helmet } from 'react-helmet'
 
 const CssTextField = styled(TextField)({
   margin: '10px 0',
@@ -58,6 +59,9 @@ export default function SignUp(): ReactElement {
 
   return (
     <div className="login">
+      <Helmet>
+        <title>Sign Up</title>
+      </Helmet>
       <div className="loginlogo">
         <MdPlaylistAddCheck size="100%" />
         <h1>Let&apos;s get ahead</h1>

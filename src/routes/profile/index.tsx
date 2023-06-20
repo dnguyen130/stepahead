@@ -3,6 +3,7 @@ import { ReactElement } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMyContext } from '@/utils/provider'
 import { TodoDataProps } from '@/utils/types'
+import { Helmet } from 'react-helmet'
 
 export default function Profile(): ReactElement {
   const { todos, journals } = useMyContext()
@@ -20,11 +21,14 @@ export default function Profile(): ReactElement {
 
   return (
     <section className="homecont">
+      <Helmet>
+        <title>Your Profile</title>
+      </Helmet>
       <header>
         <h1 className="homecontgreeting">Profile</h1>
       </header>
       <main className="profilecont">
-        <p className="profileinfo">Tasks Created: {todos.length}</p>
+        <p className="profileinfo">Current Tasks: {todos.length}</p>
         <p className="profileinfo">
           Tasks Completed: {CalculateCompletedTodos(todos)}
         </p>

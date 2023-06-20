@@ -1,6 +1,7 @@
 import Todo from '@/components/shared/todo'
 import { ReactElement } from 'react'
 import { useMyContext } from '@/utils/provider'
+import { Helmet } from 'react-helmet'
 
 const morning = (hour: number): boolean => {
   return hour >= 6 && hour <= 11
@@ -38,6 +39,9 @@ export default function Home(): ReactElement {
 
   return (
     <section className="homecont">
+      <Helmet>
+        <title>Dashboard</title>
+      </Helmet>
       <header>
         <h1 className="homecontgreeting">
           {currentUser.name !== null && (

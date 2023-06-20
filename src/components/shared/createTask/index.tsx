@@ -59,10 +59,14 @@ export default function CreateTask(): ReactElement {
                   : 'createtasktab-inactive'
               }
               style={{
-                visibility: activeModal === 'createtask' ? 'visible' : 'hidden',
+                visibility:
+                  activeModal === 'createtask' ||
+                  activeModal === 'createjournal'
+                    ? 'visible'
+                    : 'hidden',
               }}
               onClick={() => {
-                setActiveModal('creattask')
+                setActiveModal('createtask')
               }}
             >
               Event
@@ -74,7 +78,11 @@ export default function CreateTask(): ReactElement {
                   : 'createtasktab-inactive'
               }
               style={{
-                visibility: activeModal === 'createtask' ? 'visible' : 'hidden',
+                visibility:
+                  activeModal === 'createtask' ||
+                  activeModal === 'createjournal'
+                    ? 'visible'
+                    : 'hidden',
               }}
               onClick={() => {
                 setActiveModal('createjournal')
