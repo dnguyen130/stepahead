@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://github.com/dnguyen130/stepahead">
-    <img src="/logo1.svg" alt="Logo" width="80" height="80">
+    <img src="public/logo1.svg" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Step Ahead | Todo List Web Application</h3>
@@ -24,6 +24,7 @@ Step Ahead is a personal project designed and developed by me. It is built with 
 
 * [React.js](https://reactjs.org/)
 * [Vite](https://vitejs.dev/)
+* [Sass](https://sass-lang.com/)
 * [Firebase](https://firebase.google.com/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
